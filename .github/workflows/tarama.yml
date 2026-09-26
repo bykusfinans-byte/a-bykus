@@ -1,0 +1,40 @@
+name: BIST AI Pro Tarama
+
+on:
+  schedule:
+    # BIST işlem saatleri (TR saatiyle 10:00-18:00) içinde her 4 saatte bir
+    # Cron UTC'dir, TR = UTC+3
+    - cron: "30 6 * * 1-5"   # 09:30 TR
+    - cron: "30 10 * * 1-5"  # 13:30 TR
+    - cron: "0 15 * * 1-5"   # 18:00 TR
+  workflow_dispatch: {}       # "Run workflow" butonuyla elle de tetiklenebilir
+
+permissions:
+  contents: write
+
+jobs:
+  tara:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kodu çek
+        uses: actions/checkout@v4
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Bağımlılıkları kur
+        run: pip install -r requirements.txt
+
+      - name: Taramayı çalıştır
+        working-directory: src
+        run: python main.py
+
+      - name: Sonuçları commit et
+        run: |
+          git config user.name "bist-ai-pro-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/data/sonuc.json docs/data/portfoy.json
+          git diff --cached --quiet || git commit -m "Tarama güncellendi: $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
