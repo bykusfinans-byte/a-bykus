@@ -96,6 +96,9 @@ async function veriYukle() {
     }
   } catch (err) {
     console.error("Veri yüklenemedi:", err);
+    const el = document.getElementById("guncelleme-zamani");
+    el.textContent = "Veri yüklenemedi (konsolu kontrol et: F12)";
+    el.style.color = "var(--neg)";
   }
 }
 
@@ -103,7 +106,7 @@ function sinyalTablosunuDoldur(hisseler) {
   const gövde = document.querySelector("#sinyal-tablo tbody");
 
   if (!hisseler.length) {
-    gövde.innerHTML = '<tr><td colspan="9" class="bos-satir">Henüz tarama verisi yok. İlk GitHub Actions çalıştığında burası dolacak.</td></tr>';
+    gövde.innerHTML = '<tr><td colspan="17" class="bos-satir">Henüz tarama verisi yok. İlk GitHub Actions çalıştığında burası dolacak.</td></tr>';
     return;
   }
 
@@ -113,13 +116,21 @@ function sinyalTablosunuDoldur(hisseler) {
     <tr>
       <td>${h.Hisse}</td>
       <td>${paraFormat(h.Fiyat)}</td>
+      <td>${h.AISkor ?? "—"}</td>
+      <td>${h.Karar ?? "—"}</td>
       <td>${h.Trend ?? "—"}</td>
       <td>${h.Momentum ?? "—"}</td>
+      <td>${h.RSI ?? "—"}</td>
+      <td>${h.ADX ?? "—"}</td>
+      <td>${h.ATR ?? "—"}</td>
       <td>${h.Teknik ?? "—"}</td>
       <td>${h.Temel ?? "—"}</td>
       <td>${h.Risk ?? "—"}</td>
-      <td>${h.AISkor ?? "—"}</td>
-      <td>${h.Karar ?? "—"}</td>
+      <td>${paraFormat(h.Destek)}</td>
+      <td>${paraFormat(h.Direnc)}</td>
+      <td>${paraFormat(h.Stop)}</td>
+      <td>${paraFormat(h.Hedef)}</td>
+      <td>${h["Risk/Odul"] ?? "—"}</td>
     </tr>`
     )
     .join("");
