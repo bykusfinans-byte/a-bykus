@@ -21,17 +21,32 @@ const SIFRE_HASH = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c8
 // ----------------------------------------------------------
 // GitHub Actions'ı tetiklemek için ayarlar
 // ----------------------------------------------------------
-// ⚠️ GÜVENLİK UYARISI: Buraya koyduğun token, siteyi ziyaret eden HERKES
-// tarafından görülebilir (tarayıcı "Kaynağı görüntüle" / Ağ sekmesi).
-// SADECE bu repo için, SADECE "Actions: Read and write" yetkisiyle
-// oluşturulmuş bir "fine-grained personal access token" kullan.
-// Asla "Contents" veya "repo" (tüm reponun tam yetkisi) izni olan bir
-// token buraya KOYMA. Nasıl oluşturulacağı README.md'de anlatılıyor.
-const GITHUB_OWNER ="bykusfinans-byte";       // <-- değiştir
-const GITHUB_REPO = "a-bykus";             // <-- değiştir
+// Token'ı buraya YAZMIYORUZ — GitHub, public repolara token commit
+// edilmesini "secret scanning" ile zaten engelliyor (haklı olarak,
+// commit geçmişine giren token'lar botlarca taranıp ele geçirilebiliyor).
+// Bunun yerine token, sadece SENİN tarayıcında (localStorage) saklanır,
+// koda hiç karışmaz. İlk "Yeni Tarama Başlat" tıklamanda senden istenir.
+const GITHUB_OWNER = "bykusfinans-byte";
+const GITHUB_REPO = "a-bykus";
 const GITHUB_WORKFLOW_FILE = "tarama.yml";
 const GITHUB_BRANCH = "main";
-const GITHUB_TOKEN = "BURAYA_TOKEN_YAPISTIR"; // <-- değiştir, README'ye bak
+const TOKEN_ANAHTARI = "bist-ai-pro-github-token";
+
+function tokenGetir() {
+  return localStorage.getItem(TOKEN_ANAHTARI) || "";
+}
+
+function tokenIste() {
+  const girilen = prompt(
+    "GitHub token'ını yapıştır (sadece bu repo + \"Actions: Read and write\" " +
+    "yetkili olmalı). Sadece bu tarayıcıda saklanır, koda yazılmaz:"
+  );
+  if (girilen && girilen.trim()) {
+    localStorage.setItem(TOKEN_ANAHTARI, girilen.trim());
+    return girilen.trim();
+  }
+  return null;
+}
 
 let sonGuncellemeZamani = null;
 let bekleyenInterval = null;
@@ -71,6 +86,10 @@ document.getElementById("kilitle-buton").addEventListener("click", () => {
 
 document.getElementById("yenile-buton").addEventListener("click", veriYukle);
 document.getElementById("tarama-buton").addEventListener("click", taramaBaslat);
+document.getElementById("token-buton").addEventListener("click", () => {
+  localStorage.removeItem(TOKEN_ANAHTARI);
+  tokenIste();
+});
 
 // Bu tarayıcı oturumunda zaten giriş yapılmışsa şifreyi tekrar sorma
 if (sessionStorage.getItem("bist-ai-pro-giris") === "ok") {
@@ -244,12 +263,11 @@ const taramaButon = document.getElementById("tarama-buton");
 
 async function taramaBaslat() {
 
-  if (!GITHUB_TOKEN || GITHUB_TOKEN.includes("BURAYA") || GITHUB_OWNER.includes("KULLANICI_ADIN")) {
-    alert(
-      "Önce app.js dosyasının başındaki GITHUB_OWNER, GITHUB_REPO ve GITHUB_TOKEN " +
-      "değerlerini doldurman gerekiyor (README.md'de nasıl token oluşturulacağı anlatılıyor)."
-    );
-    return;
+  let token = tokenGetir();
+
+  if (!token) {
+    token = tokenIste();
+    if (!token) return; // kullanıcı iptal etti
   }
 
   taramaButon.disabled = true;
@@ -261,7 +279,7 @@ async function taramaBaslat() {
     const res = await fetch(url, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${GITHUB_TOKEN}`,
+        "Authorization": `Bearer ${token}`,
         "Accept": "application/vnd.github+json",
         "Content-Type": "application/json",
       },
@@ -271,13 +289,18 @@ async function taramaBaslat() {
     if (res.status === 204) {
       taramaButon.textContent = "Çalışıyor… (1-3 dk)";
       taramaSonucunuBekle();
+    } else if (res.status === 401 || res.status === 403) {
+      alert("Token geçersiz veya yetkisiz. Token'ı yeniden gireceksin.");
+      localStorage.removeItem(TOKEN_ANAHTARI);
+      taramaButon.disabled = false;
+      taramaButon.textContent = "▶ Yeni Tarama Başlat";
     } else {
       let mesaj = res.status;
       try {
         const hata = await res.json();
         mesaj = hata.message || mesaj;
       } catch (_) {}
-      alert("Tarama başlatılamadı (" + mesaj + "). Token'ın \"Actions: Read and write\" yetkisi olduğundan emin ol.");
+      alert("Tarama başlatılamadı (" + mesaj + ").");
       taramaButon.disabled = false;
       taramaButon.textContent = "▶ Yeni Tarama Başlat";
     }
