@@ -142,6 +142,25 @@ body {
 
 .ikinci-buton:hover { border-color: var(--accent); color: var(--accent); }
 
+.birincil-buton {
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: #1a1505;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.birincil-buton:hover { filter: brightness(1.08); }
+
+.birincil-buton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  filter: none;
+}
+
 /* ---------- Ana içerik ---------- */
 
 main {
