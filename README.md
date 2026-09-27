@@ -59,6 +59,42 @@ hiçbir dosya gerçekten gizli değildir (herkes `docs/data/sonuc.json`'u
 doğrudan da açabilir). Gerçek gizlilik istersen GitHub'ın ücretli planındaki
 private repo + Pages özelliğini kullanman gerekir.
 
+## "Yeni Tarama Başlat" butonu (siteden GitHub Actions tetikleme)
+
+Site üzerindeki **▶ Yeni Tarama Başlat** butonu, GitHub Actions'ı anlık olarak
+tetikler (cron saatini beklemeden). Bunun çalışması için `docs/app.js`
+dosyasının başındaki üç değeri doldurman gerekiyor:
+
+```js
+const GITHUB_OWNER = "kullanici-adin";
+const GITHUB_REPO = "repo-adin";
+const GITHUB_TOKEN = "...";
+```
+
+**Token'ı şöyle oluştur (fine-grained personal access token):**
+
+1. GitHub → sağ üst profil fotoğrafın → **Settings**
+2. Sol menüde en altta **Developer settings**
+3. **Personal access tokens → Fine-grained tokens → Generate new token**
+4. **Repository access** → "Only select repositories" → bu repoyu seç
+5. **Permissions → Repository permissions** → **Actions** satırını bul,
+   **Read and write** seç. **Başka hiçbir izin verme** (Contents dahil —
+   koda yazma yetkisi vermene gerek yok, sadece Actions'ı tetikleyecek).
+6. Süre (expiration) belirle, oluştur, çıkan token'ı kopyala (bir daha
+   gösterilmez).
+7. Token'ı `docs/app.js`'e yapıştır, commit'le.
+
+⚠️ **Bu token, sitendeki herkes tarafından görülebilir** (tarayıcı "Kaynağı
+görüntüle" / Ağ sekmesinden). Bu yüzden **sadece** "Actions: Read and write"
+yetkisi ver — başka bir izin verirsen (özellikle "Contents: write") biri bu
+token'ı alıp reponun koduna yazabilir. Actions-only bir token ile en kötü
+ihtimalle biri taramanı gereksiz yere spam gibi tetikleyip GitHub Actions
+dakikalarını tüketebilir (ücretsiz planda ayda 2000 dakika) — koduna veya
+verine zarar veremez.
+
+Token'ı doldurmadan butona basarsan site seni uyarır, hiçbir şey göndermez.
+
+
 ## Bot kurallarını değiştirme
 
 `src/settings.py` içindeki bu değerleri değiştirerek botun davranışını
