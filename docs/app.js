@@ -27,7 +27,7 @@ const SIFRE_HASH = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c8
 // oluşturulmuş bir "fine-grained personal access token" kullan.
 // Asla "Contents" veya "repo" (tüm reponun tam yetkisi) izni olan bir
 // token buraya KOYMA. Nasıl oluşturulacağı README.md'de anlatılıyor.
-const GITHUB_OWNER = "KULLANICI_ADIN";       // <-- değiştir
+const GITHUB_OWNER ="bykusfinans-byte";       // <-- değiştir
 const GITHUB_REPO = "REPO_ADIN";             // <-- değiştir
 const GITHUB_WORKFLOW_FILE = "tarama.yml";
 const GITHUB_BRANCH = "main";
