@@ -7,8 +7,14 @@
 class Settings:
 
     # ---- Veri ----
-    PERIOD = "2y"
-    MIN_BAR = 220
+    # NOT: Bu sistem GÜNLÜK değil, 4 SAATLİK mum bazlı çalışır.
+    # yfinance'tan saatlik (1h) veri çekilip BIST seansına göre
+    # (10:00-14:00 ve 14:00-18:00) 4 saatlik mumlara birleştirilir.
+    # Bu yüzden EMA200 gibi göstergeler "200 gün" değil "200 tane
+    # 4 saatlik mum" (~yaklaşık 100 işlem günü, ~5 ay) anlamına gelir.
+    INTERVAL = "1h"
+    PERIOD = "1y"       # yfinance'ın 1h veri için izin verdiği maksimum aralık 730 gün
+    MIN_BAR = 220        # 220 adet 4 saatlik mum (~110 işlem günü)
     SLEEP = 0.3  # her hisse taraması arası bekleme (saniye) - rate-limit koruması
 
     # ---- Hareketli ortalamalar ----
