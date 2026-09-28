@@ -2,11 +2,9 @@ name: BIST AI Pro Tarama
 
 on:
   schedule:
-    # BIST işlem saatleri (TR saatiyle 10:00-18:00) içinde her 4 saatte bir
-    # Cron UTC'dir, TR = UTC+3
-    - cron: "30 6 * * 1-5"   # 09:30 TR
-    - cron: "30 10 * * 1-5"  # 13:30 TR
-    - cron: "0 15 * * 1-5"   # 18:00 TR
+    # 4 saatlik mumların kapandığı saatlerin hemen ardından çalışır (TR = UTC+3)
+    - cron: "5 11 * * 1-5"   # 14:05 TR (ilk 4 saatlik mum -10:00-14:00- kapanışı)
+    - cron: "5 15 * * 1-5"   # 18:05 TR (ikinci 4 saatlik mum -14:00-18:00- kapanışı)
   workflow_dispatch: {}       # "Run workflow" butonuyla elle de tetiklenebilir
 
 permissions:
