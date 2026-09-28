@@ -1,6 +1,20 @@
 {
-  "nakit": 100000,
+  "nakit": 99019.3,
   "baslangic_sermaye": 100000,
-  "pozisyonlar": {},
-  "islemler": []
+  "pozisyonlar": {
+    "AKBNK": {
+      "adet": 14,
+      "maliyet": 70.05
+    }
+  },
+  "islemler": [
+    {
+      "tarih": "2026-09-28T09:23:27.255Z",
+      "hisse": "AKBNK",
+      "tip": "AL",
+      "adet": 14,
+      "fiyat": 70.05,
+      "tutar": 980.7
+    }
+  ]
 }
