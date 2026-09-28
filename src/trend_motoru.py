@@ -66,17 +66,17 @@ class TrendMotoru:
             puan += 10
             nedenler.append("DI+ > DI-")
 
-        # 20 günlük getiri
+        # 20 mum (yaklaşık 10 işlem günü) getirisi
         getiri20 = (self.df["Close"].iloc[-1] / self.df["Close"].iloc[-20] - 1) * 100
         if getiri20 > 0:
             puan += 5
-            nedenler.append("20 günlük yükseliş")
+            nedenler.append("Son 20 mumda yükseliş")
 
-        # 50 günlük getiri
+        # 50 mum (yaklaşık 25 işlem günü) getirisi
         getiri50 = (self.df["Close"].iloc[-1] / self.df["Close"].iloc[-50] - 1) * 100
         if getiri50 > 0:
             puan += 5
-            nedenler.append("50 günlük yükseliş")
+            nedenler.append("Son 50 mumda yükseliş")
 
         if puan >= 90:
             trend = "★★★★★ Çok Güçlü"
