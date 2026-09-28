@@ -1,23 +1,6 @@
 {
-  "nakit": 99999.3,
+  "nakit": 100000,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {},
-  "islemler": [
-    {
-      "tarih": "2026-09-28T09:23:27.255Z",
-      "hisse": "AKBNK",
-      "tip": "AL",
-      "adet": 14,
-      "fiyat": 70.05,
-      "tutar": 980.7
-    },
-    {
-      "tarih": "2026-09-28T10:07:26.722Z",
-      "hisse": "AKBNK",
-      "tip": "SAT",
-      "adet": 14,
-      "fiyat": 70,
-      "tutar": 980
-    }
-  ]
+  "islemler": []
 }
