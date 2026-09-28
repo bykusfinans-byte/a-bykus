@@ -163,6 +163,9 @@ async function veriYukle() {
     sinyalTablosunuDoldur(sonuc.hisseler || []);
     filtreTablosunuDoldur(sonuc.hisseler || []);
 
+    sonBilinenFiyatlar = Object.fromEntries((sonuc.hisseler || []).map((h) => [h.Hisse, h.Fiyat]));
+    await manuelGoster();
+
     if (portfoy) {
       portfoyOzetiDoldur(portfoy, sonuc.hisseler || []);
       pozisyonTablosunuDoldur(portfoy, sonuc.hisseler || []);
@@ -256,6 +259,8 @@ function portfoyOzetiDoldur(portfoy, hisseler) {
 
   const toplamDeger = portfoy.nakit + pozisyonDegeri;
   const kz = toplamDeger - (portfoy.baslangic_sermaye ?? toplamDeger);
+  const baslangic = portfoy.baslangic_sermaye || toplamDeger || 1;
+  const kzYuzde = (kz / baslangic) * 100;
 
   document.getElementById("ozet-nakit").textContent = paraFormat(portfoy.nakit);
   document.getElementById("ozet-pozisyon").textContent = paraFormat(pozisyonDegeri);
@@ -264,6 +269,10 @@ function portfoyOzetiDoldur(portfoy, hisseler) {
   const kzEl = document.getElementById("ozet-kz");
   kzEl.textContent = (kz >= 0 ? "+" : "") + paraFormat(kz);
   kzEl.className = "ozet-deger " + kzSinifi(kz);
+
+  const kzYuzdeEl = document.getElementById("ozet-kz-yuzde");
+  kzYuzdeEl.textContent = (kzYuzde >= 0 ? "+" : "") + kzYuzde.toFixed(2) + "%";
+  kzYuzdeEl.className = "ozet-yuzde " + kzSinifi(kz);
 }
 
 function pozisyonTablosunuDoldur(portfoy, hisseler) {
@@ -418,3 +427,280 @@ function taramaSonucunuBekle() {
 
   }, ARALIK_MS);
 }
+
+// ----------------------------------------------------------
+// Manuel Portföy — repoda docs/data/manuel-portfoy.json olarak
+// saklanır (botunki gibi). Okuma herkese açık (statik dosya),
+// yazma GitHub API üzerinden aynı token ile yapılır — token'ın
+// artık "Contents: Read and write" yetkisi de olması gerekiyor.
+// Bu sayede hangi cihaz/tarayıcıdan girersen gir aynı veriyi
+// görürsün.
+// ----------------------------------------------------------
+
+const MANUEL_DOSYA_YOLU = "docs/data/manuel-portfoy.json";
+const MANUEL_BASLANGIC_SERMAYE = 100000;
+
+let sonBilinenFiyatlar = {};
+let manuelVeri = null;   // en son bilinen içerik (önbellek)
+let manuelSha = null;    // GitHub'daki dosyanın son bilinen sürüm kimliği
+
+function yuvarla(x) {
+  return Math.round(x * 100) / 100;
+}
+
+function utf8ToBase64(str) {
+  return btoa(unescape(encodeURIComponent(str)));
+}
+
+function varsayilanManuelVeri() {
+  return {
+    nakit: MANUEL_BASLANGIC_SERMAYE,
+    baslangic_sermaye: MANUEL_BASLANGIC_SERMAYE,
+    pozisyonlar: {},
+    islemler: [],
+  };
+}
+
+async function manuelYukle(zorlaYenile) {
+  if (manuelVeri && !zorlaYenile) return manuelVeri;
+
+  try {
+    const res = await fetch("data/manuel-portfoy.json?_=" + Date.now());
+    manuelVeri = res.ok ? await res.json() : varsayilanManuelVeri();
+  } catch (err) {
+    manuelVeri = varsayilanManuelVeri();
+  }
+
+  return manuelVeri;
+}
+
+async function manuelShaGetir(token) {
+  const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${MANUEL_DOSYA_YOLU}?ref=${GITHUB_BRANCH}`;
+  const res = await fetch(url, {
+    headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json" },
+  });
+  if (res.status === 404) return null; // dosya repoda henüz yok
+  if (!res.ok) throw new Error("Dosya bilgisi alınamadı (HTTP " + res.status + ")");
+  const veri = await res.json();
+  return veri.sha;
+}
+
+// data'yı GitHub'a commit eder. sha çakışmasında (409) bir kere tekrar dener.
+async function manuelKaydetUzaktan(data) {
+
+  let token = tokenGetir();
+  if (!token) {
+    token = await tokenIste();
+    if (!token) throw new Error("Token girilmedi, kaydedilemedi.");
+  }
+
+  const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${MANUEL_DOSYA_YOLU}`;
+  const icerik = utf8ToBase64(JSON.stringify(data, null, 2));
+
+  async function gonder(sha) {
+    return fetch(url, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github+json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: "Manuel portföy güncellendi",
+        content: icerik,
+        sha: sha || undefined,
+        branch: GITHUB_BRANCH,
+      }),
+    });
+  }
+
+  if (!manuelSha) {
+    manuelSha = await manuelShaGetir(token);
+  }
+
+  let res = await gonder(manuelSha);
+
+  if (res.status === 409) {
+    // başka bir cihaz/sekme aynı anda yazmış olabilir - sha'yı tazeleyip tekrar dene
+    manuelSha = await manuelShaGetir(token);
+    res = await gonder(manuelSha);
+  }
+
+  if (res.status === 401 || res.status === 403) {
+    localStorage.removeItem(TOKEN_ANAHTARI);
+    throw new Error(
+      "Token geçersiz/yetkisiz. Token'ın hem \"Actions: Read and write\" hem de " +
+      "\"Contents: Read and write\" yetkisi olmalı."
+    );
+  }
+
+  if (!res.ok) {
+    const hata = await res.json().catch(() => ({}));
+    throw new Error(hata.message || "HTTP " + res.status);
+  }
+
+  const sonuc = await res.json();
+  manuelSha = sonuc.content.sha;
+  manuelVeri = data;
+}
+
+async function manuelGoster() {
+  const data = await manuelYukle();
+  const fiyatMap = sonBilinenFiyatlar;
+
+  let pozisyonDegeri = 0;
+  for (const [hisse, poz] of Object.entries(data.pozisyonlar)) {
+    const guncelFiyat = fiyatMap[hisse] ?? poz.maliyet;
+    pozisyonDegeri += guncelFiyat * poz.adet;
+  }
+
+  const toplamDeger = data.nakit + pozisyonDegeri;
+  const kz = toplamDeger - data.baslangic_sermaye;
+  const kzYuzde = (kz / data.baslangic_sermaye) * 100;
+
+  document.getElementById("manuel-nakit").textContent = paraFormat(data.nakit);
+  document.getElementById("manuel-pozisyon").textContent = paraFormat(pozisyonDegeri);
+  document.getElementById("manuel-toplam").textContent = paraFormat(toplamDeger);
+
+  const kzEl = document.getElementById("manuel-kz");
+  kzEl.textContent = (kz >= 0 ? "+" : "") + paraFormat(kz);
+  kzEl.className = "ozet-deger " + kzSinifi(kz);
+
+  const kzYuzdeEl = document.getElementById("manuel-kz-yuzde");
+  kzYuzdeEl.textContent = (kzYuzde >= 0 ? "+" : "") + kzYuzde.toFixed(2) + "%";
+  kzYuzdeEl.className = "ozet-yuzde " + kzSinifi(kz);
+
+  // ---- Pozisyon tablosu ----
+  const povucu = document.querySelector("#manuel-pozisyon-tablo tbody");
+  const pozGirisleri = Object.entries(data.pozisyonlar);
+
+  if (!pozGirisleri.length) {
+    povucu.innerHTML = '<tr><td colspan="7" class="bos-satir">Henüz pozisyon eklemedin.</td></tr>';
+  } else {
+    povucu.innerHTML = pozGirisleri
+      .map(([hisse, poz]) => {
+        const guncelFiyat = fiyatMap[hisse] ?? poz.maliyet;
+        const deger = guncelFiyat * poz.adet;
+        const kzPoz = (guncelFiyat - poz.maliyet) * poz.adet;
+
+        return `
+      <tr>
+        <td>${hisse}</td>
+        <td>${poz.adet}</td>
+        <td>${paraFormat(poz.maliyet)}</td>
+        <td>${paraFormat(guncelFiyat)}</td>
+        <td>${paraFormat(deger)}</td>
+        <td class="${kzSinifi(kzPoz)}">${(kzPoz >= 0 ? "+" : "") + paraFormat(kzPoz)}</td>
+        <td><button class="mini-buton" onclick="manuelSat('${hisse}')">Sat</button></td>
+      </tr>`;
+      })
+      .join("");
+  }
+
+  // ---- İşlem geçmişi ----
+  const igovde = document.querySelector("#manuel-islem-tablo tbody");
+
+  if (!data.islemler.length) {
+    igovde.innerHTML = '<tr><td colspan="6" class="bos-satir">Henüz işlem yok.</td></tr>';
+  } else {
+    const sonIslemler = [...data.islemler].reverse().slice(0, 50);
+    igovde.innerHTML = sonIslemler
+      .map(
+        (i) => `
+      <tr class="${i.tip === "AL" ? "satir-al" : "satir-sat"}">
+        <td>${new Date(i.tarih).toLocaleString("tr-TR")}</td>
+        <td>${i.hisse}</td>
+        <td>${i.tip}</td>
+        <td>${i.adet}</td>
+        <td>${paraFormat(i.fiyat)}</td>
+        <td>${paraFormat(i.tutar)}</td>
+      </tr>`
+      )
+      .join("");
+  }
+}
+
+const manuelAlButon = document.getElementById("manuel-al-buton");
+
+async function manuelAl() {
+  const hisseInput = document.getElementById("manuel-hisse");
+  const adetInput = document.getElementById("manuel-adet");
+  const fiyatInput = document.getElementById("manuel-fiyat");
+
+  const hisse = hisseInput.value.trim().toUpperCase();
+  const adet = parseInt(adetInput.value, 10);
+  const fiyat = parseFloat(fiyatInput.value);
+
+  if (!hisse) { alert("Hisse kodu gir (örn. ASELS)."); return; }
+  if (!adet || adet <= 0) { alert("Geçerli bir adet gir."); return; }
+  if (!fiyat || fiyat <= 0) { alert("Geçerli bir fiyat gir."); return; }
+
+  const data = await manuelYukle(true); // yazmadan önce en güncelini al
+
+  const tutar = yuvarla(adet * fiyat);
+
+  if (tutar > data.nakit) {
+    alert(`Yetersiz nakit. Elindeki: ${paraFormat(data.nakit)}, gereken: ${paraFormat(tutar)}`);
+    return;
+  }
+
+  const mevcut = data.pozisyonlar[hisse];
+  if (mevcut) {
+    const toplamAdet = mevcut.adet + adet;
+    const toplamMaliyet = mevcut.adet * mevcut.maliyet + adet * fiyat;
+    data.pozisyonlar[hisse] = { adet: toplamAdet, maliyet: yuvarla(toplamMaliyet / toplamAdet) };
+  } else {
+    data.pozisyonlar[hisse] = { adet, maliyet: fiyat };
+  }
+
+  data.nakit = yuvarla(data.nakit - tutar);
+  data.islemler.push({ tarih: new Date().toISOString(), hisse, tip: "AL", adet, fiyat, tutar });
+
+  manuelAlButon.disabled = true;
+  manuelAlButon.textContent = "Kaydediliyor…";
+
+  try {
+    await manuelKaydetUzaktan(data);
+    hisseInput.value = "";
+    adetInput.value = "";
+    fiyatInput.value = "";
+    await manuelGoster();
+  } catch (err) {
+    alert("Kaydedilemedi: " + err.message);
+  } finally {
+    manuelAlButon.disabled = false;
+    manuelAlButon.textContent = "Satın Al";
+  }
+}
+
+async function manuelSat(hisse) {
+  const data = await manuelYukle(true);
+  const poz = data.pozisyonlar[hisse];
+  if (!poz) return;
+
+  const fiyat = sonBilinenFiyatlar[hisse] ?? poz.maliyet;
+  const tutar = yuvarla(fiyat * poz.adet);
+
+  data.nakit = yuvarla(data.nakit + tutar);
+  data.islemler.push({ tarih: new Date().toISOString(), hisse, tip: "SAT", adet: poz.adet, fiyat, tutar });
+  delete data.pozisyonlar[hisse];
+
+  try {
+    await manuelKaydetUzaktan(data);
+    await manuelGoster();
+  } catch (err) {
+    alert("Kaydedilemedi: " + err.message);
+  }
+}
+
+manuelAlButon.addEventListener("click", manuelAl);
+
+document.getElementById("manuel-sifirla-buton").addEventListener("click", async () => {
+  if (!confirm("Manuel portföyü tamamen sıfırlamak istediğine emin misin? Bu geri alınamaz.")) return;
+  try {
+    await manuelKaydetUzaktan(varsayilanManuelVeri());
+    await manuelGoster();
+  } catch (err) {
+    alert("Sıfırlanamadı: " + err.message);
+  }
+});
