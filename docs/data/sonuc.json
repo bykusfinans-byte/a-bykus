@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-09-29T15:43:56+00:00",
+  "guncelleme": "2026-09-29T16:54:00+00:00",
   "hisseler": [
     {
       "Hisse": "AKSGY",
@@ -15,7 +15,7 @@
       "Karar": "★★★ AL",
       "RSI": 51.43,
       "MACD": -0.09,
-      "ADX": 30.58,
+      "ADX": 30.56,
       "ATR": 0.23,
       "EMA9": 9.44,
       "EMA21": 9.51,
@@ -258,7 +258,7 @@
       "Karar": "🔴 SAT",
       "RSI": 35.03,
       "MACD": -4.61,
-      "ADX": 26.72,
+      "ADX": 26.69,
       "ATR": 4.62,
       "EMA9": 232.68,
       "EMA21": 236.99,
@@ -650,7 +650,7 @@
       "Risk/Odul": 2.0
     }
   ],
-  "onceki_guncelleme": "2026-09-29T15:42:49+00:00",
+  "onceki_guncelleme": "2026-09-29T15:43:56+00:00",
   "onceki_hisseler": [
     {
       "Hisse": "AKSGY",
