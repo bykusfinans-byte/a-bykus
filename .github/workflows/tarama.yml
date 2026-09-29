@@ -2,9 +2,10 @@ name: BIST AI Pro Tarama
 
 on:
   schedule:
-    # 4 saatlik mumların kapandığı saatlerin hemen ardından çalışır (TR = UTC+3)
-    - cron: "5 11 * * 1-5"   # 14:05 TR (ilk 4 saatlik mum -10:00-14:00- kapanışı)
-    - cron: "5 15 * * 1-5"   # 18:05 TR (ikinci 4 saatlik mum -14:00-18:00- kapanışı)
+    # 4 saatlik mumların kapandığı saatlerin biraz ardından çalışır (TR = UTC+3)
+    # Yahoo Finance'ın veriyi (özellikle kapanış açık artırmasını) işlemesi için pay bırakıldı
+    - cron: "15 11 * * 1-5"   # 14:15 TR (ilk 4 saatlik mum -10:00-14:00- kapanışından 15 dk sonra)
+    - cron: "20 15 * * 1-5"   # 18:20 TR (ikinci 4 saatlik mum -14:00-18:00- kapanışından 20 dk sonra)
   workflow_dispatch: {}       # "Run workflow" butonuyla elle de tetiklenebilir
 
 permissions:
