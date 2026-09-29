@@ -17,10 +17,9 @@ class TrendMotoru:
         puan = 0
         nedenler = []
 
-        ema20 = self.son["EMA20"]
+        ema9 = self.son["EMA9"]
+        ema21 = self.son["EMA21"]
         ema50 = self.son["EMA50"]
-        ema100 = self.son["EMA100"]
-        ema200 = self.son["EMA200"]
 
         adx = self.son["ADX"]
         di_plus = self.son["DI_PLUS"]
@@ -28,27 +27,23 @@ class TrendMotoru:
 
         fiyat = self.son["Close"]
 
-        # EMA dizilimi
-        if ema20 > ema50:
-            puan += 15
-            nedenler.append("EMA20 > EMA50")
+        # EMA dizilimi (kısa/orta vade - 4 saatlik sisteme göre)
+        if ema9 > ema21:
+            puan += 20
+            nedenler.append("EMA9 > EMA21")
 
-        if ema50 > ema100:
-            puan += 15
-            nedenler.append("EMA50 > EMA100")
-
-        if ema100 > ema200:
-            puan += 15
-            nedenler.append("EMA100 > EMA200")
+        if ema21 > ema50:
+            puan += 20
+            nedenler.append("EMA21 > EMA50")
 
         # Fiyat EMA üzerinde mi?
-        if fiyat > ema20:
-            puan += 10
-            nedenler.append("Fiyat EMA20 üzerinde")
+        if fiyat > ema9:
+            puan += 15
+            nedenler.append("Fiyat EMA9 üzerinde")
 
-        if fiyat > ema50:
+        if fiyat > ema21:
             puan += 10
-            nedenler.append("Fiyat EMA50 üzerinde")
+            nedenler.append("Fiyat EMA21 üzerinde")
 
         # ADX
         if adx >= 25:
@@ -95,10 +90,9 @@ class TrendMotoru:
             "ADX": round(adx, 2),
             "DI_PLUS": round(di_plus, 2),
             "DI_MINUS": round(di_minus, 2),
-            "EMA20": round(ema20, 2),
+            "EMA9": round(ema9, 2),
+            "EMA21": round(ema21, 2),
             "EMA50": round(ema50, 2),
-            "EMA100": round(ema100, 2),
-            "EMA200": round(ema200, 2),
             "Getiri20": round(getiri20, 2),
             "Getiri50": round(getiri50, 2),
             "Nedenler": nedenler,
