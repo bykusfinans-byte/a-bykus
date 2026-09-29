@@ -344,6 +344,14 @@ tbody tr:hover { background: rgba(255,255,255,0.02); }
   margin-top: 1px;
 }
 
+.tablo-onceki {
+  display: block;
+  font-size: 11px;
+  opacity: 0.7;
+  margin-top: 1px;
+  font-weight: 500;
+}
+
 .rozet {
   display: inline-block;
   padding: 3px 10px;
