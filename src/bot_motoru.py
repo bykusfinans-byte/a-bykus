@@ -6,16 +6,16 @@
 #
 # KURALLAR
 # --------
-# SATIŞ (önce kontrol edilir):
+# SERT TETİKLEYİCİLER (anında uygulanır, onay beklemez - risk yönetimi):
 #   - Fiyat, hissenin Stop-Loss seviyesine değdiyse       -> SAT (stop)
 #   - Fiyat, hissenin Hedef fiyatına ulaştıysa             -> SAT (kâr al)
-#   - AI Skoru, Settings.BOT_SATIM_ESIGI altına düştüyse   -> SAT (sinyal bozuldu)
 #
-# ALIŞ:
-#   - AI Skoru >= Settings.BOT_ALIM_ESIGI
-#   - Hisse zaten portföyde değil
-#   - Açık pozisyon sayısı Settings.BOT_MAX_POZISYON'u aşmıyor
-#   - Boş slotlara eşit ağırlıklı nakit dağıtılır
+# YUMUŞAK SİNYALLER (2 tarama üst üste - yani en az bir sonraki
+# tur boyunca - aynı yönde kalırsa uygulanır; tek turluk sıçramaları
+# "whipsaw" filtresiyle eler):
+#   - AL: AI Skoru >= Settings.BOT_ALIM_ESIGI, hisse elde yok,
+#         boş pozisyon slotu var
+#   - SAT: AI Skoru < Settings.BOT_SATIM_ESIGI (sinyal bozuldu)
 # ==========================================================
 
 from datetime import datetime, timezone
@@ -28,10 +28,12 @@ class BotMotoru:
     def __init__(self, tarama_df, portfoy):
         """
         tarama_df: BistTaramaMotoru.tara() çıktısı (pandas DataFrame)
-        portfoy:   {"nakit": float, "pozisyonlar": {hisse: {...}}, "islemler": [...]}
+        portfoy:   {"nakit": float, "pozisyonlar": {...}, "islemler": [...],
+                    "bekleyen": {hisse: "AL"|"SAT_ZAYIF"}}
         """
         self.df = tarama_df
         self.portfoy = portfoy
+        self.portfoy.setdefault("bekleyen", {})  # eski portfoy.json dosyalarıyla uyumluluk
 
     # ------------------------------------------------------
 
@@ -58,6 +60,35 @@ class BotMotoru:
 
     # ------------------------------------------------------
 
+    def _sinyal_onayla(self, hisse, tip):
+        """
+        İki turluk onay mekanizması. Aynı sinyal (aynı hisse + aynı tip)
+        bir önceki turda da görülmüşse True döner ve bekleyen kaydını
+        temizler; ilk kez görülüyorsa sadece kaydedip False döner.
+        """
+        bekleyen = self.portfoy["bekleyen"]
+
+        if bekleyen.get(hisse) == tip:
+            del bekleyen[hisse]
+            return True
+
+        bekleyen[hisse] = tip
+        return False
+
+    def _sinyal_temizle(self, hisse):
+        self.portfoy["bekleyen"].pop(hisse, None)
+
+    # ------------------------------------------------------
+
+    def _sat_uygula(self, hisse, fiyat, gerekce):
+        poz = self.portfoy["pozisyonlar"].pop(hisse)
+        tutar = round(poz["adet"] * fiyat, 2)
+        self.portfoy["nakit"] = round(self.portfoy["nakit"] + tutar, 2)
+        self._islem_kaydet(hisse, "SAT", poz["adet"], fiyat, gerekce)
+        self._sinyal_temizle(hisse)
+
+    # ------------------------------------------------------
+
     def _satislari_uygula(self):
 
         pozisyonlar = self.portfoy["pozisyonlar"]
@@ -73,25 +104,21 @@ class BotMotoru:
             fiyat = float(satir["Fiyat"])
             poz = pozisyonlar[hisse]
 
-            sat = False
-            gerekce = ""
-
+            # Sert tetikleyiciler: onay beklemeden hemen uygulanır
             if fiyat <= poz["stop_takip"]:
-                sat = True
-                gerekce = f"Stop-Loss ({poz['stop_takip']})"
-            elif fiyat >= poz["hedef_takip"]:
-                sat = True
-                gerekce = f"Hedef fiyata ulaşıldı ({poz['hedef_takip']})"
-            elif float(satir["AISkor"]) < Settings.BOT_SATIM_ESIGI:
-                sat = True
-                gerekce = f"AI Skoru düştü ({satir['AISkor']})"
+                self._sat_uygula(hisse, fiyat, f"Stop-Loss ({poz['stop_takip']})")
+                continue
 
-            if sat:
-                adet = poz["adet"]
-                tutar = round(adet * fiyat, 2)
-                self.portfoy["nakit"] = round(self.portfoy["nakit"] + tutar, 2)
-                self._islem_kaydet(hisse, "SAT", adet, fiyat, gerekce)
-                del pozisyonlar[hisse]
+            if fiyat >= poz["hedef_takip"]:
+                self._sat_uygula(hisse, fiyat, f"Hedef fiyata ulaşıldı ({poz['hedef_takip']})")
+                continue
+
+            # Yumuşak sinyal: AI Skoru düşük - 2 tur üst üste onay gerekir
+            if float(satir["AISkor"]) < Settings.BOT_SATIM_ESIGI:
+                if self._sinyal_onayla(hisse, "SAT_ZAYIF"):
+                    self._sat_uygula(hisse, fiyat, f"AI Skoru 2 tur üst üste düşük ({satir['AISkor']})")
+            else:
+                self._sinyal_temizle(hisse)  # skor toparladıysa bekleyen kaydını sil
 
     # ------------------------------------------------------
 
@@ -107,7 +134,16 @@ class BotMotoru:
             (self.df["AISkor"] >= Settings.BOT_ALIM_ESIGI) & (~self.df["Hisse"].isin(pozisyonlar.keys()))
         ].sort_values("AISkor", ascending=False)
 
-        for _, satir in adaylar.iterrows():
+        # Aday olmaktan çıkmış (artık şartı sağlamayan) bekleyen AL kayıtlarını temizle
+        gecerli_adaylar = set(adaylar["Hisse"])
+        for hisse in list(self.portfoy["bekleyen"].keys()):
+            if self.portfoy["bekleyen"][hisse] == "AL" and hisse not in gecerli_adaylar:
+                self._sinyal_temizle(hisse)
+
+        # 2 tur üst üste onaylanan adayları belirle (en yüksek skor önce)
+        onayli = [satir for _, satir in adaylar.iterrows() if self._sinyal_onayla(satir["Hisse"], "AL")]
+
+        for satir in onayli:
 
             if bos_slot <= 0 or self.portfoy["nakit"] <= 0:
                 break
@@ -131,7 +167,11 @@ class BotMotoru:
             }
 
             self._islem_kaydet(
-                satir["Hisse"], "AL", adet, fiyat, f"AI Skoru {satir['AISkor']} (eşik: {Settings.BOT_ALIM_ESIGI})"
+                satir["Hisse"],
+                "AL",
+                adet,
+                fiyat,
+                f"AI Skoru 2 tur üst üste >= eşik ({satir['AISkor']}, eşik: {Settings.BOT_ALIM_ESIGI})",
             )
 
             bos_slot -= 1
