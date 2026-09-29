@@ -37,9 +37,20 @@ def portfoyu_yukle():
     }
 
 
+def onceki_sonucu_yukle():
+    """Bir önceki tarama sonucunu döndürür (varsa) - karşılaştırma için kullanılır."""
+    if os.path.exists(SONUC_PATH):
+        with open(SONUC_PATH, "r", encoding="utf-8") as f:
+            eski = json.load(f)
+        return eski.get("guncelleme"), eski.get("hisseler", [])
+    return None, []
+
+
 def main():
 
     os.makedirs(DATA_DIR, exist_ok=True)
+
+    onceki_guncelleme, onceki_hisseler = onceki_sonucu_yukle()
 
     # 1) Tarama
     tarama_df = BistTaramaMotoru(BIST_HISSELERI).tara()
@@ -49,6 +60,8 @@ def main():
     sonuc_kaydi = {
         "guncelleme": guncelleme_zamani,
         "hisseler": tarama_df.to_dict(orient="records") if not tarama_df.empty else [],
+        "onceki_guncelleme": onceki_guncelleme,
+        "onceki_hisseler": onceki_hisseler,
     }
 
     with open(SONUC_PATH, "w", encoding="utf-8") as f:
