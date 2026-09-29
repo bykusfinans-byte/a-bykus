@@ -17,7 +17,8 @@ class HacimMotoru:
         puan = 0
         nedenler = []
 
-        ort_hacim = self.df["Volume"].tail(20).mean()
+        # Son hacim / son 40 mum (yaklaşık 20 işlem günü) ortalama hacim oranı
+        ort_hacim = self.df["Volume"].tail(40).mean()
         son_hacim = self.son["Volume"]
         oran = son_hacim / ort_hacim
 
