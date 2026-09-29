@@ -1,5 +1,5 @@
 {
-  "nakit": 87500.0,
+  "nakit": 75004.23,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "AKFGY": {
@@ -8,6 +8,13 @@
       "tarih": "2026-09-29T10:14:22+00:00",
       "stop_takip": 2.34,
       "hedef_takip": 2.81
+    },
+    "AKSGY": {
+      "adet": 1303,
+      "maliyet": 9.59,
+      "tarih": "2026-09-29T15:42:49+00:00",
+      "stop_takip": 9.14,
+      "hedef_takip": 10.49
     }
   },
   "islemler": [
@@ -19,10 +26,17 @@
       "fiyat": 2.5,
       "tutar": 12500.0,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (78.62, eşik: 70)"
+    },
+    {
+      "tarih": "2026-09-29T15:42:49+00:00",
+      "hisse": "AKSGY",
+      "tip": "AL",
+      "adet": 1303,
+      "fiyat": 9.59,
+      "tutar": 12495.77,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (79.38, eşik: 70)"
     }
   ],
-  "bekleyen": {
-    "AKSGY": "AL"
-  },
-  "guncelleme": "2026-09-29T13:37:37+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-09-29T15:42:49+00:00"
 }
