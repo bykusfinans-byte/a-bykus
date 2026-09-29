@@ -290,6 +290,7 @@ function pozisyonTablosunuDoldur(portfoy, hisseler) {
       const guncelFiyat = fiyatMap[hisse] ?? poz.maliyet;
       const deger = guncelFiyat * poz.adet;
       const kz = (guncelFiyat - poz.maliyet) * poz.adet;
+      const kzYuzde = poz.maliyet > 0 ? ((guncelFiyat - poz.maliyet) / poz.maliyet) * 100 : 0;
 
       return `
       <tr>
@@ -298,7 +299,7 @@ function pozisyonTablosunuDoldur(portfoy, hisseler) {
         <td>${paraFormat(poz.maliyet)}</td>
         <td>${paraFormat(guncelFiyat)}</td>
         <td>${paraFormat(deger)}</td>
-        <td class="${kzSinifi(kz)}">${(kz >= 0 ? "+" : "") + paraFormat(kz)}</td>
+        <td class="${kzSinifi(kz)}">${(kz >= 0 ? "+" : "") + paraFormat(kz)}<span class="tablo-yuzde">${(kzYuzde >= 0 ? "+" : "") + kzYuzde.toFixed(2)}%</span></td>
         <td>${paraFormat(poz.stop_takip)}</td>
         <td>${paraFormat(poz.hedef_takip)}</td>
       </tr>`;
@@ -582,6 +583,7 @@ async function manuelGoster() {
         const guncelFiyat = fiyatMap[hisse] ?? poz.maliyet;
         const deger = guncelFiyat * poz.adet;
         const kzPoz = (guncelFiyat - poz.maliyet) * poz.adet;
+        const kzYuzde = poz.maliyet > 0 ? ((guncelFiyat - poz.maliyet) / poz.maliyet) * 100 : 0;
 
         return `
       <tr>
@@ -590,7 +592,7 @@ async function manuelGoster() {
         <td>${paraFormat(poz.maliyet)}</td>
         <td>${paraFormat(guncelFiyat)}</td>
         <td>${paraFormat(deger)}</td>
-        <td class="${kzSinifi(kzPoz)}">${(kzPoz >= 0 ? "+" : "") + paraFormat(kzPoz)}</td>
+        <td class="${kzSinifi(kzPoz)}">${(kzPoz >= 0 ? "+" : "") + paraFormat(kzPoz)}<span class="tablo-yuzde">${(kzYuzde >= 0 ? "+" : "") + kzYuzde.toFixed(2)}%</span></td>
         <td><button class="mini-buton" onclick="manuelSat('${hisse}')">Sat</button></td>
       </tr>`;
       })
