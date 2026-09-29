@@ -24,11 +24,8 @@ class GostergeMotoru:
 
         # ---- EMA ----
         df["EMA9"] = EMAIndicator(close=df["Close"], window=Settings.EMA9).ema_indicator()
-        df["EMA20"] = EMAIndicator(close=df["Close"], window=Settings.EMA20).ema_indicator()
         df["EMA21"] = EMAIndicator(close=df["Close"], window=Settings.EMA21).ema_indicator()
         df["EMA50"] = EMAIndicator(close=df["Close"], window=Settings.EMA50).ema_indicator()
-        df["EMA100"] = EMAIndicator(close=df["Close"], window=Settings.EMA100).ema_indicator()
-        df["EMA200"] = EMAIndicator(close=df["Close"], window=Settings.EMA200).ema_indicator()
 
         # ---- SMA ----
         df["SMA50"] = SMAIndicator(close=df["Close"], window=Settings.SMA50).sma_indicator()
