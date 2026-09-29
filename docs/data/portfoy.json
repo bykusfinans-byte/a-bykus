@@ -1,10 +1,26 @@
 {
-  "nakit": 100000,
+  "nakit": 87500.0,
   "baslangic_sermaye": 100000,
-  "pozisyonlar": {},
-  "islemler": [],
-  "bekleyen": {
-    "AKFGY": "AL"
+  "pozisyonlar": {
+    "AKFGY": {
+      "adet": 5000,
+      "maliyet": 2.5,
+      "tarih": "2026-09-29T10:14:22+00:00",
+      "stop_takip": 2.34,
+      "hedef_takip": 2.81
+    }
   },
-  "guncelleme": "2026-09-29T09:43:35+00:00"
+  "islemler": [
+    {
+      "tarih": "2026-09-29T10:14:22+00:00",
+      "hisse": "AKFGY",
+      "tip": "AL",
+      "adet": 5000,
+      "fiyat": 2.5,
+      "tutar": 12500.0,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (78.62, eşik: 70)"
+    }
+  ],
+  "bekleyen": {},
+  "guncelleme": "2026-09-29T10:14:22+00:00"
 }
