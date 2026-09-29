@@ -18,12 +18,13 @@ class Settings:
     SLEEP = 0.3  # her hisse taraması arası bekleme (saniye) - rate-limit koruması
 
     # ---- Hareketli ortalamalar ----
+    # NOT: Trend dizilimi artık EMA9 > EMA21 > EMA50 üzerinden hesaplanıyor
+    # (4 saatlik sistemde EMA100/EMA200 çok geriden takip ettiği için kaldırıldı).
+    # SMA50/SMA200 hâlâ "Teknik Dizilim Süzgeci" tablosunda uzun vade
+    # referansı olarak kullanılıyor.
     EMA9 = 9
-    EMA20 = 20
     EMA21 = 21
     EMA50 = 50
-    EMA100 = 100
-    EMA200 = 200
     SMA50 = 50
     SMA200 = 200
 
