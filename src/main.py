@@ -33,6 +33,7 @@ def portfoyu_yukle():
         "baslangic_sermaye": Settings.BOT_BASLANGIC_SERMAYE,
         "pozisyonlar": {},
         "islemler": [],
+        "bekleyen": {},
     }
 
 
