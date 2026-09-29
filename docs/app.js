@@ -161,7 +161,9 @@ async function veriYukle() {
     sonGuncellemeZamani = sonuc.guncelleme;
 
     sinyalTablosunuDoldur(sonuc.hisseler || []);
-    filtreTablosunuDoldur(sonuc.hisseler || []);
+
+    const oncekiMap = Object.fromEntries((sonuc.onceki_hisseler || []).map((h) => [h.Hisse, h]));
+    filtreTablosunuDoldur(sonuc.hisseler || [], oncekiMap);
 
     sonBilinenFiyatlar = Object.fromEntries((sonuc.hisseler || []).map((h) => [h.Hisse, h.Fiyat]));
     await manuelGoster();
@@ -213,8 +215,21 @@ function sinyalTablosunuDoldur(hisseler) {
     .join("");
 }
 
-function filtreTablosunuDoldur(hisseler) {
+function oncekiEtiket(guncel, onceki, formatFn) {
+  if (onceki === undefined || onceki === null || guncel === undefined || guncel === null) return "";
+  if (isNaN(guncel) || isNaN(onceki)) return "";
+
+  let ok = "＝";
+  let sinif = "";
+  if (guncel > onceki) { ok = "▲"; sinif = "pozitif"; }
+  else if (guncel < onceki) { ok = "▼"; sinif = "negatif"; }
+
+  return `<span class="tablo-onceki ${sinif}">${ok} ${formatFn(onceki)}</span>`;
+}
+
+function filtreTablosunuDoldur(hisseler, oncekiMap) {
   const gövde = document.querySelector("#filtre-tablo tbody");
+  oncekiMap = oncekiMap || {};
 
   if (!hisseler.length) {
     gövde.innerHTML = '<tr><td colspan="10" class="bos-satir">Henüz tarama verisi yok.</td></tr>';
@@ -231,17 +246,20 @@ function filtreTablosunuDoldur(hisseler) {
         ? '<span class="rozet rozet-gecti">✓ Güçlü Dizilim</span>'
         : '<span class="rozet rozet-bekliyor">—</span>';
 
+      const onceki = oncekiMap[h.Hisse];
+      const sayi = (x) => (x === undefined || x === null ? "—" : x);
+
       return `
     <tr class="${gecti ? "satir-gecti" : ""}">
       <td>${h.Hisse}</td>
-      <td>${paraFormat(h.Fiyat)}</td>
-      <td>${paraFormat(h.EMA9)}</td>
-      <td>${paraFormat(h.EMA21)}</td>
-      <td>${paraFormat(h.SMA50)}</td>
-      <td>${paraFormat(h.SMA200)}</td>
-      <td>${h.ADX ?? "—"}</td>
-      <td>${h.MACD ?? "—"}</td>
-      <td>${h.RSI ?? "—"}</td>
+      <td>${paraFormat(h.Fiyat)}${oncekiEtiket(h.Fiyat, onceki?.Fiyat, paraFormat)}</td>
+      <td>${paraFormat(h.EMA9)}${oncekiEtiket(h.EMA9, onceki?.EMA9, paraFormat)}</td>
+      <td>${paraFormat(h.EMA21)}${oncekiEtiket(h.EMA21, onceki?.EMA21, paraFormat)}</td>
+      <td>${paraFormat(h.SMA50)}${oncekiEtiket(h.SMA50, onceki?.SMA50, paraFormat)}</td>
+      <td>${paraFormat(h.SMA200)}${oncekiEtiket(h.SMA200, onceki?.SMA200, paraFormat)}</td>
+      <td>${sayi(h.ADX)}${oncekiEtiket(h.ADX, onceki?.ADX, sayi)}</td>
+      <td>${sayi(h.MACD)}${oncekiEtiket(h.MACD, onceki?.MACD, sayi)}</td>
+      <td>${sayi(h.RSI)}${oncekiEtiket(h.RSI, onceki?.RSI, sayi)}</td>
       <td>${durum}</td>
     </tr>`;
     })
