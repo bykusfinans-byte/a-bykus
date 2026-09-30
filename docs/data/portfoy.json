@@ -1,5 +1,5 @@
 {
-  "nakit": 75004.23,
+  "nakit": 62508.25,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "AKFGY": {
@@ -15,6 +15,13 @@
       "tarih": "2026-09-29T15:42:49+00:00",
       "stop_takip": 9.14,
       "hedef_takip": 10.49
+    },
+    "AHGAZ": {
+      "adet": 287,
+      "maliyet": 43.54,
+      "tarih": "2026-09-30T16:27:44+00:00",
+      "stop_takip": 40.86,
+      "hedef_takip": 48.89
     }
   },
   "islemler": [
@@ -35,10 +42,17 @@
       "fiyat": 9.59,
       "tutar": 12495.77,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (79.38, eşik: 70)"
+    },
+    {
+      "tarih": "2026-09-30T16:27:44+00:00",
+      "hisse": "AHGAZ",
+      "tip": "AL",
+      "adet": 287,
+      "fiyat": 43.54,
+      "tutar": 12495.98,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (76.25, eşik: 70)"
     }
   ],
-  "bekleyen": {
-    "AHGAZ": "AL"
-  },
-  "guncelleme": "2026-09-30T14:38:00+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-09-30T16:27:44+00:00"
 }
