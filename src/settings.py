@@ -61,6 +61,19 @@ class Settings:
     BOT_SATIM_ESIGI = 50          # AI Skoru < bu değer ise pozisyon kapatılır (sinyal bozuldu)
     # Not: Stop-Loss ve Hedef fiyatına değme kuralı skor eşiğinden bağımsız her zaman çalışır.
 
+    # ---- Emtia (Altın/Gümüş) ----
+    # Bilanço/F-K gibi temel analiz kavramları emtiada anlamsız olduğu için
+    # AI Skoru burada sadece Teknik ve Risk'ten oluşuyor (Temel'in ağırlığı
+    # orantılı olarak ikisine dağıtıldı: 50/20 oranı korunarak 70/30 oldu).
+    W_TEKNIK_EMTIA = 0.70
+    W_RISK_EMTIA = 0.30
+    ONS_GRAM = 31.1034768  # 1 ons = 31.1034768 gram
+    EMTIA_TICKERLAR = {
+        "ALTIN": "GC=F",  # ons altın vadeli işlemi, USD
+        "GUMUS": "SI=F",  # ons gümüş vadeli işlemi, USD
+    }
+    KUR_TICKER = "TRY=X"  # USD/TRY kuru
+
     # ---- Teknik dizilim süzgeci (site "Teknik Süzgeç" tablosu) ----
     # Fiyat > EMA9 > EMA21 > SMA50 > SMA200  VE  MACD > 0  VE  ADX > FILTRE_ADX_ESIK
     # VE  FILTRE_RSI_ALT <= RSI <= FILTRE_RSI_UST  ise hisse "güçlü dizilim" sayılır.
