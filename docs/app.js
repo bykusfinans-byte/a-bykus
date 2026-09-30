@@ -145,13 +145,15 @@ function kzSinifi(sayi) {
 
 async function veriYukle() {
   try {
-    const [sonucRes, portfoyRes] = await Promise.all([
+    const [sonucRes, portfoyRes, emtiaRes] = await Promise.all([
       fetch("data/sonuc.json?_=" + Date.now()),
       fetch("data/portfoy.json?_=" + Date.now()),
+      fetch("data/emtia.json?_=" + Date.now()),
     ]);
 
     const sonuc = sonucRes.ok ? await sonucRes.json() : { guncelleme: null, hisseler: [] };
     const portfoy = portfoyRes.ok ? await portfoyRes.json() : null;
+    const emtia = emtiaRes.ok ? await emtiaRes.json() : { guncelleme: null, hisseler: [] };
 
     document.getElementById("guncelleme-zamani").textContent = sonuc.guncelleme
       ? "Son güncelleme: " + new Date(sonuc.guncelleme).toLocaleString("tr-TR")
@@ -165,12 +167,17 @@ async function veriYukle() {
     const oncekiMap = Object.fromEntries((sonuc.onceki_hisseler || []).map((h) => [h.Hisse, h]));
     filtreTablosunuDoldur(sonuc.hisseler || [], oncekiMap);
 
-    sonBilinenFiyatlar = Object.fromEntries((sonuc.hisseler || []).map((h) => [h.Hisse, h.Fiyat]));
+    const emtiaOncekiMap = Object.fromEntries((emtia.onceki_hisseler || []).map((h) => [h.Hisse, h]));
+    emtiaTablosunuDoldur(emtia.hisseler || [], emtiaOncekiMap);
+
+    // Bot/Manuel portföy fiyat araması hisse + emtia birlikte baksın diye birleştiriyoruz
+    const tumHisseler = [...(sonuc.hisseler || []), ...(emtia.hisseler || [])];
+    sonBilinenFiyatlar = Object.fromEntries(tumHisseler.map((h) => [h.Hisse, h.Fiyat]));
     await manuelGoster();
 
     if (portfoy) {
-      portfoyOzetiDoldur(portfoy, sonuc.hisseler || []);
-      pozisyonTablosunuDoldur(portfoy, sonuc.hisseler || []);
+      portfoyOzetiDoldur(portfoy, tumHisseler);
+      pozisyonTablosunuDoldur(portfoy, tumHisseler);
       islemTablosunuDoldur(portfoy.islemler || []);
     }
   } catch (err) {
@@ -260,6 +267,50 @@ function filtreTablosunuDoldur(hisseler, oncekiMap) {
       <td>${sayi(h.ADX)}${oncekiEtiket(h.ADX, onceki?.ADX, sayi)}</td>
       <td>${sayi(h.MACD)}${oncekiEtiket(h.MACD, onceki?.MACD, sayi)}</td>
       <td>${sayi(h.RSI)}${oncekiEtiket(h.RSI, onceki?.RSI, sayi)}</td>
+      <td>${durum}</td>
+    </tr>`;
+    })
+    .join("");
+}
+
+const EMTIA_ISIMLERI = { ALTIN: "🟡 Altın", GUMUS: "⚪ Gümüş" };
+
+function emtiaTablosunuDoldur(hisseler, oncekiMap) {
+  const gövde = document.querySelector("#emtia-tablo tbody");
+  oncekiMap = oncekiMap || {};
+
+  if (!hisseler.length) {
+    gövde.innerHTML = '<tr><td colspan="16" class="bos-satir">Henüz emtia taraması yapılmadı.</td></tr>';
+    return;
+  }
+
+  const sayi = (x) => (x === undefined || x === null ? "—" : x);
+
+  gövde.innerHTML = hisseler
+    .map((h) => {
+      const onceki = oncekiMap[h.Hisse];
+      const gecti = h.FiltreGecti === true;
+      const durum = gecti
+        ? '<span class="rozet rozet-gecti">✓ Güçlü Dizilim</span>'
+        : '<span class="rozet rozet-bekliyor">—</span>';
+
+      return `
+    <tr class="${gecti ? "satir-gecti" : ""}">
+      <td>${EMTIA_ISIMLERI[h.Hisse] || h.Hisse}</td>
+      <td>${paraFormat(h.Fiyat)}${oncekiEtiket(h.Fiyat, onceki?.Fiyat, paraFormat)}</td>
+      <td>${sayi(h.AISkor)}</td>
+      <td>${h.Karar ?? "—"}</td>
+      <td>${h.Trend ?? "—"}</td>
+      <td>${h.Momentum ?? "—"}</td>
+      <td>${sayi(h.RSI)}${oncekiEtiket(h.RSI, onceki?.RSI, sayi)}</td>
+      <td>${sayi(h.ADX)}${oncekiEtiket(h.ADX, onceki?.ADX, sayi)}</td>
+      <td>${sayi(h.MACD)}${oncekiEtiket(h.MACD, onceki?.MACD, sayi)}</td>
+      <td>${paraFormat(h.EMA9)}${oncekiEtiket(h.EMA9, onceki?.EMA9, paraFormat)}</td>
+      <td>${paraFormat(h.EMA21)}${oncekiEtiket(h.EMA21, onceki?.EMA21, paraFormat)}</td>
+      <td>${paraFormat(h.SMA50)}${oncekiEtiket(h.SMA50, onceki?.SMA50, paraFormat)}</td>
+      <td>${paraFormat(h.SMA200)}${oncekiEtiket(h.SMA200, onceki?.SMA200, paraFormat)}</td>
+      <td>${paraFormat(h.Stop)}</td>
+      <td>${paraFormat(h.Hedef)}</td>
       <td>${durum}</td>
     </tr>`;
     })
