@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-09-30T16:49:37+00:00",
+  "guncelleme": "2026-09-30T19:53:27+00:00",
   "hisseler": [
     {
       "Hisse": "AHGAZ",
@@ -650,7 +650,7 @@
       "Risk/Odul": 2.0
     }
   ],
-  "onceki_guncelleme": "2026-09-30T16:27:44+00:00",
+  "onceki_guncelleme": "2026-09-30T16:49:37+00:00",
   "onceki_hisseler": [
     {
       "Hisse": "AHGAZ",
@@ -693,7 +693,7 @@
       "Karar": "★★★ AL",
       "RSI": 47.8,
       "MACD": -0.08,
-      "ADX": 27.98,
+      "ADX": 27.96,
       "ATR": 0.23,
       "EMA9": 9.44,
       "EMA21": 9.5,
@@ -855,7 +855,7 @@
       "Karar": "★ ZAYIF",
       "RSI": 32.55,
       "MACD": -4.66,
-      "ADX": 27.87,
+      "ADX": 27.84,
       "ATR": 4.47,
       "EMA9": 231.26,
       "EMA21": 235.56,
