@@ -46,6 +46,85 @@ def dortSaatlikYap(df):
     return gruplu
 
 
+def surekliDortSaatlikYap(df):
+    """
+    Altın/gümüş gibi neredeyse 7/24 işlem gören enstrümanlar için, BIST
+    seansına bağlı olmayan standart (kesintisiz) 4 saatlik mumlar üretir.
+    """
+    df = df.copy()
+
+    gruplu = df.resample("4h").agg(
+        {
+            "Open": "first",
+            "High": "max",
+            "Low": "min",
+            "Close": "last",
+            "Volume": "sum",
+        }
+    )
+
+    return gruplu.dropna()
+
+
+class EmtiaVeriMotoru:
+    """
+    Gram altın/gümüş fiyatını (TL) ons fiyatı (USD) ile USD/TRY kurunu
+    çarpıp grama bölerek üretir: (ons_fiyat_usd * usdtry) / 31,1035
+    """
+
+    def __init__(self):
+        self.cache = {}
+
+    def getir(self, sembol):
+
+        sembol = sembol.upper()
+
+        if sembol in self.cache:
+            return self.cache[sembol].copy()
+
+        if sembol not in Settings.EMTIA_TICKERLAR:
+            print(f"[HATA] {sembol}: tanımsız emtia sembolü")
+            return None
+
+        try:
+            ons_ticker = Settings.EMTIA_TICKERLAR[sembol]
+
+            ons = yf.Ticker(ons_ticker).history(
+                period=Settings.PERIOD, interval=Settings.INTERVAL, auto_adjust=False
+            )
+            kur = yf.Ticker(Settings.KUR_TICKER).history(
+                period=Settings.PERIOD, interval=Settings.INTERVAL, auto_adjust=False
+            )
+
+            if ons.empty or kur.empty:
+                raise ValueError("Veri bulunamadı (ons fiyatı veya kur)")
+
+            ortak = ons[["Open", "High", "Low", "Close", "Volume"]].join(
+                kur[["Open", "High", "Low", "Close"]], how="inner", lsuffix="_ons", rsuffix="_kur"
+            )
+
+            if ortak.empty:
+                raise ValueError("Ons fiyatı ve kur verileri zaman olarak eşleşmedi")
+
+            gram = pd.DataFrame(index=ortak.index)
+            for kolon in ["Open", "High", "Low", "Close"]:
+                gram[kolon] = (ortak[f"{kolon}_ons"] * ortak[f"{kolon}_kur"]) / Settings.ONS_GRAM
+            gram["Volume"] = ortak["Volume"]
+
+            gram = gram.dropna()
+            gram = surekliDortSaatlikYap(gram)
+
+            if len(gram) < Settings.MIN_BAR:
+                raise ValueError(f"Yetersiz veri ({len(gram)} mum)")
+
+            self.cache[sembol] = gram.copy()
+            return gram.copy()
+
+        except Exception as e:
+            print(f"[HATA] {sembol}: {e}")
+            return None
+
+
 class VeriMotoru:
 
     def __init__(self):
