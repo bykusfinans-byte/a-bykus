@@ -1,6 +1,63 @@
 {
-  "guncelleme": "2026-09-30T20:02:12+00:00",
+  "guncelleme": "2026-09-30T20:05:32+00:00",
   "hisseler": [
+    {
+      "Hisse": "GUMUS",
+      "Fiyat": 95.63,
+      "Trend": "★ Çok Zayıf",
+      "TrendSkor": 15,
+      "Momentum": "★★★ Orta",
+      "MomentumSkor": 70,
+      "Teknik": 43.0,
+      "Temel": null,
+      "Risk": 100,
+      "AISkor": 60.1,
+      "Karar": "★★ TUT",
+      "RSI": 33.44,
+      "MACD": -1.36,
+      "ADX": 31.76,
+      "ATR": 1.39,
+      "EMA9": 96.4,
+      "EMA21": 97.58,
+      "SMA50": 100.85,
+      "SMA200": 102.72,
+      "FiltreGecti": false,
+      "Destek": 94.96,
+      "Direnc": 102.67,
+      "Stop": 92.84,
+      "Hedef": 101.2,
+      "Risk/Odul": 2.0
+    },
+    {
+      "Hisse": "ALTIN",
+      "Fiyat": 6597.96,
+      "Trend": "★ Çok Zayıf",
+      "TrendSkor": 15,
+      "Momentum": "★★ Zayıf",
+      "MomentumSkor": 50,
+      "Teknik": 29.75,
+      "Temel": null,
+      "Risk": 100,
+      "AISkor": 50.83,
+      "Karar": "★ ZAYIF",
+      "RSI": 38.52,
+      "MACD": -38.24,
+      "ADX": 31.87,
+      "ATR": 63.35,
+      "EMA9": 6618.72,
+      "EMA21": 6646.65,
+      "SMA50": 6752.96,
+      "SMA200": 6913.21,
+      "FiltreGecti": false,
+      "Destek": 6511.93,
+      "Direnc": 6825.56,
+      "Stop": 6471.26,
+      "Hedef": 6851.35,
+      "Risk/Odul": 2.0
+    }
+  ],
+  "onceki_guncelleme": "2026-09-30T20:02:12+00:00",
+  "onceki_hisseler": [
     {
       "Hisse": "GUMUS",
       "Fiyat": 95.63,
@@ -55,7 +112,5 @@
       "Hedef": 6848.67,
       "Risk/Odul": 2.0
     }
-  ],
-  "onceki_guncelleme": null,
-  "onceki_hisseler": []
+  ]
 }
