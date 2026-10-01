@@ -3,6 +3,10 @@
   "baslangic_sermaye": 100000,
   "pozisyonlar": {},
   "islemler": [],
-  "bekleyen": {},
-  "guncelleme": null
+  "bekleyen": {
+    "AKFGY": "AL",
+    "AHGAZ": "AL",
+    "AKSGY": "AL"
+  },
+  "guncelleme": "2026-10-01T08:56:50+00:00"
 }
