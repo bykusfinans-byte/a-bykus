@@ -3,6 +3,8 @@
   "baslangic_sermaye": 100000,
   "pozisyonlar": {},
   "islemler": [],
-  "bekleyen": {},
-  "guncelleme": null
+  "bekleyen": {
+    "ASELS": "AL"
+  },
+  "guncelleme": "2026-10-01T18:52:37+00:00"
 }
