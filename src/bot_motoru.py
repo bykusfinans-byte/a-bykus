@@ -10,6 +10,12 @@
 #   - Fiyat, hissenin Stop-Loss seviyesine değdiyse       -> SAT (stop)
 #   - Fiyat, hissenin Hedef fiyatına ulaştıysa             -> SAT (kâr al)
 #
+# BREAKEVEN'E ÇEKME:
+#   - Fiyat Hedef1'e (giriş + 2×ATR) ulaştıysa, Stop en az giriş
+#     fiyatına (maliyete) çekilir. Böylece hedefe ulaşamayıp geri
+#     dönen bir pozisyon, kâr varken "zararsız" kapanır - uzak
+#     Stop'u bekleyip kârı tamamen geri vermez.
+#
 # YUMUŞAK SİNYALLER (2 tarama üst üste - yani en az bir sonraki
 # tur boyunca - aynı yönde kalırsa uygulanır; tek turluk sıçramaları
 # "whipsaw" filtresiyle eler):
@@ -104,6 +110,13 @@ class BotMotoru:
             fiyat = float(satir["Fiyat"])
             poz = pozisyonlar[hisse]
 
+            # Breakeven'e çekme: Hedef1'e ulaşıldıysa Stop en az maliyete çekilir
+            hedef1 = poz.get("hedef1_takip")
+            if hedef1 is not None and fiyat >= hedef1:
+                yeni_stop = max(poz["stop_takip"], poz["maliyet"])
+                if yeni_stop != poz["stop_takip"]:
+                    poz["stop_takip"] = yeni_stop
+
             # Sert tetikleyiciler: onay beklemeden hemen uygulanır
             if fiyat <= poz["stop_takip"]:
                 self._sat_uygula(hisse, fiyat, f"Stop-Loss ({poz['stop_takip']})")
@@ -164,6 +177,7 @@ class BotMotoru:
                 "tarih": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                 "stop_takip": float(satir["Stop"]),
                 "hedef_takip": float(satir["Hedef"]),
+                "hedef1_takip": float(satir["Hedef1"]) if "Hedef1" in satir and satir["Hedef1"] is not None else None,
             }
 
             self._islem_kaydet(
