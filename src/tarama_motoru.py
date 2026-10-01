@@ -66,6 +66,7 @@ class BistTaramaMotoru:
                         "Destek": analiz["DestekDirenc"]["Destek20"],
                         "Direnc": analiz["DestekDirenc"]["Direnc20"],
                         "Stop": analiz["Risk"]["StopLoss"],
+                        "Hedef1": analiz["Risk"]["Hedef1"],
                         "Hedef": analiz["Risk"]["HedefFiyat"],
                         "Risk/Odul": analiz["Risk"]["RiskOdul"],
                     }
