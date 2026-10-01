@@ -1,5 +1,5 @@
 {
-  "nakit": 75010.18,
+  "nakit": 62682.38,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "AKFGY": {
@@ -17,6 +17,14 @@
       "stop_takip": 41.37,
       "hedef_takip": 49.67,
       "hedef1_takip": 46.91
+    },
+    "AGESA": {
+      "adet": 53,
+      "maliyet": 232.6,
+      "tarih": "2026-10-01T15:43:36+00:00",
+      "stop_takip": 223.45,
+      "hedef_takip": 250.91,
+      "hedef1_takip": 241.75
     }
   },
   "islemler": [
@@ -37,10 +45,17 @@
       "fiyat": 44.14,
       "tutar": 12491.62,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (71.88, eşik: 70)"
+    },
+    {
+      "tarih": "2026-10-01T15:43:36+00:00",
+      "hisse": "AGESA",
+      "tip": "AL",
+      "adet": 53,
+      "fiyat": 232.6,
+      "tutar": 12327.8,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (70.25, eşik: 70)"
     }
   ],
-  "bekleyen": {
-    "AGESA": "AL"
-  },
-  "guncelleme": "2026-10-01T15:19:05+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-10-01T15:43:14+00:00"
 }
