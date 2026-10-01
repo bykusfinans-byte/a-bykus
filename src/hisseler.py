@@ -5,7 +5,6 @@
 # ==========================================================
 
 BIST_HISSELERI = [
-    "A1CAP", "A1YEN", "ADEL", "ADESE", "AEFES", "AFYON", "AGESA", "AGHOL",
-    "AGROT", "AHGAZ", "AKBNK", "AKCNS", "AKENR", "AKFGY", "AKFIS", "AKGRT",
-    "AKMGY", "AKSA", "AKSEN", "AKSGY", "AKSUE", "AKYHO", "ALARK", "ZRGYO",
+    "XU100", "ASELS", "TUPRS", "AKSA", "CIMSA", "CWENE", "AKBNK", "YKBNK",
+    "TURSG", "TOASO", "THYAO", "BIMAS", "TCELL", "SOKM", "CATES", "KCHOL" 
 ]
