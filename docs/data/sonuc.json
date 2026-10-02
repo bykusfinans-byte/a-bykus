@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-10-01T20:22:30+00:00",
+  "guncelleme": "2026-10-02T06:43:44+00:00",
   "hisseler": [
     {
       "Hisse": "ASELS",
@@ -379,7 +379,7 @@
       "Karar": "🔴 SAT",
       "RSI": 44.53,
       "MACD": -2.0,
-      "ADX": 16.3,
+      "ADX": 16.31,
       "ATR": 5.96,
       "EMA9": 288.0,
       "EMA21": 289.94,
@@ -422,7 +422,7 @@
       "Risk/Odul": 2.0
     }
   ],
-  "onceki_guncelleme": "2026-10-01T18:52:37+00:00",
+  "onceki_guncelleme": "2026-10-01T20:22:30+00:00",
   "onceki_hisseler": [
     {
       "Hisse": "ASELS",
