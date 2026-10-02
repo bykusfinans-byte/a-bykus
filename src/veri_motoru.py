@@ -114,6 +114,9 @@ class EmtiaVeriMotoru:
             gram = gram.dropna()
             gram = surekliDortSaatlikYap(gram)
 
+            if (gram["Volume"] == 0).all():
+                gram["Volume"] = 1.0
+
             if len(gram) < Settings.MIN_BAR:
                 raise ValueError(f"Yetersiz veri ({len(gram)} mum)")
 
@@ -156,6 +159,16 @@ class VeriMotoru:
 
             df = df.dropna()
             df = dortSaatlikYap(df)  # saatlik veriyi 4 saatlik mumlara birleştir
+
+            # Bazı semboller (örn. endeksler: XU100, XU030) hacim verisi
+            # raporlamaz (hep 0). Bu durumda OBV/MFI gibi hacim bazlı
+            # göstergeler sıfıra bölme nedeniyle NaN üretip GostergeMotoru'nun
+            # sonundaki dropna() ile TÜM satırları siler. Hacim tamamen
+            # sıfırsa, matematiğin patlamaması için nötr bir sabitle (1)
+            # dolduruyoruz - bu sembollerde Hacim Skoru çok anlamlı olmaz
+            # ama Trend/Momentum/Risk fiyat bazlı olduğu için etkilenmez.
+            if (df["Volume"] == 0).all():
+                df["Volume"] = 1.0
 
             if len(df) < Settings.MIN_BAR:
                 raise ValueError(f"Yetersiz veri ({len(df)} mum)")
