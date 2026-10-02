@@ -1,5 +1,5 @@
 {
-  "nakit": 87790.0,
+  "nakit": 75258.32,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "ASELS": {
@@ -9,6 +9,14 @@
       "stop_takip": 346.73,
       "hedef_takip": 416.53,
       "hedef1_takip": 393.27
+    },
+    "AKSA": {
+      "adet": 1169,
+      "maliyet": 10.72,
+      "tarih": "2026-10-02T16:38:44+00:00",
+      "stop_takip": 10.25,
+      "hedef_takip": 11.65,
+      "hedef1_takip": 11.19
     }
   },
   "islemler": [
@@ -20,10 +28,17 @@
       "fiyat": 370.0,
       "tutar": 12210.0,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (74.0, eşik: 70)"
+    },
+    {
+      "tarih": "2026-10-02T16:38:44+00:00",
+      "hisse": "AKSA",
+      "tip": "AL",
+      "adet": 1169,
+      "fiyat": 10.72,
+      "tutar": 12531.68,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (78.12, eşik: 70)"
     }
   ],
-  "bekleyen": {
-    "AKSA": "AL"
-  },
-  "guncelleme": "2026-10-02T10:21:05+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-10-02T16:38:29+00:00"
 }
