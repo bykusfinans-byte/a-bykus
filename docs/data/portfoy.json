@@ -1,5 +1,5 @@
 {
-  "nakit": 75258.32,
+  "nakit": 62737.36,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "ASELS": {
@@ -17,6 +17,14 @@
       "stop_takip": 10.25,
       "hedef_takip": 11.65,
       "hedef1_takip": 11.19
+    },
+    "GUMUS": {
+      "adet": 128,
+      "maliyet": 97.82,
+      "tarih": "2026-10-05T08:55:42+00:00",
+      "stop_takip": 94.81,
+      "hedef_takip": 103.82,
+      "hedef1_takip": 100.82
     }
   },
   "islemler": [
@@ -37,10 +45,19 @@
       "fiyat": 10.72,
       "tutar": 12531.68,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (78.12, eşik: 70)"
+    },
+    {
+      "tarih": "2026-10-05T08:55:42+00:00",
+      "hisse": "GUMUS",
+      "tip": "AL",
+      "adet": 128,
+      "fiyat": 97.82,
+      "tutar": 12520.96,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (74.8, eşik: 70)"
     }
   ],
   "bekleyen": {
-    "GUMUS": "AL"
+    "CIMSA": "AL"
   },
-  "guncelleme": "2026-10-05T08:11:44+00:00"
+  "guncelleme": "2026-10-05T08:55:30+00:00"
 }
