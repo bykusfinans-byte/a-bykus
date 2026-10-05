@@ -154,6 +154,12 @@ body {
 
 .ikinci-buton:hover { border-color: var(--accent); color: var(--accent); }
 
+.menu-link {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
 .birincil-buton {
   background: var(--accent);
   border: 1px solid var(--accent);
