@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portföyüm</title>
+<style>
+:root{--bg:#edf1f3;--panel:#f8fafb;--ink:#14232b;--mute:#5d707a;--line:#d3dde2;--accent:#0f6b63;--up:#17804f;--down:#c0392b;--gold:#b8892b;
+--serif:Georgia,"Times New Roman",serif;--sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media(prefers-color-scheme:dark){:root{--bg:#10191e;--panel:#162329;--ink:#e6eef1;--mute:#8da0a9;--line:#27373f;--accent:#4fc3b6;--up:#4cc58a;--down:#ff7b6b;--gold:#e0b050}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--sans);padding:24px 16px 48px}
+main{max-width:1000px;margin:0 auto}
+.num{font-variant-numeric:tabular-nums}
+.up{color:var(--up)}.down{color:var(--down)}
+header.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+header.top h1{font:600 20px var(--sans);margin:0}
+#status{color:var(--mute);font-size:13px}
+button,.navlink{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:5px 12px;cursor:pointer}
+button:hover,.navlink:hover{border-color:var(--accent)}
+.navlink{text-decoration:none;display:inline-block}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.hero{display:grid;grid-template-columns:1fr 240px;gap:28px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px}
+.hero .lbl{color:var(--mute);margin:0}
+.total{font:600 clamp(36px,7vw,60px)/1.05 var(--serif);margin:4px 0 8px;letter-spacing:-.02em}
+.pl{font-size:18px;margin:0 0 18px}
+.facts{display:flex;gap:28px;flex-wrap:wrap;color:var(--mute);font-size:14px}
+.facts b{display:block;color:var(--ink);font-weight:600}
+.donut{position:relative;width:200px;height:200px;margin:0 auto}
+.legend{list-style:none;padding:0;margin:14px 0 0;font-size:13px}
+.legend li{display:flex;align-items:center;gap:8px;padding:2px 0}
+.legend i{width:10px;height:10px;border-radius:50%;flex:none}
+.legend span:last-child{margin-left:auto;color:var(--mute)}
+.market{display:flex;gap:32px;flex-wrap:wrap;padding:18px 4px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.market div{color:var(--mute);font-size:13px}.market b{display:block;font:600 20px var(--serif);color:var(--ink)}
+h2{font:600 17px var(--sans);margin:32px 0 10px}
+.bars{display:grid;grid-template-columns:90px 1fr 56px;gap:6px 12px;align-items:center;font-size:14px}
+.bar{height:10px;background:var(--line);border-radius:5px;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent);border-radius:5px}
+.bars .r{text-align:right;color:var(--mute)}
+.sec{margin-top:34px}
+.sec h2{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 8px}
+.sec h2 small{font:400 14px var(--sans);color:var(--mute)}
+.wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;min-width:640px}
+th,td{padding:9px 12px;text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-weight:500;color:var(--mute);font-size:13px;border-bottom:1px solid var(--line)}
+tbody tr+tr td{border-top:1px solid var(--line)}
+td:first-child{font-weight:600}
+.rt td small{display:block;font-size:12px}.rt tr.tot td{font-weight:600;border-top:2px solid var(--line)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 8px}
+.chip{display:inline-flex;align-items:center;gap:7px}
+.chip i{width:10px;height:10px;border-radius:50%}
+.chip[aria-pressed="false"]{opacity:.45}
+.chartbox{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 8px 4px}
+.chartbox svg{display:block;width:100%;height:auto}
+.chartbox text{fill:var(--mute);font:12px var(--sans)}
+.err{background:var(--panel);border:1px solid var(--down);border-radius:10px;padding:16px;margin:16px 0}
+@media(max-width:700px){.hero{grid-template-columns:1fr;padding:20px}}
+@media(prefers-reduced-motion:no-preference){.bar i{transition:width .5s}}
+</style>
+</head>
+<body>
+<main>
+<header class="top">
+  <h1>Portföyüm</h1>
+  <div><span id="status">Yükleniyor…</span> <button id="refresh" type="button">Yenile</button> <button id="pick" type="button">CSV dosyası aç</button><input id="file" type="file" accept=".csv,text/csv" hidden> <a href="index.html" class="navlink">← Ana Sayfa</a></div>
+</header>
+<div id="app"></div>
+</main>
+
+<script>
+// Bu sayfa, ana sayfadaki (index.html) şifre korumasının açtığı oturumu paylaşır.
+// Doğrudan bu adrese girilirse ve oturum yoksa, önce girişi yapman için ana sayfaya yönlendirilir.
+if (sessionStorage.getItem("bist-ai-pro-giris") !== "ok") {
+  location.href = "index.html";
+}
+
+// Google Sheet'te "Web'de yayınla → CSV" bağlantısı. Başka bir sayfa kullanacaksan sadece bunu değiştir.
+const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSDArwkk5do4rkfPIYja06vGGcrDeN0kVsClNbFtuj0fmKvCETp0Ml4pr1DnPjYf8ogvjnVK7BLB5Xr/pub?gid=0&single=true&output=csv";
+// İsteğe bağlı: Apps Script web uygulaması adresi (/exec ile biten). Doluysa CSV yerine bu kullanılır ve veri her seferinde güncel gelir.
+const DATA_URL = "https://script.google.com/macros/s/AKfycbz0eCu_QWODSTVFXTX-MW1KHhskZrGh71Slkc1fApo1mgQsTEUaiaCayvt-6bXfwU6RZg/exec";
+const REFRESH_MS = 5 * 60 * 1000;
+
+// Canlı veri alınamazsa gösterilecek son kayıtlı veri (sheet'ten kopyalandı)
+const SNAPSHOT = [
+["ANLIK PİYASALAR"],
+["BİST100","12439,01","ALTIN","6.564,03","GÜMÜŞ","96,94"],
+["ZİRAAT PORTFOY"],
+["KOD","ADET","ALIŞ","GÜNCEL","KAR/ZARAR","MALİYET","KAZANÇ %","TOPLAM"],
+["TUPRS","52","175,096","385","10915,008","9104,992","119,88","20020"],
+["TL","3932,82","1","1","0","3932,82","0,00","3932,82"],
+["TOASO","15","176,13","264,75","1329,3","2641,95","50,32","3971,25"],
+["ALTIN","66","81,701","71,54","-670,626","5392,266","-12,44","4721,64"],
+["ASELS","12","117,7","377","3111,6","1412,4","220,31","4524"],
+["THYAO","19","287,816","292,75","93,746","5468,504","1,71","5562,25"],
+[""],
+["QNB PORTFOY"],
+["KOD","ADET","ALIŞ","GÜNCEL","KAR/ZARAR","MALİYET","KAZANÇ %","TOPLAM"],
+["TUPRS","4","253,23","385","527,08","1012,92","52,04","1540"],
+["TCELL","3","109,4","99","-31,2","328,2","-9,51","297"],
+["SOKM","4","51,9","56,75","19,4","207,6","9,34","227"],
+["TURSG","221","6,31","5,47","-185,64","1394,51","-13,31","1208,87"],
+[""],
+["TL","1390","","","","","","1390"],
+["DEĞERLİ MADENLER"],
+["","GR","ALIŞ","GÜNCEL","KAR/ZARAR","MALİYET","KAZANÇ","TOPLAM"],
+["ALTIN","11,8","2156","6.564,03","52014,754","25440,8","204,4540816","77455,554"],
+["GÜMÜŞ","81,3","54,36","96,94","3461,754","4419,468","78,32965416","7881,222"],
+["GETİRİ TABLOSU"],
+[""],
+["","1 HAFTA","1 AY","3 AY","6 AY","9AY","1 YIL"],
+["ZİRAAT","-1,753553724","2,274729529","28,35009614","58,17241618","98,14114595","63,8111832"],
+["","-619,54","772,02","7.667,00","12.765,96","17.192,68","13.521,36"],
+["QNB","-2,583045913","-0,6569682338","-","-","-","-"],
+["","-37,97","-9,47","1.432,00","1.432,00","1.432,00","1.432,00"],
+["HİSSE","-1,86800029","-7,495250904","16,2557146","2,758276997","18,40295142","52,02979799"],
+["","-1219,9194","-5192,6254","8.961,00","1.720,23","9.960,70","21.932,51"],
+["ALTIN","-4,220945682","-8,424403039","44,98296562","-3,51833392","1,999183988","339,1360795"],
+["","-180,50226","-376,79298","1.270,79","-149,36","80,28","3.163,14"],
+["GÜMÜŞ","-1,934454937","-4,404638519","22,7436373","17,80656296","37,88774931","62,30778488"],
+["","-2.057,93","-4.806,87","19.330,79","15.768,83","28.665,66","40.049,01"],
+["TOPLAM","-1,786687195","2,155286323","33,64517083","64,69780871","106,3154458","70,56920269"],
+["","-657,51","762,55","9.099,00","14.197,96","18.624,68","14.953,36"],
+["bİST 100"]
+];
+const COLORS = ["#0f6b63","#b8892b","#3b6fb6","#c0615a","#7a5ea8"];
+
+const $ = s => document.querySelector(s);
+const norm = s => (s || "").trim().toLocaleUpperCase("tr-TR");
+const money = n => n.toLocaleString("tr-TR", {minimumFractionDigits:2, maximumFractionDigits:2});
+const price = n => isNaN(n) ? "–" : n.toLocaleString("tr-TR", {minimumFractionDigits:2, maximumFractionDigits:3});
+const sign = n => (n > 0 ? "+" : "") + money(n);
+const cls = n => n > 0 ? "up" : n < 0 ? "down" : "";
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function num(s){
+  if (s == null) return NaN;
+  s = String(s).trim().replace(/[₺%\s]/g, "");
+  if (!s) return NaN;
+  if (s.includes(",")) s = s.replace(/\./g, "").replace(",", ".");
+  else if (/^-?\d{1,3}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, "");
+  return parseFloat(s);
+}
+
+function parseCSV(t){
+  const rows = []; let r = [], f = "", q = false;
+  for (let i = 0; i < t.length; i++){
+    const c = t[i];
+    if (q){ if (c === '"'){ if (t[i+1] === '"'){ f += '"'; i++; } else q = false; } else f += c; }
+    else if (c === '"') q = true;
+    else if (c === ",") { r.push(f); f = ""; }
+    else if (c === "\n" || c === "\r"){ if (c === "\r" && t[i+1] === "\n") i++; r.push(f); rows.push(r); r = []; f = ""; }
+    else f += c;
+  }
+  if (f || r.length){ r.push(f); rows.push(r); }
+  return rows;
+}
+
+function holding(row){
+  const total = num(row[7]);
+  if (isNaN(total)) return null;
+  const cost = isNaN(num(row[5])) ? total : num(row[5]);
+  const pl = isNaN(num(row[4])) ? total - cost : num(row[4]);
+  let pct = num(row[6]);
+  if (isNaN(pct)) pct = cost ? (pl / cost) * 100 : 0;
+  return {code: row[0].trim(), qty: num(row[1]), buy: num(row[2]), cur: num(row[3]), pl, cost, pct, total};
+}
+
+function parseSheet(rows){
+  const out = {market: [], sections: []};
+  let cur = null, lastPortfolio = null;
+  for (let i = 0; i < rows.length; i++){
+    const row = rows[i], key = norm(row[0]);
+    const empty = row.every(c => !c.trim());
+    if (key === "ANLIK PİYASALAR"){
+      const m = rows[++i] || [];
+      for (let j = 0; j + 1 < m.length; j += 2){ const v = num(m[j+1]); if (m[j].trim() && !isNaN(v)) out.market.push({name: m[j].trim(), value: v}); }
+      continue;
+    }
+    if (key.startsWith("GETİRİ")){
+      let j = i + 1;
+      while (j < rows.length && rows[j].every(c => !c.trim())) j++;
+      const hdr = rows[j] || [], cols = [];
+      for (let c = 1; c < hdr.length; c++) if (hdr[c].trim()) cols.push({c, label: hdr[c].trim()});
+      j++;
+      const items = [];
+      while (rows[j] && rows[j][0].trim()){
+        const pr = rows[j], ar = rows[j+1] || [];
+        const vals = cols.map(x => ({pct: num(pr[x.c]), amt: num(ar[x.c])}));
+        if (vals.some(v => !isNaN(v.pct) || !isNaN(v.amt))) items.push({name: pr[0].trim(), vals});
+        j += 2;
+      }
+      out.returns = {cols: cols.map(x => x.label), items};
+      cur = null; i = j - 1; continue;
+    }
+    if (key.endsWith("PORTFOY") || key.endsWith("PORTFÖY") || key === "DEĞERLİ MADENLER"){
+      cur = {name: row[0].trim(), metal: key === "DEĞERLİ MADENLER", rows: []};
+      out.sections.push(cur); if (!cur.metal) lastPortfolio = cur;
+      i++; continue; // başlık satırını atla
+    }
+    if (empty){ cur = null; continue; }
+    if (cur){ const h = holding(row); if (h) cur.rows.push(h); }
+    else if (key === "TL" && lastPortfolio){ const h = holding(row); if (h) lastPortfolio.rows.push(h); }
+  }
+  out.sections = out.sections.filter(s => s.rows.length);
+  out.sections.forEach(s => {
+    s.total = s.rows.reduce((a, h) => a + h.total, 0);
+    s.cost = s.rows.reduce((a, h) => a + h.cost, 0);
+    s.pl = s.total - s.cost;
+  });
+  return out;
+}
+
+function donut(sections, total){
+  const R = 80, C = 2 * Math.PI * R; let off = 0;
+  const arcs = sections.map((s, i) => {
+    const len = (s.total / total) * C;
+    const el = `<circle r="${R}" cx="100" cy="100" fill="none" stroke="${COLORS[i % COLORS.length]}" stroke-width="26" stroke-dasharray="${len} ${C - len}" stroke-dashoffset="${-off}" transform="rotate(-90 100 100)"/>`;
+    off += len; return el;
+  }).join("");
+  const legend = sections.map((s, i) => `<li><i style="background:${COLORS[i % COLORS.length]}"></i><span>${esc(s.name)}</span><span class="num">%${(s.total / total * 100).toFixed(1).replace(".", ",")}</span></li>`).join("");
+  return `<div><svg class="donut" viewBox="0 0 200 200" role="img" aria-label="Varlık dağılımı">${arcs}</svg><ul class="legend">${legend}</ul></div>`;
+}
+
+function weights(sections, total){
+  const map = new Map();
+  sections.forEach(s => s.rows.forEach(h => {
+    const k = h.code + (s.metal ? " (gr)" : "");
+    map.set(k, (map.get(k) || 0) + h.total);
+  }));
+  const list = [...map].sort((a, b) => b[1] - a[1]);
+  const max = list[0][1];
+  return `<div class="bars">${list.map(([k, v]) => `<span>${esc(k)}</span><div class="bar"><i style="width:${v / max * 100}%"></i></div><span class="r num">%${(v / total * 100).toFixed(1).replace(".", ",")}</span>`).join("")}</div>`;
+}
+
+function table(s){
+  const body = s.rows.map(h => `<tr><td>${esc(h.code)}</td><td class="num">${isNaN(h.qty) ? "–" : h.qty.toLocaleString("tr-TR", {maximumFractionDigits:3})}</td><td class="num">${price(h.buy)}</td><td class="num">${price(h.cur)}</td><td class="num">${money(h.cost)}</td><td class="num">${money(h.total)}</td><td class="num ${cls(h.pl)}">${sign(h.pl)}</td><td class="num ${cls(h.pct)}">${h.pl === 0 && h.cost === h.total ? "–" : sign(h.pct) + "%"}</td></tr>`).join("");
+  return `<section class="sec"><h2><span>${esc(s.name)}</span><small class="num">${money(s.total)} ₺ · <span class="${cls(s.pl)}">${sign(s.pl)} ₺</span></small></h2><div class="wrap"><table><thead><tr><th>${s.metal ? "Maden" : "Kod"}</th><th>${s.metal ? "Gram" : "Adet"}</th><th>Alış</th><th>Güncel</th><th>Maliyet</th><th>Toplam</th><th>Kâr/Zarar</th><th>Getiri</th></tr></thead><tbody>${body}</tbody></table></div></section>`;
+}
+
+let lastReturns = null, chartSel = null;
+const SC = {"TOPLAM":"var(--ink)","ZİRAAT":"var(--accent)","QNB":"#3b82c4","HİSSE":"#d9675d","ALTIN":"var(--gold)","GÜMÜŞ":"#9b7bd0"};
+const FALLBACK = ["#3b82c4","#d9675d","#9b7bd0","#2f9e8f"];
+const pretty = n => n.charAt(0) + n.slice(1).toLocaleLowerCase("tr-TR");
+const colorOf = (n, i) => SC[norm(n)] || FALLBACK[i % FALLBACK.length];
+
+function ticks(min, max){
+  const span = max - min || 1, raw = span / 5, p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p;
+  const step = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * p;
+  const lo = Math.floor(min / step) * step, hi = Math.ceil(max / step) * step, t = [];
+  for (let v = lo; v <= hi + 1e-9; v += step) t.push(v);
+  return t;
+}
+
+function drawChart(){
+  const r = lastReturns, box = $("#rsvg");
+  if (!r || !box) return;
+  const W = 760, H = 300, L = 52, R = 18, T = 14, B = 30, w = W - L - R, h = H - T - B;
+  const act = r.items.map((it, i) => ({it, i})).filter(x => chartSel.has(norm(x.it.name)));
+  const all = act.flatMap(x => x.it.vals.map(v => v.pct)).filter(v => !isNaN(v));
+  if (!all.length){ box.innerHTML = '<p style="color:var(--mute);padding:12px">Grafik için en az bir seri seçin.</p>'; return; }
+  const tk = ticks(Math.min(0, ...all), Math.max(0, ...all)), lo = tk[0], hi = tk[tk.length - 1];
+  const n = r.cols.length;
+  const X = i => L + (n > 1 ? w * i / (n - 1) : w / 2), Y = v => T + h * (1 - (v - lo) / (hi - lo));
+  let g = "";
+  tk.forEach(v => {
+    g += `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" style="stroke:var(--line);${v === 0 ? "stroke-width:1.5;stroke:var(--mute)" : ""}"/><text x="${L - 8}" y="${Y(v) + 4}" text-anchor="end">${v.toLocaleString("tr-TR", {maximumFractionDigits: 1})}%</text>`;
+  });
+  r.cols.forEach((c, i) => { g += `<text x="${X(i)}" y="${H - 8}" text-anchor="middle">${esc(c.replace(/(\d)(AY|HAFTA|YIL)/i, "$1 $2"))}</text>`; });
+  act.forEach(({it, i}) => {
+    const col = colorOf(it.name, i), top = norm(it.name) === "TOPLAM";
+    let d = "", pen = false, dots = "";
+    it.vals.forEach((v, k) => {
+      if (isNaN(v.pct)){ pen = false; return; }
+      d += (pen ? "L" : "M") + X(k).toFixed(1) + " " + Y(v.pct).toFixed(1) + " "; pen = true;
+      dots += `<circle cx="${X(k).toFixed(1)}" cy="${Y(v.pct).toFixed(1)}" r="${top ? 4.5 : 3.5}" style="fill:${col}"><title>${esc(pretty(it.name))} · ${esc(r.cols[k])}: ${sign(v.pct)}%${isNaN(v.amt) ? "" : " (" + sign(v.amt) + " ₺)"}</title></circle>`;
+    });
+    g += `<path d="${d}" fill="none" stroke-linejoin="round" stroke-linecap="round" style="stroke:${col};stroke-width:${top ? 3 : 2}"/>${dots}`;
+  });
+  box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Dönemsel getiri grafiği">${g}</svg>`;
+}
+
+function chartSection(r){
+  const chips = r.items.map((it, i) => `<button type="button" class="chip" data-n="${esc(norm(it.name))}" aria-pressed="${chartSel.has(norm(it.name))}"><i style="background:${colorOf(it.name, i)}"></i>${esc(pretty(it.name))}</button>`).join("");
+  return `<section class="sec"><h2><span>Getiri grafiği</span><small>Dönem başına % getiri</small></h2><div class="chips">${chips}</div><div class="chartbox" id="rsvg"></div></section>`;
+}
+
+function returnsTable(r){
+  const head = r.cols.map(c => `<th>${esc(c.replace(/(\d)(AY|HAFTA|YIL)/i, "$1 $2"))}</th>`).join("");
+  const body = r.items.map(it => `<tr class="${norm(it.name) === "TOPLAM" ? "tot" : ""}"><td>${esc(it.name)}</td>${it.vals.map(v => `<td class="num ${cls(isNaN(v.pct) ? v.amt : v.pct)}">${isNaN(v.pct) ? "–" : sign(v.pct) + "%"}${isNaN(v.amt) ? "" : `<small>${sign(v.amt)} ₺</small>`}</td>`).join("")}</tr>`).join("");
+  return `<section class="sec"><h2><span>Dönemsel getiri</span></h2><div class="wrap"><table class="rt"><thead><tr><th></th>${head}</tr></thead><tbody>${body}</tbody></table></div></section>`;
+}
+
+function render(d){
+  const hasR = !!(d.returns && d.returns.items.length);
+  lastReturns = hasR ? d.returns : null;
+  if (hasR && !chartSel) chartSel = new Set(d.returns.items.map(it => norm(it.name)).filter(k => k !== "ALTIN" && k !== "GÜMÜŞ"));
+  const total = d.sections.reduce((a, s) => a + s.total, 0);
+  const cost = d.sections.reduce((a, s) => a + s.cost, 0);
+  const pl = total - cost, pct = cost ? pl / cost * 100 : 0;
+  const assets = d.sections.flatMap(s => s.rows).filter(h => h.code !== "TL" && h.cost !== h.total);
+  const best = assets.reduce((a, h) => (!a || h.pct > a.pct ? h : a), null);
+  const worst = assets.reduce((a, h) => (!a || h.pct < a.pct ? h : a), null);
+  $("#app").innerHTML = `
+  <div class="hero">
+    <div>
+      <p class="lbl">Toplam portföy değeri</p>
+      <p class="total num">${money(total)} ₺</p>
+      <p class="pl num ${cls(pl)}">${sign(pl)} ₺ (${sign(pct)}%)</p>
+      <div class="facts">
+        <div>Toplam maliyet<b class="num">${money(cost)} ₺</b></div>
+        ${best ? `<div>En çok kazandıran<b>${esc(best.code)} <span class="up num">${sign(best.pct)}%</span></b></div>` : ""}
+        ${worst ? `<div>En çok kaybettiren<b>${esc(worst.code)} <span class="${cls(worst.pct)} num">${sign(worst.pct)}%</span></b></div>` : ""}
+      </div>
+    </div>
+    ${donut(d.sections, total)}
+  </div>
+  ${d.market.length ? `<div class="market">${d.market.map(m => `<div>${esc(m.name)}<b class="num">${money(m.value)}</b></div>`).join("")}</div>` : ""}
+  ${hasR ? chartSection(d.returns) : ""}
+  <h2>Varlık ağırlıkları</h2>
+  ${weights(d.sections, total)}
+  ${d.sections.map(table).join("")}
+  ${hasR ? returnsTable(d.returns) : ""}`;
+  if (hasR) drawChart();
+}
+
+async function fetchRows(){
+  let warn = "";
+  if (DATA_URL){
+    try{
+      const r = await fetch(DATA_URL, {cache: "no-store"});
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      const rows = await r.json();
+      if (!Array.isArray(rows)) throw new Error("beklenmeyen yanıt");
+      return {rows, note: ""};
+    }catch(e){ warn = " · Apps Script okunamadı (" + e.message + "), eski CSV kullanıldı"; }
+  }
+  const r = await fetch(CSV_URL + "&t=" + Date.now(), {cache: "no-store"});
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  return {rows: parseCSV(await r.text()), note: warn};
+}
+
+async function load(){
+  $("#status").textContent = "Güncelleniyor…";
+  try{
+    const {rows, note} = await fetchRows();
+    const data = parseSheet(rows);
+    if (!data.sections.length) throw new Error("Tabloda portföy bölümü bulunamadı");
+    render(data);
+    $("#status").textContent = "Son güncelleme: " + new Date().toLocaleTimeString("tr-TR", {hour:"2-digit", minute:"2-digit"}) + note;
+  }catch(e){
+    const hint = location.protocol === "file:" ? "Dosya bilgisayardan açıldı; bazı tarayıcılar buradan Google'a erişimi engeller." : "";
+    $("#status").textContent = "Güncellenemedi (" + e.message + ")";
+    if (!$("#app").children.length){
+      render(parseSheet(SNAPSHOT));
+      $("#status").textContent = "Canlı veri alınamadı, son kayıtlı veri gösteriliyor (" + e.message + ") " + hint;
+    }
+  }
+}
+$("#app").addEventListener("click", ev => {
+  const b = ev.target.closest(".chip"); if (!b) return;
+  const k = b.dataset.n;
+  if (chartSel.has(k)) chartSel.delete(k); else chartSel.add(k);
+  b.setAttribute("aria-pressed", chartSel.has(k));
+  drawChart();
+});
+$("#refresh").addEventListener("click", load);
+$("#pick").addEventListener("click", () => $("#file").click());
+$("#file").addEventListener("change", async ev => {
+  const f = ev.target.files[0]; if (!f) return;
+  try{
+    const data = parseSheet(parseCSV(await f.text()));
+    if (!data.sections.length) throw new Error("Dosyada portföy bölümü bulunamadı");
+    render(data); $("#status").textContent = "Dosyadan yüklendi: " + f.name;
+  }catch(e){ $("#status").textContent = "Dosya okunamadı (" + e.message + ")"; }
+});
+load(); setInterval(load, REFRESH_MS);
+</script>
+</body>
+</html>
