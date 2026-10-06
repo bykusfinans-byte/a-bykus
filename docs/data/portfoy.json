@@ -124,6 +124,8 @@
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (71.12, eşik: 70)"
     }
   ],
-  "bekleyen": {},
-  "guncelleme": "2026-10-06T08:26:45+00:00"
+  "bekleyen": {
+    "AKBNK": "AL"
+  },
+  "guncelleme": "2026-10-06T15:21:12+00:00"
 }
