@@ -1,5 +1,5 @@
 {
-  "nakit": 50218.84,
+  "nakit": 37756.84,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "ASELS": {
@@ -33,6 +33,14 @@
       "stop_takip": 40.67,
       "hedef_takip": 46.4,
       "hedef1_takip": 44.49
+    },
+    "TCELL": {
+      "adet": 124,
+      "maliyet": 100.5,
+      "tarih": "2026-10-06T06:50:17+00:00",
+      "stop_takip": 96.65,
+      "hedef_takip": 108.21,
+      "hedef1_takip": 104.35
     }
   },
   "islemler": [
@@ -71,10 +79,17 @@
       "fiyat": 42.58,
       "tutar": 12518.52,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (72.5, eşik: 70)"
+    },
+    {
+      "tarih": "2026-10-06T06:50:17+00:00",
+      "hisse": "TCELL",
+      "tip": "AL",
+      "adet": 124,
+      "fiyat": 100.5,
+      "tutar": 12462.0,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (70.5, eşik: 70)"
     }
   ],
-  "bekleyen": {
-    "TCELL": "AL"
-  },
-  "guncelleme": "2026-10-05T22:03:32+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-10-06T06:50:01+00:00"
 }
