@@ -1,5 +1,5 @@
 {
-  "nakit": 37756.84,
+  "nakit": 12632.8,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "ASELS": {
@@ -41,6 +41,22 @@
       "stop_takip": 96.65,
       "hedef_takip": 108.21,
       "hedef1_takip": 104.35
+    },
+    "VAKBN": {
+      "adet": 373,
+      "maliyet": 33.68,
+      "tarih": "2026-10-06T08:26:58+00:00",
+      "stop_takip": 31.83,
+      "hedef_takip": 37.38,
+      "hedef1_takip": 35.53
+    },
+    "YKBNK": {
+      "adet": 347,
+      "maliyet": 36.2,
+      "tarih": "2026-10-06T08:26:58+00:00",
+      "stop_takip": 34.3,
+      "hedef_takip": 40.01,
+      "hedef1_takip": 38.1
     }
   },
   "islemler": [
@@ -88,11 +104,26 @@
       "fiyat": 100.5,
       "tutar": 12462.0,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (70.5, eşik: 70)"
+    },
+    {
+      "tarih": "2026-10-06T08:26:58+00:00",
+      "hisse": "VAKBN",
+      "tip": "AL",
+      "adet": 373,
+      "fiyat": 33.68,
+      "tutar": 12562.64,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (72.25, eşik: 70)"
+    },
+    {
+      "tarih": "2026-10-06T08:26:58+00:00",
+      "hisse": "YKBNK",
+      "tip": "AL",
+      "adet": 347,
+      "fiyat": 36.2,
+      "tutar": 12561.4,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (71.12, eşik: 70)"
     }
   ],
-  "bekleyen": {
-    "VAKBN": "AL",
-    "YKBNK": "AL"
-  },
-  "guncelleme": "2026-10-06T07:41:45+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-10-06T08:26:45+00:00"
 }
