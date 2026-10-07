@@ -1,5 +1,5 @@
 {
-  "nakit": 11993.35,
+  "nakit": 36191.31,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "ASELS": {
@@ -9,22 +9,6 @@
       "stop_takip": 346.73,
       "hedef_takip": 416.53,
       "hedef1_takip": 393.27
-    },
-    "GUMUS": {
-      "adet": 128,
-      "maliyet": 97.82,
-      "tarih": "2026-10-05T08:55:42+00:00",
-      "stop_takip": 94.81,
-      "hedef_takip": 103.82,
-      "hedef1_takip": 100.82
-    },
-    "CIMSA": {
-      "adet": 294,
-      "maliyet": 42.58,
-      "tarih": "2026-10-05T09:18:46+00:00",
-      "stop_takip": 40.67,
-      "hedef_takip": 46.4,
-      "hedef1_takip": 44.49
     },
     "TCELL": {
       "adet": 124,
@@ -140,12 +124,28 @@
       "fiyat": 10.25,
       "tutar": 11982.25,
       "gerekce": "Stop-Loss (10.25)"
+    },
+    {
+      "tarih": "2026-10-07T11:43:33+00:00",
+      "hisse": "GUMUS",
+      "tip": "SAT",
+      "adet": 128,
+      "fiyat": 95.38,
+      "tutar": 12208.64,
+      "gerekce": "AI Skoru 2 tur üst üste düşük (34.02)"
+    },
+    {
+      "tarih": "2026-10-07T11:43:33+00:00",
+      "hisse": "CIMSA",
+      "tip": "SAT",
+      "adet": 294,
+      "fiyat": 40.78,
+      "tutar": 11989.32,
+      "gerekce": "AI Skoru 2 tur üst üste düşük (42.62)"
     }
   ],
   "bekleyen": {
-    "GUMUS": "SAT_ZAYIF",
-    "CIMSA": "SAT_ZAYIF",
-    "VAKBN": "SAT_ZAYIF"
+    "TURSG": "AL"
   },
-  "guncelleme": "2026-10-07T10:29:46+00:00"
+  "guncelleme": "2026-10-07T11:43:22+00:00"
 }
