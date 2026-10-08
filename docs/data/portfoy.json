@@ -1,5 +1,5 @@
 {
-  "nakit": 35580.96,
+  "nakit": 11912.94,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "TCELL": {
@@ -41,6 +41,22 @@
       "stop_takip": 5.12,
       "hedef_takip": 6.17,
       "hedef1_takip": 5.82
+    },
+    "TUPRS": {
+      "adet": 30,
+      "maliyet": 392.5,
+      "tarih": "2026-10-08T19:51:01+00:00",
+      "stop_takip": 372.44,
+      "hedef_takip": 432.62,
+      "hedef1_takip": 412.56
+    },
+    "AKSA": {
+      "adet": 1137,
+      "maliyet": 10.46,
+      "tarih": "2026-10-08T19:51:01+00:00",
+      "stop_takip": 10.05,
+      "hedef_takip": 11.29,
+      "hedef1_takip": 10.87
     }
   },
   "islemler": [
@@ -160,11 +176,28 @@
       "fiyat": 347.0,
       "tutar": 11451.0,
       "gerekce": "AI Skoru 2 tur üst üste düşük (43.38)"
+    },
+    {
+      "tarih": "2026-10-08T19:51:01+00:00",
+      "hisse": "TUPRS",
+      "tip": "AL",
+      "adet": 30,
+      "fiyat": 392.5,
+      "tutar": 11775.0,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (77.62, eşik: 70)"
+    },
+    {
+      "tarih": "2026-10-08T19:51:01+00:00",
+      "hisse": "AKSA",
+      "tip": "AL",
+      "adet": 1137,
+      "fiyat": 10.46,
+      "tutar": 11893.02,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (73.38, eşik: 70)"
     }
   ],
   "bekleyen": {
-    "TUPRS": "AL",
-    "AKSA": "AL"
+    "ALTIN": "AL"
   },
-  "guncelleme": "2026-10-08T17:52:23+00:00"
+  "guncelleme": "2026-10-08T19:50:45+00:00"
 }
