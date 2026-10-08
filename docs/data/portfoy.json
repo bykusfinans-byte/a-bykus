@@ -1,15 +1,7 @@
 {
-  "nakit": 24129.96,
+  "nakit": 35580.96,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
-    "ASELS": {
-      "adet": 33,
-      "maliyet": 370.0,
-      "tarih": "2026-10-01T20:22:43+00:00",
-      "stop_takip": 346.73,
-      "hedef_takip": 416.53,
-      "hedef1_takip": 393.27
-    },
     "TCELL": {
       "adet": 124,
       "maliyet": 100.5,
@@ -159,10 +151,19 @@
       "fiyat": 5.47,
       "tutar": 12061.35,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (74.0, eşik: 70)"
+    },
+    {
+      "tarih": "2026-10-08T08:07:59+00:00",
+      "hisse": "ASELS",
+      "tip": "SAT",
+      "adet": 33,
+      "fiyat": 347.0,
+      "tutar": 11451.0,
+      "gerekce": "AI Skoru 2 tur üst üste düşük (43.38)"
     }
   ],
   "bekleyen": {
-    "ASELS": "SAT_ZAYIF"
+    "VAKBN": "SAT_ZAYIF"
   },
-  "guncelleme": "2026-10-08T07:24:12+00:00"
+  "guncelleme": "2026-10-08T08:07:45+00:00"
 }
