@@ -1,5 +1,5 @@
 {
-  "nakit": 11196.81,
+  "nakit": 11579.7,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "TCELL": {
@@ -50,13 +50,13 @@
       "hedef_takip": 11.29,
       "hedef1_takip": 10.87
     },
-    "GUMUS": {
-      "adet": 123,
-      "maliyet": 96.31,
-      "tarih": "2026-10-09T12:06:00+00:00",
-      "stop_takip": 93.72,
-      "hedef_takip": 101.49,
-      "hedef1_takip": 98.9
+    "TUPRS": {
+      "adet": 29,
+      "maliyet": 386.25,
+      "tarih": "2026-10-13T20:43:31+00:00",
+      "stop_takip": 366.13,
+      "hedef_takip": 426.49,
+      "hedef1_takip": 406.37
     }
   },
   "islemler": [
@@ -212,11 +212,26 @@
       "fiyat": 371.0,
       "tutar": 11130.0,
       "gerekce": "Stop-Loss (372.44)"
+    },
+    {
+      "tarih": "2026-10-13T20:43:31+00:00",
+      "hisse": "GUMUS",
+      "tip": "SAT",
+      "adet": 123,
+      "fiyat": 94.18,
+      "tutar": 11584.14,
+      "gerekce": "AI Skoru 2 tur üst üste düşük (32.27)"
+    },
+    {
+      "tarih": "2026-10-13T20:43:31+00:00",
+      "hisse": "TUPRS",
+      "tip": "AL",
+      "adet": 29,
+      "fiyat": 386.25,
+      "tutar": 11201.25,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (71.88, eşik: 70)"
     }
   ],
-  "bekleyen": {
-    "GUMUS": "SAT_ZAYIF",
-    "TUPRS": "AL"
-  },
-  "guncelleme": "2026-10-13T18:17:23+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-10-13T20:43:14+00:00"
 }
