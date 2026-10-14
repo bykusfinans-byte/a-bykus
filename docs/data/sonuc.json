@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-10-13T20:43:14+00:00",
+  "guncelleme": "2026-10-14T07:09:44+00:00",
   "hisseler": [
     {
       "Hisse": "VAKBN",
@@ -478,7 +478,7 @@
       "Risk/Odul": 2.0
     }
   ],
-  "onceki_guncelleme": "2026-10-13T18:17:23+00:00",
+  "onceki_guncelleme": "2026-10-13T20:43:14+00:00",
   "onceki_hisseler": [
     {
       "Hisse": "VAKBN",
@@ -908,9 +908,9 @@
       "Momentum": "★ Çok Zayıf",
       "MomentumSkor": 0,
       "Teknik": 5.75,
-      "Temel": 70,
+      "Temel": 65,
       "Risk": 90,
-      "AISkor": 41.88,
+      "AISkor": 40.38,
       "Karar": "🔴 SAT",
       "RSI": 39.88,
       "MACD": -4.02,
