@@ -1,5 +1,5 @@
 {
-  "nakit": 11579.7,
+  "nakit": 23165.73,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "TCELL": {
@@ -41,14 +41,6 @@
       "stop_takip": 5.12,
       "hedef_takip": 6.17,
       "hedef1_takip": 5.82
-    },
-    "AKSA": {
-      "adet": 1137,
-      "maliyet": 10.46,
-      "tarih": "2026-10-08T19:51:01+00:00",
-      "stop_takip": 10.05,
-      "hedef_takip": 11.29,
-      "hedef1_takip": 10.87
     },
     "TUPRS": {
       "adet": 29,
@@ -230,10 +222,17 @@
       "fiyat": 386.25,
       "tutar": 11201.25,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (71.88, eşik: 70)"
+    },
+    {
+      "tarih": "2026-10-14T19:27:58+00:00",
+      "hisse": "AKSA",
+      "tip": "SAT",
+      "adet": 1137,
+      "fiyat": 10.19,
+      "tutar": 11586.03,
+      "gerekce": "AI Skoru 2 tur üst üste düşük (48.62)"
     }
   ],
-  "bekleyen": {
-    "AKSA": "SAT_ZAYIF"
-  },
-  "guncelleme": "2026-10-14T15:49:31+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-10-14T19:27:39+00:00"
 }
