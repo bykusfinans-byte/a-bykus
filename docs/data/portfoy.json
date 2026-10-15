@@ -1,15 +1,7 @@
 {
-  "nakit": 23165.73,
+  "nakit": 35348.73,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
-    "TCELL": {
-      "adet": 124,
-      "maliyet": 100.5,
-      "tarih": "2026-10-06T06:50:17+00:00",
-      "stop_takip": 96.65,
-      "hedef_takip": 108.21,
-      "hedef1_takip": 104.35
-    },
     "VAKBN": {
       "adet": 373,
       "maliyet": 33.68,
@@ -231,10 +223,19 @@
       "fiyat": 10.19,
       "tutar": 11586.03,
       "gerekce": "AI Skoru 2 tur üst üste düşük (48.62)"
+    },
+    {
+      "tarih": "2026-10-15T08:37:54+00:00",
+      "hisse": "TCELL",
+      "tip": "SAT",
+      "adet": 124,
+      "fiyat": 98.25,
+      "tutar": 12183.0,
+      "gerekce": "AI Skoru 2 tur üst üste düşük (45.88)"
     }
   ],
   "bekleyen": {
-    "TCELL": "SAT_ZAYIF"
+    "SOKM": "AL"
   },
-  "guncelleme": "2026-10-15T08:03:30+00:00"
+  "guncelleme": "2026-10-15T08:37:38+00:00"
 }
