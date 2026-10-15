@@ -233,6 +233,8 @@
       "gerekce": "AI Skoru 2 tur üst üste düşük (48.62)"
     }
   ],
-  "bekleyen": {},
-  "guncelleme": "2026-10-14T19:27:39+00:00"
+  "bekleyen": {
+    "TCELL": "SAT_ZAYIF"
+  },
+  "guncelleme": "2026-10-15T08:03:30+00:00"
 }
