@@ -1,5 +1,5 @@
 {
-  "nakit": 35348.73,
+  "nakit": 23597.43,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "VAKBN": {
@@ -41,6 +41,14 @@
       "stop_takip": 366.13,
       "hedef_takip": 426.49,
       "hedef1_takip": 406.37
+    },
+    "SOKM": {
+      "adet": 198,
+      "maliyet": 59.35,
+      "tarih": "2026-10-15T09:28:00+00:00",
+      "stop_takip": 56.46,
+      "hedef_takip": 65.14,
+      "hedef1_takip": 62.24
     }
   },
   "islemler": [
@@ -232,10 +240,17 @@
       "fiyat": 98.25,
       "tutar": 12183.0,
       "gerekce": "AI Skoru 2 tur üst üste düşük (45.88)"
+    },
+    {
+      "tarih": "2026-10-15T09:28:00+00:00",
+      "hisse": "SOKM",
+      "tip": "AL",
+      "adet": 198,
+      "fiyat": 59.35,
+      "tutar": 11751.3,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (73.0, eşik: 70)"
     }
   ],
-  "bekleyen": {
-    "SOKM": "AL"
-  },
-  "guncelleme": "2026-10-15T08:37:38+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-10-15T09:27:46+00:00"
 }
