@@ -1,5 +1,5 @@
 {
-  "nakit": 23597.43,
+  "nakit": 34644.48,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "VAKBN": {
@@ -25,14 +25,6 @@
       "stop_takip": 66.02,
       "hedef_takip": 76.01,
       "hedef1_takip": 72.68
-    },
-    "TURSG": {
-      "adet": 2205,
-      "maliyet": 5.47,
-      "tarih": "2026-10-07T16:32:37+00:00",
-      "stop_takip": 5.12,
-      "hedef_takip": 6.17,
-      "hedef1_takip": 5.82
     },
     "TUPRS": {
       "adet": 29,
@@ -249,8 +241,19 @@
       "fiyat": 59.35,
       "tutar": 11751.3,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (73.0, eşik: 70)"
+    },
+    {
+      "tarih": "2026-10-16T07:20:38+00:00",
+      "hisse": "TURSG",
+      "tip": "SAT",
+      "adet": 2205,
+      "fiyat": 5.01,
+      "tutar": 11047.05,
+      "gerekce": "Stop-Loss (5.12)"
     }
   ],
-  "bekleyen": {},
-  "guncelleme": "2026-10-15T19:13:07+00:00"
+  "bekleyen": {
+    "ALTIN": "AL"
+  },
+  "guncelleme": "2026-10-16T07:20:24+00:00"
 }
