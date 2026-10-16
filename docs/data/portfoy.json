@@ -1,5 +1,5 @@
 {
-  "nakit": 27942.6,
+  "nakit": 40330.5,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "VAKBN": {
@@ -9,14 +9,6 @@
       "stop_takip": 31.83,
       "hedef_takip": 37.38,
       "hedef1_takip": 35.53
-    },
-    "YKBNK": {
-      "adet": 347,
-      "maliyet": 36.2,
-      "tarih": "2026-10-06T08:26:58+00:00",
-      "stop_takip": 34.3,
-      "hedef_takip": 40.01,
-      "hedef1_takip": 38.1
     },
     "AKBNK": {
       "adet": 182,
@@ -267,10 +259,17 @@
       "fiyat": 6701.88,
       "tutar": 6701.88,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (82.15, eşik: 70)"
+    },
+    {
+      "tarih": "2026-10-16T18:50:23+00:00",
+      "hisse": "YKBNK",
+      "tip": "SAT",
+      "adet": 347,
+      "fiyat": 35.7,
+      "tutar": 12387.9,
+      "gerekce": "AI Skoru 2 tur üst üste düşük (48.62)"
     }
   ],
-  "bekleyen": {
-    "YKBNK": "SAT_ZAYIF"
-  },
-  "guncelleme": "2026-10-16T15:22:12+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-10-16T18:50:11+00:00"
 }
