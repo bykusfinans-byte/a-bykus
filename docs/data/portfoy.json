@@ -269,6 +269,8 @@
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (82.15, eşik: 70)"
     }
   ],
-  "bekleyen": {},
-  "guncelleme": "2026-10-16T08:08:21+00:00"
+  "bekleyen": {
+    "YKBNK": "SAT_ZAYIF"
+  },
+  "guncelleme": "2026-10-16T15:22:12+00:00"
 }
