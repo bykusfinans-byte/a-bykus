@@ -1,5 +1,5 @@
 {
-  "nakit": 40330.5,
+  "nakit": 50676.25,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "VAKBN": {
@@ -17,14 +17,6 @@
       "stop_takip": 66.02,
       "hedef_takip": 76.01,
       "hedef1_takip": 72.68
-    },
-    "TUPRS": {
-      "adet": 29,
-      "maliyet": 386.25,
-      "tarih": "2026-10-13T20:43:31+00:00",
-      "stop_takip": 366.13,
-      "hedef_takip": 426.49,
-      "hedef1_takip": 406.37
     },
     "SOKM": {
       "adet": 198,
@@ -268,8 +260,21 @@
       "fiyat": 35.7,
       "tutar": 12387.9,
       "gerekce": "AI Skoru 2 tur üst üste düşük (48.62)"
+    },
+    {
+      "tarih": "2026-10-19T17:28:24+00:00",
+      "hisse": "TUPRS",
+      "tip": "SAT",
+      "adet": 29,
+      "fiyat": 356.75,
+      "tutar": 10345.75,
+      "gerekce": "Stop-Loss (366.13)"
     }
   ],
-  "bekleyen": {},
-  "guncelleme": "2026-10-16T18:50:11+00:00"
+  "bekleyen": {
+    "VAKBN": "SAT_ZAYIF",
+    "ALTIN": "SAT_ZAYIF",
+    "YKBNK": "AL"
+  },
+  "guncelleme": "2026-10-19T17:28:07+00:00"
 }
