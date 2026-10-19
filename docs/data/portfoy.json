@@ -1,15 +1,7 @@
 {
-  "nakit": 50676.25,
+  "nakit": 57890.04,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
-    "VAKBN": {
-      "adet": 373,
-      "maliyet": 33.68,
-      "tarih": "2026-10-06T08:26:58+00:00",
-      "stop_takip": 31.83,
-      "hedef_takip": 37.38,
-      "hedef1_takip": 35.53
-    },
     "AKBNK": {
       "adet": 182,
       "maliyet": 69.35,
@@ -26,13 +18,13 @@
       "hedef_takip": 65.14,
       "hedef1_takip": 62.24
     },
-    "ALTIN": {
-      "adet": 1,
-      "maliyet": 6701.88,
-      "tarih": "2026-10-16T08:08:34+00:00",
-      "stop_takip": 6593.66,
-      "hedef_takip": 6918.33,
-      "hedef1_takip": 6810.11
+    "YKBNK": {
+      "adet": 320,
+      "maliyet": 36.06,
+      "tarih": "2026-10-19T20:37:33+00:00",
+      "stop_takip": 34.64,
+      "hedef_takip": 38.91,
+      "hedef1_takip": 37.48
     }
   },
   "islemler": [
@@ -269,12 +261,35 @@
       "fiyat": 356.75,
       "tutar": 10345.75,
       "gerekce": "Stop-Loss (366.13)"
+    },
+    {
+      "tarih": "2026-10-19T20:37:33+00:00",
+      "hisse": "VAKBN",
+      "tip": "SAT",
+      "adet": 373,
+      "fiyat": 32.52,
+      "tutar": 12129.96,
+      "gerekce": "AI Skoru 2 tur üst üste düşük (44.88)"
+    },
+    {
+      "tarih": "2026-10-19T20:37:33+00:00",
+      "hisse": "ALTIN",
+      "tip": "SAT",
+      "adet": 1,
+      "fiyat": 6623.03,
+      "tutar": 6623.03,
+      "gerekce": "AI Skoru 2 tur üst üste düşük (44.17)"
+    },
+    {
+      "tarih": "2026-10-19T20:37:33+00:00",
+      "hisse": "YKBNK",
+      "tip": "AL",
+      "adet": 320,
+      "fiyat": 36.06,
+      "tutar": 11539.2,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (80.62, eşik: 70)"
     }
   ],
-  "bekleyen": {
-    "VAKBN": "SAT_ZAYIF",
-    "ALTIN": "SAT_ZAYIF",
-    "YKBNK": "AL"
-  },
-  "guncelleme": "2026-10-19T17:28:07+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-10-19T20:37:19+00:00"
 }
