@@ -290,6 +290,8 @@
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (80.62, eşik: 70)"
     }
   ],
-  "bekleyen": {},
-  "guncelleme": "2026-10-19T20:37:19+00:00"
+  "bekleyen": {
+    "GUMUS": "AL"
+  },
+  "guncelleme": "2026-10-20T15:39:04+00:00"
 }
