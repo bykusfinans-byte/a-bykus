@@ -1,15 +1,7 @@
 {
-  "nakit": 23273.38,
+  "nakit": 46091.98,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
-    "AKBNK": {
-      "adet": 182,
-      "maliyet": 69.35,
-      "tarih": "2026-10-06T17:11:06+00:00",
-      "stop_takip": 66.02,
-      "hedef_takip": 76.01,
-      "hedef1_takip": 72.68
-    },
     "SOKM": {
       "adet": 198,
       "maliyet": 59.35,
@@ -25,14 +17,6 @@
       "stop_takip": 34.64,
       "hedef_takip": 38.91,
       "hedef1_takip": 37.48
-    },
-    "GUMUS": {
-      "adet": 125,
-      "maliyet": 92.37,
-      "tarih": "2026-10-20T19:20:33+00:00",
-      "stop_takip": 89.96,
-      "hedef_takip": 97.19,
-      "hedef1_takip": 94.78
     },
     "ASELS": {
       "adet": 33,
@@ -339,8 +323,28 @@
       "fiyat": 10.27,
       "tutar": 11635.91,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (77.25, eşik: 70)"
+    },
+    {
+      "tarih": "2026-10-22T15:52:50+00:00",
+      "hisse": "AKBNK",
+      "tip": "SAT",
+      "adet": 182,
+      "fiyat": 64.8,
+      "tutar": 11793.6,
+      "gerekce": "Stop-Loss (66.02)"
+    },
+    {
+      "tarih": "2026-10-22T15:52:50+00:00",
+      "hisse": "GUMUS",
+      "tip": "SAT",
+      "adet": 125,
+      "fiyat": 88.2,
+      "tutar": 11025.0,
+      "gerekce": "Stop-Loss (89.96)"
     }
   ],
-  "bekleyen": {},
-  "guncelleme": "2026-10-21T19:20:31+00:00"
+  "bekleyen": {
+    "SOKM": "SAT_ZAYIF"
+  },
+  "guncelleme": "2026-10-22T15:52:36+00:00"
 }
