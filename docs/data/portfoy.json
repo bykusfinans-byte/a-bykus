@@ -1,15 +1,7 @@
 {
-  "nakit": 46091.98,
+  "nakit": 57278.98,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
-    "SOKM": {
-      "adet": 198,
-      "maliyet": 59.35,
-      "tarih": "2026-10-15T09:28:00+00:00",
-      "stop_takip": 56.46,
-      "hedef_takip": 65.14,
-      "hedef1_takip": 62.24
-    },
     "YKBNK": {
       "adet": 320,
       "maliyet": 36.06,
@@ -341,10 +333,17 @@
       "fiyat": 88.2,
       "tutar": 11025.0,
       "gerekce": "Stop-Loss (89.96)"
+    },
+    {
+      "tarih": "2026-10-22T19:15:14+00:00",
+      "hisse": "SOKM",
+      "tip": "SAT",
+      "adet": 198,
+      "fiyat": 56.5,
+      "tutar": 11187.0,
+      "gerekce": "AI Skoru 2 tur üst üste düşük (47.62)"
     }
   ],
-  "bekleyen": {
-    "SOKM": "SAT_ZAYIF"
-  },
-  "guncelleme": "2026-10-22T15:52:36+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-10-22T19:15:00+00:00"
 }
