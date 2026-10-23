@@ -1,15 +1,7 @@
 {
-  "nakit": 57278.98,
+  "nakit": 68472.58,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
-    "YKBNK": {
-      "adet": 320,
-      "maliyet": 36.06,
-      "tarih": "2026-10-19T20:37:33+00:00",
-      "stop_takip": 34.64,
-      "hedef_takip": 38.91,
-      "hedef1_takip": 37.48
-    },
     "ASELS": {
       "adet": 33,
       "maliyet": 346.5,
@@ -342,10 +334,17 @@
       "fiyat": 56.5,
       "tutar": 11187.0,
       "gerekce": "AI Skoru 2 tur üst üste düşük (47.62)"
+    },
+    {
+      "tarih": "2026-10-23T19:19:37+00:00",
+      "hisse": "YKBNK",
+      "tip": "SAT",
+      "adet": 320,
+      "fiyat": 34.98,
+      "tutar": 11193.6,
+      "gerekce": "AI Skoru 2 tur üst üste düşük (45.25)"
     }
   ],
-  "bekleyen": {
-    "YKBNK": "SAT_ZAYIF"
-  },
-  "guncelleme": "2026-10-23T15:44:08+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-10-23T19:19:21+00:00"
 }
