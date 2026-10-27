@@ -1,5 +1,5 @@
 {
-  "nakit": 68472.58,
+  "nakit": 50546.76,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "ASELS": {
@@ -17,6 +17,22 @@
       "stop_takip": 10.27,
       "hedef_takip": 11.07,
       "hedef1_takip": 10.67
+    },
+    "CIMSA": {
+      "adet": 289,
+      "maliyet": 39.46,
+      "tarih": "2026-10-27T20:07:48+00:00",
+      "stop_takip": 37.48,
+      "hedef_takip": 43.42,
+      "hedef1_takip": 41.44
+    },
+    "ALTIN": {
+      "adet": 1,
+      "maliyet": 6521.88,
+      "tarih": "2026-10-27T20:07:48+00:00",
+      "stop_takip": 6411.51,
+      "hedef_takip": 6742.62,
+      "hedef1_takip": 6632.25
     }
   },
   "islemler": [
@@ -343,11 +359,26 @@
       "fiyat": 34.98,
       "tutar": 11193.6,
       "gerekce": "AI Skoru 2 tur üst üste düşük (45.25)"
+    },
+    {
+      "tarih": "2026-10-27T20:07:48+00:00",
+      "hisse": "CIMSA",
+      "tip": "AL",
+      "adet": 289,
+      "fiyat": 39.46,
+      "tutar": 11403.94,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (73.0, eşik: 70)"
+    },
+    {
+      "tarih": "2026-10-27T20:07:48+00:00",
+      "hisse": "ALTIN",
+      "tip": "AL",
+      "adet": 1,
+      "fiyat": 6521.88,
+      "tutar": 6521.88,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (70.95, eşik: 70)"
     }
   ],
-  "bekleyen": {
-    "CIMSA": "AL",
-    "ALTIN": "AL"
-  },
-  "guncelleme": "2026-10-27T16:36:37+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-10-27T20:07:30+00:00"
 }
