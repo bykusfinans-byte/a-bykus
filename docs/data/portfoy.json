@@ -14,7 +14,7 @@
       "adet": 1133,
       "maliyet": 10.27,
       "tarih": "2026-10-21T19:20:46+00:00",
-      "stop_takip": 9.87,
+      "stop_takip": 10.27,
       "hedef_takip": 11.07,
       "hedef1_takip": 10.67
     }
@@ -345,6 +345,9 @@
       "gerekce": "AI Skoru 2 tur üst üste düşük (45.25)"
     }
   ],
-  "bekleyen": {},
-  "guncelleme": "2026-10-26T20:33:51+00:00"
+  "bekleyen": {
+    "CIMSA": "AL",
+    "ALTIN": "AL"
+  },
+  "guncelleme": "2026-10-27T16:36:37+00:00"
 }
