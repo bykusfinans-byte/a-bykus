@@ -1,5 +1,5 @@
 {
-  "nakit": 50546.76,
+  "nakit": 56954.6,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "ASELS": {
@@ -25,14 +25,6 @@
       "stop_takip": 37.48,
       "hedef_takip": 43.42,
       "hedef1_takip": 41.44
-    },
-    "ALTIN": {
-      "adet": 1,
-      "maliyet": 6521.88,
-      "tarih": "2026-10-27T20:07:48+00:00",
-      "stop_takip": 6411.51,
-      "hedef_takip": 6742.62,
-      "hedef1_takip": 6632.25
     }
   },
   "islemler": [
@@ -377,8 +369,17 @@
       "fiyat": 6521.88,
       "tutar": 6521.88,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (70.95, eşik: 70)"
+    },
+    {
+      "tarih": "2026-10-30T08:12:16+00:00",
+      "hisse": "ALTIN",
+      "tip": "SAT",
+      "adet": 1,
+      "fiyat": 6407.84,
+      "tutar": 6407.84,
+      "gerekce": "Stop-Loss (6411.51)"
     }
   ],
   "bekleyen": {},
-  "guncelleme": "2026-10-29T20:20:56+00:00"
+  "guncelleme": "2026-10-30T08:12:03+00:00"
 }
