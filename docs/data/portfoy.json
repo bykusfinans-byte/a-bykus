@@ -1,5 +1,5 @@
 {
-  "nakit": 56954.6,
+  "nakit": 68307.26,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "ASELS": {
@@ -9,14 +9,6 @@
       "stop_takip": 324.23,
       "hedef_takip": 391.05,
       "hedef1_takip": 368.77
-    },
-    "AKSA": {
-      "adet": 1133,
-      "maliyet": 10.27,
-      "tarih": "2026-10-21T19:20:46+00:00",
-      "stop_takip": 10.27,
-      "hedef_takip": 11.07,
-      "hedef1_takip": 10.67
     },
     "CIMSA": {
       "adet": 289,
@@ -378,8 +370,17 @@
       "fiyat": 6407.84,
       "tutar": 6407.84,
       "gerekce": "Stop-Loss (6411.51)"
+    },
+    {
+      "tarih": "2026-10-30T17:00:58+00:00",
+      "hisse": "AKSA",
+      "tip": "SAT",
+      "adet": 1133,
+      "fiyat": 10.02,
+      "tutar": 11352.66,
+      "gerekce": "Stop-Loss (10.27)"
     }
   ],
   "bekleyen": {},
-  "guncelleme": "2026-10-30T08:12:03+00:00"
+  "guncelleme": "2026-10-30T17:00:46+00:00"
 }
