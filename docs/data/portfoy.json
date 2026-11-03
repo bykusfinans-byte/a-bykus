@@ -381,6 +381,8 @@
       "gerekce": "Stop-Loss (10.27)"
     }
   ],
-  "bekleyen": {},
-  "guncelleme": "2026-11-03T08:35:26+00:00"
+  "bekleyen": {
+    "TCELL": "AL"
+  },
+  "guncelleme": "2026-11-03T18:25:23+00:00"
 }
