@@ -1,5 +1,5 @@
 {
-  "nakit": 56951.41,
+  "nakit": 50400.22,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "ASELS": {
@@ -14,7 +14,7 @@
       "adet": 289,
       "maliyet": 39.46,
       "tarih": "2026-10-27T20:07:48+00:00",
-      "stop_takip": 37.48,
+      "stop_takip": 39.46,
       "hedef_takip": 43.42,
       "hedef1_takip": 41.44
     },
@@ -25,6 +25,14 @@
       "stop_takip": 89.43,
       "hedef_takip": 102.68,
       "hedef1_takip": 98.27
+    },
+    "ALTIN": {
+      "adet": 1,
+      "maliyet": 6551.19,
+      "tarih": "2026-11-04T18:38:52+00:00",
+      "stop_takip": 6416.76,
+      "hedef_takip": 6820.05,
+      "hedef1_takip": 6685.62
     }
   },
   "islemler": [
@@ -396,10 +404,27 @@
       "fiyat": 93.85,
       "tutar": 11355.85,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (75.5, eşik: 70)"
+    },
+    {
+      "tarih": "2026-11-04T18:38:52+00:00",
+      "hisse": "ALTIN",
+      "tip": "AL",
+      "adet": 1,
+      "fiyat": 6551.19,
+      "tutar": 6551.19,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (88.45, eşik: 70)"
     }
   ],
   "bekleyen": {
-    "ALTIN": "AL"
+    "GUMUS": "AL",
+    "AKSA": "AL",
+    "AKBNK": "AL",
+    "VAKBN": "AL",
+    "CWENE": "AL",
+    "TURSG": "AL",
+    "CATES": "AL",
+    "THYAO": "AL",
+    "BIMAS": "AL"
   },
-  "guncelleme": "2026-11-03T21:04:01+00:00"
+  "guncelleme": "2026-11-04T18:38:41+00:00"
 }
