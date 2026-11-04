@@ -1,5 +1,5 @@
 {
-  "nakit": 50400.22,
+  "nakit": 12.96,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "ASELS": {
@@ -33,6 +33,38 @@
       "stop_takip": 6416.76,
       "hedef_takip": 6820.05,
       "hedef1_takip": 6685.62
+    },
+    "GUMUS": {
+      "adet": 149,
+      "maliyet": 84.26,
+      "tarih": "2026-11-04T21:20:59+00:00",
+      "stop_takip": 81.29,
+      "hedef_takip": 90.2,
+      "hedef1_takip": 87.23
+    },
+    "AKSA": {
+      "adet": 1208,
+      "maliyet": 10.44,
+      "tarih": "2026-11-04T21:20:59+00:00",
+      "stop_takip": 9.9,
+      "hedef_takip": 11.51,
+      "hedef1_takip": 10.98
+    },
+    "AKBNK": {
+      "adet": 190,
+      "maliyet": 66.3,
+      "tarih": "2026-11-04T21:20:59+00:00",
+      "stop_takip": 62.41,
+      "hedef_takip": 74.09,
+      "hedef1_takip": 70.19
+    },
+    "VAKBN": {
+      "adet": 400,
+      "maliyet": 31.56,
+      "tarih": "2026-11-04T21:20:59+00:00",
+      "stop_takip": 29.61,
+      "hedef_takip": 35.46,
+      "hedef1_takip": 33.51
     }
   },
   "islemler": [
@@ -413,18 +445,44 @@
       "fiyat": 6551.19,
       "tutar": 6551.19,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (88.45, eşik: 70)"
+    },
+    {
+      "tarih": "2026-11-04T21:20:59+00:00",
+      "hisse": "GUMUS",
+      "tip": "AL",
+      "adet": 149,
+      "fiyat": 84.26,
+      "tutar": 12554.74,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (86.88, eşik: 70)"
+    },
+    {
+      "tarih": "2026-11-04T21:20:59+00:00",
+      "hisse": "AKSA",
+      "tip": "AL",
+      "adet": 1208,
+      "fiyat": 10.44,
+      "tutar": 12611.52,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (83.12, eşik: 70)"
+    },
+    {
+      "tarih": "2026-11-04T21:20:59+00:00",
+      "hisse": "AKBNK",
+      "tip": "AL",
+      "adet": 190,
+      "fiyat": 66.3,
+      "tutar": 12597.0,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (81.0, eşik: 70)"
+    },
+    {
+      "tarih": "2026-11-04T21:20:59+00:00",
+      "hisse": "VAKBN",
+      "tip": "AL",
+      "adet": 400,
+      "fiyat": 31.56,
+      "tutar": 12624.0,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (74.62, eşik: 70)"
     }
   ],
-  "bekleyen": {
-    "GUMUS": "AL",
-    "AKSA": "AL",
-    "AKBNK": "AL",
-    "VAKBN": "AL",
-    "CWENE": "AL",
-    "TURSG": "AL",
-    "CATES": "AL",
-    "THYAO": "AL",
-    "BIMAS": "AL"
-  },
-  "guncelleme": "2026-11-04T18:38:41+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-11-04T21:20:45+00:00"
 }
