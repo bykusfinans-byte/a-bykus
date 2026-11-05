@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-11-04T21:20:45+00:00",
+  "guncelleme": "2026-11-05T06:33:54+00:00",
   "hisseler": [
     {
       "Hisse": "AKSA",
@@ -65,10 +65,10 @@
       "Momentum": "★★★★★ Çok Güçlü",
       "MomentumSkor": 100,
       "Teknik": 77.25,
-      "Temel": 80,
+      "Temel": 75,
       "Risk": 90,
-      "AISkor": 80.62,
-      "Karar": "★★★★ GÜÇLÜ AL",
+      "AISkor": 79.12,
+      "Karar": "★★★ AL",
       "RSI": 63.91,
       "MACD": 0.25,
       "ADX": 17.26,
@@ -226,34 +226,6 @@
       "Risk/Odul": 2.0
     },
     {
-      "Hisse": "CATES",
-      "Fiyat": 24.88,
-      "Trend": "★★ Zayıf",
-      "TrendSkor": 40,
-      "Momentum": "★★★★★ Çok Güçlü",
-      "MomentumSkor": 100,
-      "Teknik": 67.25,
-      "Temel": 75,
-      "Risk": 80,
-      "AISkor": 72.12,
-      "Karar": "★★★ AL",
-      "RSI": 50.02,
-      "MACD": -1.47,
-      "ADX": 39.16,
-      "ATR": 1.13,
-      "EMA9": 23.2,
-      "EMA21": 24.07,
-      "SMA50": 27.35,
-      "SMA200": 43.92,
-      "FiltreGecti": false,
-      "Destek": 19.19,
-      "Direnc": 27.3,
-      "Stop": 22.62,
-      "Hedef1": 27.14,
-      "Hedef": 29.4,
-      "Risk/Odul": 2.0
-    },
-    {
       "Hisse": "THYAO",
       "Fiyat": 290.5,
       "Trend": "★★★★ Güçlü",
@@ -335,6 +307,34 @@
       "Stop": 33.78,
       "Hedef1": 38.18,
       "Hedef": 40.39,
+      "Risk/Odul": 2.0
+    },
+    {
+      "Hisse": "CATES",
+      "Fiyat": 24.88,
+      "Trend": "★★ Zayıf",
+      "TrendSkor": 40,
+      "Momentum": "★★★★★ Çok Güçlü",
+      "MomentumSkor": 100,
+      "Teknik": 67.25,
+      "Temel": 55,
+      "Risk": 80,
+      "AISkor": 66.12,
+      "Karar": "★★ TUT",
+      "RSI": 50.02,
+      "MACD": -1.47,
+      "ADX": 39.16,
+      "ATR": 1.13,
+      "EMA9": 23.2,
+      "EMA21": 24.07,
+      "SMA50": 27.35,
+      "SMA200": 43.92,
+      "FiltreGecti": false,
+      "Destek": 19.19,
+      "Direnc": 27.3,
+      "Stop": 22.62,
+      "Hedef1": 27.14,
+      "Hedef": 29.4,
       "Risk/Odul": 2.0
     },
     {
@@ -478,7 +478,7 @@
       "Risk/Odul": 2.0
     }
   ],
-  "onceki_guncelleme": "2026-11-04T18:38:41+00:00",
+  "onceki_guncelleme": "2026-11-04T21:20:45+00:00",
   "onceki_hisseler": [
     {
       "Hisse": "AKSA",
