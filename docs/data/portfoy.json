@@ -1,5 +1,5 @@
 {
-  "nakit": 12.96,
+  "nakit": 11972.16,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "ASELS": {
@@ -41,14 +41,6 @@
       "stop_takip": 81.29,
       "hedef_takip": 90.2,
       "hedef1_takip": 87.23
-    },
-    "AKSA": {
-      "adet": 1208,
-      "maliyet": 10.44,
-      "tarih": "2026-11-04T21:20:59+00:00",
-      "stop_takip": 9.9,
-      "hedef_takip": 11.51,
-      "hedef1_takip": 10.98
     },
     "AKBNK": {
       "adet": 190,
@@ -481,8 +473,22 @@
       "fiyat": 31.56,
       "tutar": 12624.0,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (74.62, eşik: 70)"
+    },
+    {
+      "tarih": "2026-11-05T18:43:52+00:00",
+      "hisse": "AKSA",
+      "tip": "SAT",
+      "adet": 1208,
+      "fiyat": 9.9,
+      "tutar": 11959.2,
+      "gerekce": "Stop-Loss (9.9)"
     }
   ],
-  "bekleyen": {},
-  "guncelleme": "2026-11-05T08:52:08+00:00"
+  "bekleyen": {
+    "ASELS": "SAT_ZAYIF",
+    "CWENE": "AL",
+    "CATES": "AL",
+    "YKBNK": "AL"
+  },
+  "guncelleme": "2026-11-05T18:43:38+00:00"
 }
