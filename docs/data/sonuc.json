@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-11-06T06:54:03+00:00",
+  "guncelleme": "2026-11-06T06:56:16+00:00",
   "hisseler": [
     {
       "Hisse": "AKBNK",
@@ -478,7 +478,7 @@
       "Risk/Odul": 2.0
     }
   ],
-  "onceki_guncelleme": "2026-11-05T21:29:14+00:00",
+  "onceki_guncelleme": "2026-11-06T06:54:03+00:00",
   "onceki_hisseler": [
     {
       "Hisse": "AKBNK",
@@ -509,34 +509,6 @@
       "Risk/Odul": 2.0
     },
     {
-      "Hisse": "CIMSA",
-      "Fiyat": 42.38,
-      "Trend": "★★★ Orta",
-      "TrendSkor": 70,
-      "Momentum": "★★★★★ Çok Güçlü",
-      "MomentumSkor": 100,
-      "Teknik": 79.25,
-      "Temel": 80,
-      "Risk": 90,
-      "AISkor": 81.62,
-      "Karar": "★★★★ GÜÇLÜ AL",
-      "RSI": 65.73,
-      "MACD": 0.55,
-      "ADX": 19.47,
-      "ATR": 1.07,
-      "EMA9": 41.1,
-      "EMA21": 40.3,
-      "SMA50": 40.2,
-      "SMA200": 44.66,
-      "FiltreGecti": false,
-      "Destek": 36.58,
-      "Direnc": 43.34,
-      "Stop": 40.23,
-      "Hedef1": 44.53,
-      "Hedef": 46.68,
-      "Risk/Odul": 2.0
-    },
-    {
       "Hisse": "CWENE",
       "Fiyat": 17.28,
       "Trend": "★★★★ Güçlü",
@@ -562,6 +534,34 @@
       "Stop": 15.69,
       "Hedef1": 18.87,
       "Hedef": 20.46,
+      "Risk/Odul": 2.0
+    },
+    {
+      "Hisse": "CIMSA",
+      "Fiyat": 42.38,
+      "Trend": "★★★ Orta",
+      "TrendSkor": 70,
+      "Momentum": "★★★★★ Çok Güçlü",
+      "MomentumSkor": 100,
+      "Teknik": 79.25,
+      "Temel": 75,
+      "Risk": 90,
+      "AISkor": 80.12,
+      "Karar": "★★★★ GÜÇLÜ AL",
+      "RSI": 65.73,
+      "MACD": 0.55,
+      "ADX": 19.47,
+      "ATR": 1.07,
+      "EMA9": 41.1,
+      "EMA21": 40.3,
+      "SMA50": 40.2,
+      "SMA200": 44.66,
+      "FiltreGecti": false,
+      "Destek": 36.58,
+      "Direnc": 43.34,
+      "Stop": 40.23,
+      "Hedef1": 44.53,
+      "Hedef": 46.68,
       "Risk/Odul": 2.0
     },
     {
@@ -796,9 +796,9 @@
       "Momentum": "★★★ Orta",
       "MomentumSkor": 70,
       "Teknik": 36.75,
-      "Temel": 65,
+      "Temel": 70,
       "Risk": 90,
-      "AISkor": 55.88,
+      "AISkor": 57.38,
       "Karar": "★ ZAYIF",
       "RSI": 45.93,
       "MACD": -0.75,
