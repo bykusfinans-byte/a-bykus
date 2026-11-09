@@ -22,7 +22,7 @@
       "adet": 1,
       "maliyet": 6551.19,
       "tarih": "2026-11-04T18:38:52+00:00",
-      "stop_takip": 6416.76,
+      "stop_takip": 6551.19,
       "hedef_takip": 6820.05,
       "hedef1_takip": 6685.62
     },
@@ -38,7 +38,7 @@
       "adet": 190,
       "maliyet": 66.3,
       "tarih": "2026-11-04T21:20:59+00:00",
-      "stop_takip": 62.41,
+      "stop_takip": 66.3,
       "hedef_takip": 74.09,
       "hedef1_takip": 70.19
     },
@@ -46,7 +46,7 @@
       "adet": 400,
       "maliyet": 31.56,
       "tarih": "2026-11-04T21:20:59+00:00",
-      "stop_takip": 29.61,
+      "stop_takip": 31.56,
       "hedef_takip": 35.46,
       "hedef1_takip": 33.51
     },
@@ -520,5 +520,5 @@
     }
   ],
   "bekleyen": {},
-  "guncelleme": "2026-11-06T20:56:10+00:00"
+  "guncelleme": "2026-11-09T21:25:59+00:00"
 }
