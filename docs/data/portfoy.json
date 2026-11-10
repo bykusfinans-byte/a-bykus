@@ -1,5 +1,5 @@
 {
-  "nakit": 6527.27,
+  "nakit": 49.97,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "CIMSA": {
@@ -57,6 +57,14 @@
       "stop_takip": 25.08,
       "hedef_takip": 31.91,
       "hedef1_takip": 29.64
+    },
+    "TOASO": {
+      "adet": 27,
+      "maliyet": 239.9,
+      "tarih": "2026-11-10T21:20:39+00:00",
+      "stop_takip": 225.29,
+      "hedef_takip": 269.12,
+      "hedef1_takip": 254.51
     }
   },
   "islemler": [
@@ -518,14 +526,19 @@
       "fiyat": 6508.64,
       "tutar": 6508.64,
       "gerekce": "Stop-Loss (6551.19)"
+    },
+    {
+      "tarih": "2026-11-10T21:20:39+00:00",
+      "hisse": "TOASO",
+      "tip": "AL",
+      "adet": 27,
+      "fiyat": 239.9,
+      "tutar": 6477.3,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (81.12, eşik: 70)"
     }
   ],
   "bekleyen": {
-    "TOASO": "AL",
-    "AKSA": "AL",
-    "BIMAS": "AL",
-    "YKBNK": "AL",
-    "KCHOL": "AL"
+    "GUMUS": "SAT_ZAYIF"
   },
-  "guncelleme": "2026-11-10T18:39:53+00:00"
+  "guncelleme": "2026-11-10T21:20:24+00:00"
 }
