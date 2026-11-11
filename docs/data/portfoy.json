@@ -1,5 +1,5 @@
 {
-  "nakit": 49.97,
+  "nakit": 10132.67,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "CIMSA": {
@@ -41,14 +41,6 @@
       "stop_takip": 31.56,
       "hedef_takip": 35.46,
       "hedef1_takip": 33.51
-    },
-    "CWENE": {
-      "adet": 659,
-      "maliyet": 17.28,
-      "tarih": "2026-11-05T21:29:30+00:00",
-      "stop_takip": 15.69,
-      "hedef_takip": 20.46,
-      "hedef1_takip": 18.87
     },
     "CATES": {
       "adet": 416,
@@ -535,10 +527,22 @@
       "fiyat": 239.9,
       "tutar": 6477.3,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (81.12, eşik: 70)"
+    },
+    {
+      "tarih": "2026-11-11T18:41:24+00:00",
+      "hisse": "CWENE",
+      "tip": "SAT",
+      "adet": 659,
+      "fiyat": 15.3,
+      "tutar": 10082.7,
+      "gerekce": "Stop-Loss (15.69)"
     }
   ],
   "bekleyen": {
-    "GUMUS": "SAT_ZAYIF"
+    "TUPRS": "AL",
+    "AKSA": "AL",
+    "BIMAS": "AL",
+    "YKBNK": "AL"
   },
-  "guncelleme": "2026-11-10T21:20:24+00:00"
+  "guncelleme": "2026-11-11T18:41:08+00:00"
 }
