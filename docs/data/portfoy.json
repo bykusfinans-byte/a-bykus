@@ -1,5 +1,5 @@
 {
-  "nakit": 12415.08,
+  "nakit": 23.08,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "CIMSA": {
@@ -57,6 +57,14 @@
       "stop_takip": 329.52,
       "hedef_takip": 390.95,
       "hedef1_takip": 370.48
+    },
+    "BIMAS": {
+      "adet": 32,
+      "maliyet": 387.25,
+      "tarih": "2026-11-12T21:51:28+00:00",
+      "stop_takip": 372.16,
+      "hedef_takip": 417.44,
+      "hedef1_takip": 402.34
     }
   },
   "islemler": [
@@ -554,14 +562,19 @@
       "fiyat": 81.09,
       "tutar": 12082.41,
       "gerekce": "Stop-Loss (81.29)"
+    },
+    {
+      "tarih": "2026-11-12T21:51:28+00:00",
+      "hisse": "BIMAS",
+      "tip": "AL",
+      "adet": 32,
+      "fiyat": 387.25,
+      "tutar": 12392.0,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (83.25, eşik: 70)"
     }
   ],
   "bekleyen": {
-    "BIMAS": "AL",
-    "AKSA": "AL",
-    "CWENE": "AL",
-    "KCHOL": "AL",
-    "ASELS": "AL"
+    "YKBNK": "AL"
   },
-  "guncelleme": "2026-11-12T18:53:30+00:00"
+  "guncelleme": "2026-11-12T21:51:14+00:00"
 }
