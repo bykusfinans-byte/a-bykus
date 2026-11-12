@@ -1,5 +1,5 @@
 {
-  "nakit": 332.67,
+  "nakit": 12415.08,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "CIMSA": {
@@ -17,14 +17,6 @@
       "stop_takip": 89.43,
       "hedef_takip": 102.68,
       "hedef1_takip": 98.27
-    },
-    "GUMUS": {
-      "adet": 149,
-      "maliyet": 84.26,
-      "tarih": "2026-11-04T21:20:59+00:00",
-      "stop_takip": 81.29,
-      "hedef_takip": 90.2,
-      "hedef1_takip": 87.23
     },
     "AKBNK": {
       "adet": 190,
@@ -553,10 +545,23 @@
       "fiyat": 350.0,
       "tutar": 9800.0,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (81.38, eşik: 70)"
+    },
+    {
+      "tarih": "2026-11-12T18:53:45+00:00",
+      "hisse": "GUMUS",
+      "tip": "SAT",
+      "adet": 149,
+      "fiyat": 81.09,
+      "tutar": 12082.41,
+      "gerekce": "Stop-Loss (81.29)"
     }
   ],
   "bekleyen": {
-    "GUMUS": "SAT_ZAYIF"
+    "BIMAS": "AL",
+    "AKSA": "AL",
+    "CWENE": "AL",
+    "KCHOL": "AL",
+    "ASELS": "AL"
   },
-  "guncelleme": "2026-11-11T22:00:08+00:00"
+  "guncelleme": "2026-11-12T18:53:30+00:00"
 }
