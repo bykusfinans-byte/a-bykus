@@ -38,7 +38,7 @@
       "adet": 416,
       "maliyet": 27.36,
       "tarih": "2026-11-05T21:29:30+00:00",
-      "stop_takip": 25.08,
+      "stop_takip": 27.36,
       "hedef_takip": 31.91,
       "hedef1_takip": 29.64
     },
@@ -576,5 +576,5 @@
   "bekleyen": {
     "YKBNK": "AL"
   },
-  "guncelleme": "2026-11-13T21:26:47+00:00"
+  "guncelleme": "2026-11-16T15:47:29+00:00"
 }
