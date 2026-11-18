@@ -1,15 +1,7 @@
 {
-  "nakit": 23.08,
+  "nakit": 11525.28,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
-    "CIMSA": {
-      "adet": 289,
-      "maliyet": 39.46,
-      "tarih": "2026-10-27T20:07:48+00:00",
-      "stop_takip": 39.46,
-      "hedef_takip": 43.42,
-      "hedef1_takip": 41.44
-    },
     "TCELL": {
       "adet": 121,
       "maliyet": 93.85,
@@ -571,11 +563,19 @@
       "fiyat": 387.25,
       "tutar": 12392.0,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (83.25, eşik: 70)"
+    },
+    {
+      "tarih": "2026-11-18T22:37:51+00:00",
+      "hisse": "CIMSA",
+      "tip": "SAT",
+      "adet": 289,
+      "fiyat": 39.8,
+      "tutar": 11502.2,
+      "gerekce": "AI Skoru 2 tur üst üste düşük (47.62)"
     }
   ],
   "bekleyen": {
-    "YKBNK": "AL",
-    "CIMSA": "SAT_ZAYIF"
+    "AKSA": "AL"
   },
-  "guncelleme": "2026-11-18T19:23:47+00:00"
+  "guncelleme": "2026-11-18T22:37:35+00:00"
 }
