@@ -1,5 +1,5 @@
 {
-  "nakit": 11525.28,
+  "nakit": 46525.88,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "TCELL": {
@@ -10,14 +10,6 @@
       "hedef_takip": 102.68,
       "hedef1_takip": 98.27
     },
-    "AKBNK": {
-      "adet": 190,
-      "maliyet": 66.3,
-      "tarih": "2026-11-04T21:20:59+00:00",
-      "stop_takip": 66.3,
-      "hedef_takip": 74.09,
-      "hedef1_takip": 70.19
-    },
     "VAKBN": {
       "adet": 400,
       "maliyet": 31.56,
@@ -26,14 +18,6 @@
       "hedef_takip": 35.46,
       "hedef1_takip": 33.51
     },
-    "CATES": {
-      "adet": 416,
-      "maliyet": 27.36,
-      "tarih": "2026-11-05T21:29:30+00:00",
-      "stop_takip": 27.36,
-      "hedef_takip": 31.91,
-      "hedef1_takip": 29.64
-    },
     "TOASO": {
       "adet": 27,
       "maliyet": 239.9,
@@ -41,14 +25,6 @@
       "stop_takip": 225.29,
       "hedef_takip": 269.12,
       "hedef1_takip": 254.51
-    },
-    "TUPRS": {
-      "adet": 28,
-      "maliyet": 350.0,
-      "tarih": "2026-11-11T22:00:25+00:00",
-      "stop_takip": 329.52,
-      "hedef_takip": 390.95,
-      "hedef1_takip": 370.48
     },
     "BIMAS": {
       "adet": 32,
@@ -572,8 +548,39 @@
       "fiyat": 39.8,
       "tutar": 11502.2,
       "gerekce": "AI Skoru 2 tur üst üste düşük (47.62)"
+    },
+    {
+      "tarih": "2026-11-20T19:05:50+00:00",
+      "hisse": "AKBNK",
+      "tip": "SAT",
+      "adet": 190,
+      "fiyat": 65.2,
+      "tutar": 12388.0,
+      "gerekce": "Stop-Loss (66.3)"
+    },
+    {
+      "tarih": "2026-11-20T19:05:50+00:00",
+      "hisse": "CATES",
+      "tip": "SAT",
+      "adet": 416,
+      "fiyat": 32.6,
+      "tutar": 13561.6,
+      "gerekce": "Hedef fiyata ulaşıldı (31.91)"
+    },
+    {
+      "tarih": "2026-11-20T19:05:50+00:00",
+      "hisse": "TUPRS",
+      "tip": "SAT",
+      "adet": 28,
+      "fiyat": 323.25,
+      "tutar": 9051.0,
+      "gerekce": "Stop-Loss (329.52)"
     }
   ],
-  "bekleyen": {},
-  "guncelleme": "2026-11-19T22:40:58+00:00"
+  "bekleyen": {
+    "TCELL": "SAT_ZAYIF",
+    "CATES": "AL",
+    "AKSA": "AL"
+  },
+  "guncelleme": "2026-11-20T19:05:32+00:00"
 }
