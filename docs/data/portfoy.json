@@ -1,15 +1,7 @@
 {
-  "nakit": 46525.88,
+  "nakit": 34535.82,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
-    "TCELL": {
-      "adet": 121,
-      "maliyet": 93.85,
-      "tarih": "2026-11-03T21:04:17+00:00",
-      "stop_takip": 89.43,
-      "hedef_takip": 102.68,
-      "hedef1_takip": 98.27
-    },
     "VAKBN": {
       "adet": 400,
       "maliyet": 31.56,
@@ -33,6 +25,22 @@
       "stop_takip": 372.16,
       "hedef_takip": 417.44,
       "hedef1_takip": 402.34
+    },
+    "CATES": {
+      "adet": 352,
+      "maliyet": 32.6,
+      "tarih": "2026-11-20T22:15:55+00:00",
+      "stop_takip": 29.54,
+      "hedef_takip": 38.73,
+      "hedef1_takip": 35.66
+    },
+    "AKSA": {
+      "adet": 1082,
+      "maliyet": 10.63,
+      "tarih": "2026-11-20T22:15:55+00:00",
+      "stop_takip": 10.14,
+      "hedef_takip": 11.62,
+      "hedef1_takip": 11.12
     }
   },
   "islemler": [
@@ -575,12 +583,35 @@
       "fiyat": 323.25,
       "tutar": 9051.0,
       "gerekce": "Stop-Loss (329.52)"
+    },
+    {
+      "tarih": "2026-11-20T22:15:55+00:00",
+      "hisse": "TCELL",
+      "tip": "SAT",
+      "adet": 121,
+      "fiyat": 90.8,
+      "tutar": 10986.8,
+      "gerekce": "AI Skoru 2 tur üst üste düşük (41.88)"
+    },
+    {
+      "tarih": "2026-11-20T22:15:55+00:00",
+      "hisse": "CATES",
+      "tip": "AL",
+      "adet": 352,
+      "fiyat": 32.6,
+      "tutar": 11475.2,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (78.0, eşik: 70)"
+    },
+    {
+      "tarih": "2026-11-20T22:15:55+00:00",
+      "hisse": "AKSA",
+      "tip": "AL",
+      "adet": 1082,
+      "fiyat": 10.63,
+      "tutar": 11501.66,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (74.88, eşik: 70)"
     }
   ],
-  "bekleyen": {
-    "TCELL": "SAT_ZAYIF",
-    "CATES": "AL",
-    "AKSA": "AL"
-  },
-  "guncelleme": "2026-11-20T19:05:32+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-11-20T22:15:36+00:00"
 }
