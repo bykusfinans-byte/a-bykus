@@ -1,5 +1,5 @@
 {
-  "nakit": 34535.82,
+  "nakit": 46407.82,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "VAKBN": {
@@ -17,14 +17,6 @@
       "stop_takip": 225.29,
       "hedef_takip": 269.12,
       "hedef1_takip": 254.51
-    },
-    "BIMAS": {
-      "adet": 32,
-      "maliyet": 387.25,
-      "tarih": "2026-11-12T21:51:28+00:00",
-      "stop_takip": 372.16,
-      "hedef_takip": 417.44,
-      "hedef1_takip": 402.34
     },
     "CATES": {
       "adet": 352,
@@ -610,8 +602,19 @@
       "fiyat": 10.63,
       "tutar": 11501.66,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (74.88, eşik: 70)"
+    },
+    {
+      "tarih": "2026-11-23T22:38:24+00:00",
+      "hisse": "BIMAS",
+      "tip": "SAT",
+      "adet": 32,
+      "fiyat": 371.0,
+      "tutar": 11872.0,
+      "gerekce": "Stop-Loss (372.16)"
     }
   ],
-  "bekleyen": {},
-  "guncelleme": "2026-11-20T22:15:36+00:00"
+  "bekleyen": {
+    "CWENE": "AL"
+  },
+  "guncelleme": "2026-11-23T22:38:07+00:00"
 }
