@@ -30,7 +30,7 @@
       "adet": 1082,
       "maliyet": 10.63,
       "tarih": "2026-11-20T22:15:55+00:00",
-      "stop_takip": 10.14,
+      "stop_takip": 10.63,
       "hedef_takip": 11.62,
       "hedef1_takip": 11.12
     },
@@ -631,5 +631,5 @@
     }
   ],
   "bekleyen": {},
-  "guncelleme": "2026-11-24T02:16:21+00:00"
+  "guncelleme": "2026-11-24T21:09:57+00:00"
 }
