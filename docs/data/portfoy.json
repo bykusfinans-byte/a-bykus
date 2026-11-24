@@ -1,5 +1,5 @@
 {
-  "nakit": 46407.82,
+  "nakit": 34813.3,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "VAKBN": {
@@ -33,6 +33,14 @@
       "stop_takip": 10.14,
       "hedef_takip": 11.62,
       "hedef1_takip": 11.12
+    },
+    "CWENE": {
+      "adet": 642,
+      "maliyet": 18.06,
+      "tarih": "2026-11-24T02:16:37+00:00",
+      "stop_takip": 16.52,
+      "hedef_takip": 21.14,
+      "hedef1_takip": 19.6
     }
   },
   "islemler": [
@@ -611,10 +619,17 @@
       "fiyat": 371.0,
       "tutar": 11872.0,
       "gerekce": "Stop-Loss (372.16)"
+    },
+    {
+      "tarih": "2026-11-24T02:16:37+00:00",
+      "hisse": "CWENE",
+      "tip": "AL",
+      "adet": 642,
+      "fiyat": 18.06,
+      "tutar": 11594.52,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (78.0, eşik: 70)"
     }
   ],
-  "bekleyen": {
-    "CWENE": "AL"
-  },
-  "guncelleme": "2026-11-23T22:38:07+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-11-24T02:16:21+00:00"
 }
