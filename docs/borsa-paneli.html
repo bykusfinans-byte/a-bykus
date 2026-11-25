@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Borsa Grafik Paneli</title>
+<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+<style>
+:root{--bg:#ffffff;--panel:#f4f5f7;--line:#dfe2e7;--text:#1b1f27;--mute:#6b7280;--up:#16a34a;--down:#dc2626;--acc:#2962ff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#131722;--panel:#1c212d;--line:#2a2f3d;--text:#d7dae0;--mute:#8a91a1;--up:#26a69a;--down:#ef5350;--acc:#5b8cff;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#131722;--panel:#1c212d;--line:#2a2f3d;--text:#d7dae0;--mute:#8a91a1;--up:#26a69a;--down:#ef5350;--acc:#5b8cff;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--text);font:14px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.app{display:grid;grid-template-columns:230px 1fr;height:100%}
+aside{background:var(--panel);border-right:1px solid var(--line);overflow-y:auto}
+aside h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:0;padding:14px 14px 8px}
+.row{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;cursor:pointer;border-left:3px solid transparent}
+.row:hover{background:var(--line)}
+.row.on{background:var(--line);border-left-color:var(--acc)}
+.row b{display:block}.row small{color:var(--mute)}
+.row .r{text-align:right;font-variant-numeric:tabular-nums}
+.up{color:var(--up)}.down{color:var(--down)}
+main{display:flex;flex-direction:column;min-width:0}
+.bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--line)}
+.bar .sym{font-weight:700;font-size:16px;margin-right:8px}
+button{background:transparent;color:var(--text);border:1px solid var(--line);border-radius:6px;padding:5px 10px;font:inherit;cursor:pointer}
+button:hover{background:var(--panel)}
+button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.sp{flex:1}
+.legend{padding:6px 12px;color:var(--mute);font-variant-numeric:tabular-nums;min-height:30px;font-size:13px}
+.legend span{margin-right:12px}
+#chart{flex:1;min-height:0;position:relative}
+#cv{position:absolute;left:0;top:0;width:100%;height:100%;z-index:4;pointer-events:none}
+#tools{position:absolute;left:8px;top:8px;z-index:6;display:flex;flex-direction:column;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:4px}
+#tools button{width:34px;height:34px;padding:0;font-size:15px}
+#col{width:34px;height:26px;padding:0;border:1px solid var(--line);border-radius:6px;background:transparent;cursor:pointer}
+.tabs{display:flex;flex-wrap:wrap;gap:4px;padding:0 10px 8px}.tabs button{padding:3px 8px;font-size:12px}
+#q{margin:0 10px 8px;width:calc(100% - 20px);background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:6px;padding:6px 8px;font:inherit}
+#sel{display:none;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:6px;padding:5px;font:inherit;max-width:100%}
+.note{padding:6px 12px;color:var(--mute);font-size:12px;border-top:1px solid var(--line)}
+@media (max-width:700px){.app{grid-template-columns:1fr}aside{display:none}#sel{display:inline-block}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside id="list"><h2>İzleme listesi</h2><div class="tabs" id="tabs"></div><input id="q" placeholder="Ara…"></aside>
+  <main>
+    <div class="bar">
+      <select id="sel"></select><span class="sym" id="title">THYAO</span>
+      <button data-tf="D" class="on">Günlük</button>
+      <button data-tf="W">Haftalık</button>
+      <button data-tf="M">Aylık</button>
+      <button data-cu="TL" class="on">₺ TL</button>
+      <button data-cu="USD">$ USD</button>
+      <span class="sp"></span>
+      <button id="ma20" class="on">MA 20</button>
+      <button id="ma50" class="on">MA 50</button>
+      <button id="e9" class="on">EMA 9</button>
+      <button id="e21" class="on">EMA 21</button>
+      <button id="vol" class="on">Hacim</button>
+      <button id="theme">Tema</button>
+    </div>
+    <div class="legend" id="legend"></div>
+    <div id="chart"><canvas id="cv"></canvas><div id="tools"></div></div>
+    <div class="note">Gösterilen veriler örnek (simüle) veridir; gerçek fiyatları temsil etmez.</div>
+  </main>
+</div>
+<script>
+const SYMS={XU100:["BIST 100 Endeksi",12000,"Endeks"],GAU:["Gram Altın",6550,"Emtia"],GAG:["Gram Gümüş",85,"Emtia"],USDTRY:["Dolar/TL",49,"Döviz"],
+THYAO:["Türk Hava Yolları",310,"Hisse"],GARAN:["Garanti BBVA",130,"Hisse"],AKBNK:["Akbank",65,"Hisse"],ISCTR:["İş Bankası C",16,"Hisse"],YKBNK:["Yapı Kredi",34,"Hisse"],ASELS:["Aselsan",195,"Hisse"],EREGL:["Erdemir",27,"Hisse"],KRDMD:["Kardemir D",28,"Hisse"],BIMAS:["BİM Mağazalar",560,"Hisse"],MGROS:["Migros",480,"Hisse"],KCHOL:["Koç Holding",190,"Hisse"],SAHOL:["Sabancı Holding",85,"Hisse"],SISE:["Şişecam",42,"Hisse"],TUPRS:["Tüpraş",170,"Hisse"],PETKM:["Petkim",20,"Hisse"],FROTO:["Ford Otosan",1050,"Hisse"],TOASO:["Tofaş",260,"Hisse"],PGSUS:["Pegasus",230,"Hisse"],TAVHL:["TAV Havalimanları",330,"Hisse"],TCELL:["Turkcell",95,"Hisse"],TTKOM:["Türk Telekom",55,"Hisse"],SASA:["Sasa Polyester",3.5,"Hisse"],HEKTS:["Hektaş",3,"Hisse"],ARCLK:["Arçelik",140,"Hisse"],VESTL:["Vestel",95,"Hisse"],ENKAI:["Enka İnşaat",70,"Hisse"],EKGYO:["Emlak Konut",20,"Hisse"],KOZAL:["Koza Altın",20,"Hisse"],ASTOR:["Astor Enerji",110,"Hisse"],ALARK:["Alarko Holding",110,"Hisse"],DOHOL:["Doğan Holding",19,"Hisse"],ULKER:["Ülker",120,"Hisse"],
+AEFES:["Anadolu Efes",170,"Hisse"],AGHOL:["AG Anadolu Grubu",25,"Hisse"],AKSA:["Aksa Akrilik",5.5,"Hisse"],AKSEN:["Aksa Enerji",38,"Hisse"],AKCNS:["Akçansa",230,"Hisse"],ANSGR:["Anadolu Sigorta",85,"Hisse"],AYDEM:["Aydem Yenilenebilir",12,"Hisse"],BIOEN:["Biotrend Enerji",15,"Hisse"],BRSAN:["Borusan Mannesmann",470,"Hisse"],BRYAT:["Borusan Yatırım",2400,"Hisse"],CANTE:["Çan2 Termik",3.5,"Hisse"],CCOLA:["Coca-Cola İçecek",60,"Hisse"],CIMSA:["Çimsa",55,"Hisse"],CWENE:["CW Enerji",60,"Hisse"],DOAS:["Doğuş Otomotiv",230,"Hisse"],ECILC:["Eczacıbaşı İlaç",90,"Hisse"],ENJSA:["Enerjisa",70,"Hisse"],GENIL:["Gen İlaç",110,"Hisse"],GESAN:["Girişim Elektrik",45,"Hisse"],GUBRF:["Gübre Fabrikaları",330,"Hisse"],HALKB:["Halkbank",28,"Hisse"],ISMEN:["İş Yatırım",50,"Hisse"],KONTR:["Kontrolmatik",20,"Hisse"],KORDS:["Kordsa",160,"Hisse"],LOGO:["Logo Yazılım",120,"Hisse"],MAVI:["Mavi Giyim",75,"Hisse"],MIATK:["Mia Teknoloji",32,"Hisse"],ODAS:["Odaş Elektrik",6,"Hisse"],OTKAR:["Otokar",480,"Hisse"],OYAKC:["Oyak Çimento",40,"Hisse"],SELEC:["Selçuk Ecza",70,"Hisse"],SKBNK:["Şekerbank",6,"Hisse"],SMRTG:["Smart Güneş",30,"Hisse"],SOKM:["Şok Marketler",50,"Hisse"],TKFEN:["Tekfen Holding",90,"Hisse"],TSKB:["TSKB",12,"Hisse"],TTRAK:["Türk Traktör",520,"Hisse"],TURSG:["Türkiye Sigorta",9,"Hisse"],VAKBN:["Vakıfbank",24,"Hisse"],VESBE:["Vestel Beyaz Eşya",16,"Hisse"],YEOTK:["Yeo Teknoloji",180,"Hisse"],ZOREN:["Zorlu Enerji",3,"Hisse"],
+AHGAZ:["Ahlatcı Doğal Gaz",10,"Hisse"],AKFYE:["Akfen Yenilenebilir Enerji",15,"Hisse"],ALBRK:["Albaraka Türk",7,"Hisse"],ANHYT:["Anadolu Hayat Emeklilik",150,"Hisse"],AYGAZ:["Aygaz",180,"Hisse"],BINHO:["1000 Yatırımlar Holding",100,"Hisse"],ECZYT:["Eczacıbaşı Yatırım",25,"Hisse"],EGEEN:["Ege Endüstri",7000,"Hisse"],EGGUB:["Ege Gübre",120,"Hisse"],ENTRA:["IC Enterra Yenilenebilir",15,"Hisse"],GLYHO:["Global Yatırım Holding",12,"Hisse"],GWIND:["Galata Wind Enerji",12,"Hisse"],ISDMR:["İskenderun Demir Çelik",45,"Hisse"],KARSN:["Karsan Otomotiv",6,"Hisse"],KATMR:["Katmerciler",12,"Hisse"],KCAER:["Kocaer Çelik",12,"Hisse"],LMKDC:["Limak Doğu Anadolu Çimento",90,"Hisse"],RGYAS:["Rönesans Gayrimenkul",40,"Hisse"],RYSAS:["Reysaş Lojistik",20,"Hisse"],SNGYO:["Sinpaş GYO",7,"Hisse"],TABGD:["TAB Gıda",200,"Hisse"],TCKRC:["TCKRC",40,"Hisse"],TRGYO:["Torunlar GYO",40,"Hisse"],TRMET:["TR Anadolu Metal Madencilik",100,"Hisse"]};
+function conv(sym){
+  const d=full[sym]||(full[sym]=gen(sym));
+  if(cu==="TL"||sym==="USDTRY")return d;
+  const u=full.USDTRY||(full.USDTRY=gen("USDTRY")),r=x=>+x.toFixed(3);
+  return d.map((b,i)=>{const k=u[i].close;return{time:b.time,open:r(b.open/k),high:r(b.high/k),low:r(b.low/k),close:r(b.close/k),vol:b.vol}});
+}
+function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function gen(sym){
+  const r=rng([...sym].reduce((s,c)=>s*31+c.charCodeAt(0),7));
+  let p=SYMS[sym][1]*0.8,d=new Date();d.setHours(12,0,0,0);
+  const days=[];
+  while(days.length<700){d.setDate(d.getDate()-1);const w=d.getDay();if(w>0&&w<6)days.push(new Date(d))}
+  days.reverse();
+  return days.map(dt=>{
+    const o=p,ch=(r()-0.48)*0.035,c=Math.max(1,o*(1+ch));
+    const h=Math.max(o,c)*(1+r()*0.012),l=Math.min(o,c)*(1-r()*0.012);
+    p=c;
+    const f=x=>+x.toFixed(2);
+    return{time:dt.toISOString().slice(0,10),open:f(o),high:f(h),low:f(l),close:f(c),vol:Math.round((0.5+r())*5e6)};
+  });
+}
+function agg(data,tf){
+  if(tf==="D")return data;
+  const g=new Map();
+  for(const b of data){
+    const d=new Date(b.time);let k;
+    if(tf==="M")k=b.time.slice(0,7);
+    else{const x=new Date(d);x.setDate(d.getDate()-((d.getDay()+6)%7));k=x.toISOString().slice(0,10)}
+    const e=g.get(k);
+    if(!e)g.set(k,{time:b.time,open:b.open,high:b.high,low:b.low,close:b.close,vol:b.vol});
+    else{e.high=Math.max(e.high,b.high);e.low=Math.min(e.low,b.low);e.close=b.close;e.vol+=b.vol}
+  }
+  return [...g.values()];
+}
+function ma(data,n){
+  const out=[];let s=0;
+  data.forEach((b,i)=>{s+=b.close;if(i>=n)s-=data[i-n].close;if(i>=n-1)out.push({time:b.time,value:+(s/n).toFixed(2)})});
+  return out;
+}
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const el=document.getElementById("chart");
+const chart=LightweightCharts.createChart(el,{autoSize:true,crosshair:{mode:0},rightPriceScale:{borderVisible:false},timeScale:{borderVisible:false,timeVisible:false}});
+const candles=chart.addCandlestickSeries({borderVisible:false});
+const volS=chart.addHistogramSeries({priceFormat:{type:"volume"},priceScaleId:"v"});
+chart.priceScale("v").applyOptions({scaleMargins:{top:0.8,bottom:0}});
+const m20=chart.addLineSeries({lineWidth:2,priceLineVisible:false,lastValueVisible:false});
+const m50=chart.addLineSeries({lineWidth:2,priceLineVisible:false,lastValueVisible:false});
+const s9=chart.addLineSeries({lineWidth:1,priceLineVisible:false,lastValueVisible:false});
+const s21=chart.addLineSeries({lineWidth:1,priceLineVisible:false,lastValueVisible:false});
+function ema(data,n){
+  const k=2/(n+1),out=[];let e=0;
+  data.forEach((b,i)=>{
+    if(i<n-1){e+=b.close;return}
+    if(i===n-1){e=(e+b.close)/n}else{e=b.close*k+e*(1-k)}
+    out.push({time:b.time,value:+e.toFixed(3)});
+  });
+  return out;
+}
+let cur="THYAO",tf="D",full={},view=[];
+function colors(){
+  chart.applyOptions({layout:{background:{type:"solid",color:css("--bg")},textColor:css("--mute")},grid:{vertLines:{color:css("--line")},horzLines:{color:css("--line")}}});
+  candles.applyOptions({upColor:css("--up"),downColor:css("--down"),wickUpColor:css("--up"),wickDownColor:css("--down")});
+  m20.applyOptions({color:"#f59e0b"});m50.applyOptions({color:css("--acc")});s9.applyOptions({color:"#ec4899"});s21.applyOptions({color:"#8b5cf6"});
+  if(view.length)setVol();
+}
+function setVol(){
+  volS.setData(view.map(b=>({time:b.time,value:b.vol,color:(b.close>=b.open?css("--up"):css("--down"))+"66"})));
+}
+function load(){
+  full[cur]=full[cur]||gen(cur);
+  view=agg(conv(cur),tf);
+  candles.setData(view);setVol();
+  m20.setData(ma(view,20));m50.setData(ma(view,50));s9.setData(ema(view,9));s21.setData(ema(view,21));
+  chart.timeScale().fitContent();
+  const n=Math.min(view.length,120);
+  chart.timeScale().setVisibleLogicalRange({from:view.length-n,to:view.length+4});
+  document.getElementById("title").textContent=cur+" · "+SYMS[cur][0]+" ("+(cu==="USD"&&cur!=="USDTRY"?"$":"₺")+")";document.getElementById("sel").value=cur;
+  show(view[view.length-1],view[view.length-2]);
+  renderList();
+}
+const fmt=x=>x.toLocaleString("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2});
+function show(b,prev){
+  if(!b)return;
+  const ch=prev?(b.close/prev.close-1)*100:0;
+  const cls=b.close>=b.open?"up":"down";
+  document.getElementById("legend").innerHTML=
+   `<span>A <b class="${cls}">${fmt(b.open)}</b></span><span>Y <b class="${cls}">${fmt(b.high)}</b></span><span>D <b class="${cls}">${fmt(b.low)}</b></span><span>K <b class="${cls}">${fmt(b.close)}</b></span><span class="${ch>=0?"up":"down"}">${ch>=0?"+":""}${ch.toFixed(2)}%</span><span>Hacim ${(b.vol/1e6).toFixed(2)}M</span>`;
+}
+chart.subscribeCrosshairMove(p=>{
+  if(!p.time){show(view[view.length-1],view[view.length-2]);return}
+  const i=view.findIndex(b=>b.time===p.time);
+  if(i>=0)show(view[i],view[i-1]);
+});
+function renderList(){
+  const box=document.getElementById("list");
+  box.querySelectorAll(".row").forEach(x=>x.remove());
+  for(const s of Object.keys(SYMS)){
+    full[s]=full[s]||gen(s);
+    if(tab!=="Tümü"&&SYMS[s][2]!==tab)continue;const qq=document.getElementById("q").value.trim().toUpperCase();if(qq&&!s.includes(qq)&&!SYMS[s][0].toUpperCase().includes(qq))continue;const d=conv(s),l=d[d.length-1],p=d[d.length-2],ch=(l.close/p.close-1)*100;
+    const row=document.createElement("div");
+    row.className="row"+(s===cur?" on":"");
+    row.innerHTML=`<div><b>${s}</b><small>${SYMS[s][0]}</small></div><div class="r">${fmt(l.close)}<br><small class="${ch>=0?"up":"down"}">${ch>=0?"+":""}${ch.toFixed(2)}%</small></div>`;
+    row.onclick=()=>{cur=s;load()};
+    box.appendChild(row);
+  }
+}
+document.querySelectorAll("[data-tf]").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("[data-tf]").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on");tf=b.dataset.tf;load();
+});
+function toggle(id,fn){const b=document.getElementById(id);b.onclick=()=>{b.classList.toggle("on");fn(b.classList.contains("on"))}}
+toggle("ma20",v=>m20.applyOptions({visible:v}));
+toggle("ma50",v=>m50.applyOptions({visible:v}));
+toggle("e9",v=>s9.applyOptions({visible:v}));
+toggle("e21",v=>s21.applyOptions({visible:v}));
+toggle("vol",v=>volS.applyOptions({visible:v}));
+document.getElementById("theme").onclick=()=>{
+  const r=document.documentElement;
+  const dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;
+  r.dataset.theme=dark?"light":"dark";colors();
+};
+matchMedia("(prefers-color-scheme:dark)").addEventListener("change",colors);
+let tab="Tümü",cu="TL",tool="cursor",draft=null;
+const tabsEl=document.getElementById("tabs");
+["Tümü","Endeks","Hisse","Emtia","Döviz"].forEach(t=>{const b=document.createElement("button");b.textContent=t;if(t===tab)b.className="on";b.onclick=()=>{tab=t;tabsEl.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));renderList()};tabsEl.appendChild(b)});
+document.getElementById("q").oninput=renderList;
+const sel=document.getElementById("sel");
+for(const c of ["Endeks","Emtia","Döviz","Hisse"]){const g=document.createElement("optgroup");g.label=c;for(const s of Object.keys(SYMS))if(SYMS[s][2]===c){const o=document.createElement("option");o.value=s;o.textContent=s+" · "+SYMS[s][0];g.appendChild(o)}sel.appendChild(g)}
+sel.onchange=()=>{cur=sel.value;load()};
+document.querySelectorAll("[data-cu]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-cu]").forEach(x=>x.classList.remove("on"));b.classList.add("on");cu=b.dataset.cu;load()});
+
+/* Çizim araçları */
+const cv=document.getElementById("cv"),ctx=cv.getContext("2d"),ts=chart.timeScale(),tools=document.getElementById("tools"),store={};
+const list=()=>store[cur+"|"+cu+"|"+tf]||(store[cur+"|"+cu+"|"+tf]=[]);
+[["cursor","✥","İmleç"],["line","╱","Trend çizgisi"],["hline","―","Yatay çizgi"],["fib","Fib","Fibonacci düzeltme"],["rect","▭","Dikdörtgen"],["pen","✎","Serbest kalem"]].forEach(([id,ic,tt])=>{const b=document.createElement("button");b.textContent=ic;b.title=tt;b.dataset.t=id;if(id==="cursor")b.className="on";b.onclick=()=>setTool(id);tools.appendChild(b)});
+tools.insertAdjacentHTML("beforeend",'<input type="color" id="col" value="#f59e0b" title="Renk">');
+[["↶","Geri al",()=>list().pop()],["✕","Tüm çizimleri sil",()=>{store[cur+"|"+cu+"|"+tf]=[]}]].forEach(([ic,tt,fn])=>{const b=document.createElement("button");b.textContent=ic;b.title=tt;b.onclick=fn;tools.appendChild(b)});
+function setTool(t){tool=t;tools.querySelectorAll("[data-t]").forEach(b=>b.classList.toggle("on",b.dataset.t===t));cv.style.pointerEvents=t==="cursor"?"none":"auto";cv.style.cursor="crosshair"}
+const toPx=p=>({x:ts.logicalToCoordinate(p.l),y:candles.priceToCoordinate(p.p)});
+function pt(e){const r=cv.getBoundingClientRect();return{l:ts.coordinateToLogical(e.clientX-r.left),p:candles.coordinateToPrice(e.clientY-r.top)}}
+cv.onpointerdown=e=>{const a=pt(e);if(a.l==null||a.p==null)return;cv.setPointerCapture(e.pointerId);const c=document.getElementById("col").value;if(tool==="hline"){list().push({t:"hline",c,a});setTool("cursor");return}draft={t:tool,c,a,b:a,pts:[a]}};
+cv.onpointermove=e=>{if(!draft)return;const b=pt(e);if(b.l==null||b.p==null)return;draft.b=b;if(draft.t==="pen")draft.pts.push(b)};
+cv.onpointerup=()=>{if(!draft)return;list().push(draft);draft=null;if(tool!=="pen")setTool("cursor")};
+function shape(d,W){
+  const A=toPx(d.a),B=toPx(d.b||d.a);
+  ctx.strokeStyle=ctx.fillStyle=d.c;ctx.lineWidth=2;ctx.font="12px system-ui";ctx.globalAlpha=1;
+  if(d.t==="hline"){if(A.y==null)return;ctx.beginPath();ctx.moveTo(0,A.y);ctx.lineTo(W,A.y);ctx.stroke();ctx.fillText(fmt(d.a.p),W-110,A.y-4);return}
+  if(d.t==="pen"){ctx.beginPath();d.pts.forEach((p,i)=>{const q=toPx(p);if(q.x==null||q.y==null)return;i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y)});ctx.stroke();return}
+  if(A.x==null||A.y==null||B.x==null||B.y==null)return;
+  if(d.t==="line"){ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.lineTo(B.x,B.y);ctx.stroke()}
+  else if(d.t==="rect"){ctx.globalAlpha=.15;ctx.fillRect(A.x,A.y,B.x-A.x,B.y-A.y);ctx.globalAlpha=1;ctx.strokeRect(A.x,A.y,B.x-A.x,B.y-A.y)}
+  else if(d.t==="fib"){
+    const x0=Math.min(A.x,B.x),LV=[0,.236,.382,.5,.618,.786,1],pr=v=>d.b.p+(d.a.p-d.b.p)*v;
+    LV.forEach((v,i)=>{const y=candles.priceToCoordinate(pr(v));if(y==null)return;
+      ctx.globalAlpha=.9;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x0,y);ctx.lineTo(W,y);ctx.stroke();ctx.fillText((v*100).toFixed(1)+"%  "+fmt(pr(v)),x0+4,y-4);
+      const py=i?candles.priceToCoordinate(pr(LV[i-1])):null;
+      if(py!=null){ctx.globalAlpha=i%2?.06:.12;ctx.fillRect(x0,Math.min(y,py),W-x0,Math.abs(y-py))}});
+    ctx.globalAlpha=.6;ctx.lineWidth=1;ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.lineTo(B.x,B.y);ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1;
+  }
+}
+function draw(){
+  const r=cv.getBoundingClientRect(),dpr=devicePixelRatio||1,w=Math.round(r.width*dpr),h=Math.round(r.height*dpr);
+  if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h}
+  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,r.width,r.height);
+  const all=[...list()];if(draft)all.push(draft);
+  for(const d of all)shape(d,r.width);
+  requestAnimationFrame(draw);
+}
+colors();load();draw();
+</script>
+</body>
+</html>
