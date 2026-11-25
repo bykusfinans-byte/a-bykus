@@ -1,15 +1,7 @@
 {
-  "nakit": 34813.3,
+  "nakit": 47773.3,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
-    "VAKBN": {
-      "adet": 400,
-      "maliyet": 31.56,
-      "tarih": "2026-11-04T21:20:59+00:00",
-      "stop_takip": 31.56,
-      "hedef_takip": 35.46,
-      "hedef1_takip": 33.51
-    },
     "TOASO": {
       "adet": 27,
       "maliyet": 239.9,
@@ -628,10 +620,17 @@
       "fiyat": 18.06,
       "tutar": 11594.52,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (78.0, eşik: 70)"
+    },
+    {
+      "tarih": "2026-11-25T08:13:53+00:00",
+      "hisse": "VAKBN",
+      "tip": "SAT",
+      "adet": 400,
+      "fiyat": 32.4,
+      "tutar": 12960.0,
+      "gerekce": "AI Skoru 2 tur üst üste düşük (49.38)"
     }
   ],
-  "bekleyen": {
-    "VAKBN": "SAT_ZAYIF"
-  },
-  "guncelleme": "2026-11-25T07:47:10+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-11-25T08:13:40+00:00"
 }
