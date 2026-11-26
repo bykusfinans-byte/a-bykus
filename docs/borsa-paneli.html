@@ -48,6 +48,7 @@ button.on{background:var(--acc);border-color:var(--acc);color:#fff}
   <main>
     <div class="bar">
       <select id="sel"></select><span class="sym" id="title">THYAO</span>
+      <button data-tf="H4">4 Saat</button>
       <button data-tf="D" class="on">Günlük</button>
       <button data-tf="W">Haftalık</button>
       <button data-tf="M">Aylık</button>
@@ -93,7 +94,7 @@ function gen(sym){
   });
 }
 function agg(data,tf){
-  if(tf==="D")return data;
+  if(tf==="D")return data;if(tf==="H4")return h4(data);
   const g=new Map();
   for(const b of data){
     const d=new Date(b.time);let k;
@@ -104,6 +105,18 @@ function agg(data,tf){
     else{e.high=Math.max(e.high,b.high);e.low=Math.min(e.low,b.low);e.close=b.close;e.vol+=b.vol}
   }
   return [...g.values()];
+}
+function h4(data){
+  const out=[],f=x=>+x.toFixed(3);
+  data.forEach((b,i)=>{
+    const [y,m,d]=b.time.split("-").map(Number);
+    const t0=Date.UTC(y,m-1,d,10)/1000,t1=Date.UTC(y,m-1,d,14)/1000;
+    const r=((i*9301+49297)%233280)/233280,r2=((i*7919+13)%1000)/1000;
+    const mid=b.open+(b.close-b.open)*(0.35+0.3*r),hi1=r<.5,lo1=r2<.5;
+    out.push({time:t0,open:b.open,close:f(mid),high:f(hi1?b.high:Math.max(b.open,mid)*1.002),low:f(lo1?b.low:Math.min(b.open,mid)*0.998),vol:Math.round(b.vol*.55)});
+    out.push({time:t1,open:f(mid),close:b.close,high:f(hi1?Math.max(mid,b.close)*1.002:b.high),low:f(lo1?Math.min(mid,b.close)*0.998:b.low),vol:Math.round(b.vol*.45)});
+  });
+  return out;
 }
 function ma(data,n){
   const out=[];let s=0;
@@ -145,7 +158,7 @@ function load(){
   candles.setData(view);setVol();
   m20.setData(ma(view,20));m50.setData(ma(view,50));s9.setData(ema(view,9));s21.setData(ema(view,21));
   chart.timeScale().fitContent();
-  const n=Math.min(view.length,120);
+  const n=Math.min(view.length,tf==="H4"?200:120);chart.applyOptions({timeScale:{timeVisible:tf==="H4"}});
   chart.timeScale().setVisibleLogicalRange({from:view.length-n,to:view.length+4});
   document.getElementById("title").textContent=cur+" · "+SYMS[cur][0]+" ("+(cu==="USD"&&cur!=="USDTRY"?"$":"₺")+")";document.getElementById("sel").value=cur;
   show(view[view.length-1],view[view.length-2]);
