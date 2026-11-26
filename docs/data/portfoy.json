@@ -1,5 +1,5 @@
 {
-  "nakit": 47773.3,
+  "nakit": 35976.58,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "TOASO": {
@@ -33,6 +33,14 @@
       "stop_takip": 16.52,
       "hedef_takip": 21.14,
       "hedef1_takip": 19.6
+    },
+    "ALTIN": {
+      "adet": 2,
+      "maliyet": 5898.36,
+      "tarih": "2026-11-26T07:57:04+00:00",
+      "stop_takip": 5714.88,
+      "hedef_takip": 6265.32,
+      "hedef1_takip": 6081.84
     }
   },
   "islemler": [
@@ -629,11 +637,17 @@
       "fiyat": 32.4,
       "tutar": 12960.0,
       "gerekce": "AI Skoru 2 tur üst üste düşük (49.38)"
+    },
+    {
+      "tarih": "2026-11-26T07:57:04+00:00",
+      "hisse": "ALTIN",
+      "tip": "AL",
+      "adet": 2,
+      "fiyat": 5898.36,
+      "tutar": 11796.72,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (70.95, eşik: 70)"
     }
   ],
-  "bekleyen": {
-    "TOASO": "SAT_ZAYIF",
-    "ALTIN": "AL"
-  },
-  "guncelleme": "2026-11-26T07:02:30+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-11-26T07:56:52+00:00"
 }
