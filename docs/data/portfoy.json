@@ -1,12 +1,12 @@
 {
-  "nakit": 46346.5,
+  "nakit": 34770.25,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "TOASO": {
       "adet": 27,
       "maliyet": 239.9,
       "tarih": "2026-11-10T21:20:39+00:00",
-      "stop_takip": 225.29,
+      "stop_takip": 239.9,
       "hedef_takip": 269.12,
       "hedef1_takip": 254.51
     },
@@ -33,6 +33,14 @@
       "stop_takip": 5714.88,
       "hedef_takip": 6265.32,
       "hedef1_takip": 6081.84
+    },
+    "TUPRS": {
+      "adet": 35,
+      "maliyet": 330.75,
+      "tarih": "2026-11-27T19:56:30+00:00",
+      "stop_takip": 313.3,
+      "hedef_takip": 365.65,
+      "hedef1_takip": 348.2
     }
   },
   "islemler": [
@@ -647,10 +655,17 @@
       "fiyat": 29.46,
       "tutar": 10369.92,
       "gerekce": "Stop-Loss (29.54)"
+    },
+    {
+      "tarih": "2026-11-27T19:56:30+00:00",
+      "hisse": "TUPRS",
+      "tip": "AL",
+      "adet": 35,
+      "fiyat": 330.75,
+      "tutar": 11576.25,
+      "gerekce": "AI Skoru 2 tur üst üste >= eşik (73.0, eşik: 70)"
     }
   ],
-  "bekleyen": {
-    "TUPRS": "AL"
-  },
-  "guncelleme": "2026-11-27T08:30:50+00:00"
+  "bekleyen": {},
+  "guncelleme": "2026-11-27T19:56:11+00:00"
 }
