@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-11-26T23:53:29+00:00",
+  "guncelleme": "2026-11-27T08:30:50+00:00",
   "hisseler": [
     {
       "Hisse": "ALTIN",
@@ -14,19 +14,19 @@
       "AISkor": 70.95,
       "Karar": "★★★ AL",
       "RSI": 52.44,
-      "MACD": -39.59,
-      "ADX": 29.26,
-      "ATR": 91.74,
-      "EMA9": 5829.21,
-      "EMA21": 5848.54,
-      "SMA50": 5983.16,
-      "SMA200": 6384.58,
+      "MACD": -39.6,
+      "ADX": 28.88,
+      "ATR": 91.73,
+      "EMA9": 5829.23,
+      "EMA21": 5848.58,
+      "SMA50": 5983.2,
+      "SMA200": 6384.61,
       "FiltreGecti": false,
       "Destek": 5622.29,
       "Direnc": 6004.89,
-      "Stop": 5714.88,
-      "Hedef1": 6081.84,
-      "Hedef": 6265.32,
+      "Stop": 5714.89,
+      "Hedef1": 6081.83,
+      "Hedef": 6265.29,
       "Risk/Odul": 2.0
     },
     {
@@ -41,7 +41,7 @@
       "Risk": 90,
       "AISkor": 66.2,
       "Karar": "★★ TUT",
-      "RSI": 50.51,
+      "RSI": 50.52,
       "MACD": -1.15,
       "ADX": 18.88,
       "ATR": 1.89,
@@ -58,7 +58,7 @@
       "Risk/Odul": 2.0
     }
   ],
-  "onceki_guncelleme": "2026-11-26T20:09:53+00:00",
+  "onceki_guncelleme": "2026-11-26T23:53:29+00:00",
   "onceki_hisseler": [
     {
       "Hisse": "ALTIN",

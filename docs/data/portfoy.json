@@ -1,5 +1,5 @@
 {
-  "nakit": 35976.58,
+  "nakit": 46346.5,
   "baslangic_sermaye": 100000,
   "pozisyonlar": {
     "TOASO": {
@@ -9,14 +9,6 @@
       "stop_takip": 225.29,
       "hedef_takip": 269.12,
       "hedef1_takip": 254.51
-    },
-    "CATES": {
-      "adet": 352,
-      "maliyet": 32.6,
-      "tarih": "2026-11-20T22:15:55+00:00",
-      "stop_takip": 29.54,
-      "hedef_takip": 38.73,
-      "hedef1_takip": 35.66
     },
     "AKSA": {
       "adet": 1082,
@@ -646,8 +638,19 @@
       "fiyat": 5898.36,
       "tutar": 11796.72,
       "gerekce": "AI Skoru 2 tur üst üste >= eşik (70.95, eşik: 70)"
+    },
+    {
+      "tarih": "2026-11-27T08:31:02+00:00",
+      "hisse": "CATES",
+      "tip": "SAT",
+      "adet": 352,
+      "fiyat": 29.46,
+      "tutar": 10369.92,
+      "gerekce": "Stop-Loss (29.54)"
     }
   ],
-  "bekleyen": {},
-  "guncelleme": "2026-11-26T23:53:29+00:00"
+  "bekleyen": {
+    "TUPRS": "AL"
+  },
+  "guncelleme": "2026-11-27T08:30:50+00:00"
 }
