@@ -64,7 +64,7 @@ button.on{background:var(--acc);border-color:var(--acc);color:#fff}
     </div>
     <div class="legend" id="legend"></div>
     <div id="chart"><canvas id="cv"></canvas><div id="tools"></div></div>
-    <div class="note">Gösterilen veriler örnek (simüle) veridir; gerçek fiyatları temsil etmez.</div>
+    <div class="note" id="note">Veriler yükleniyor…</div>
   </main>
 </div>
 <script>
@@ -72,11 +72,11 @@ const SYMS={XU100:["BIST 100 Endeksi",12000,"Endeks"],GAU:["Gram Altın",6550,"E
 THYAO:["Türk Hava Yolları",310,"Hisse"],GARAN:["Garanti BBVA",130,"Hisse"],AKBNK:["Akbank",65,"Hisse"],ISCTR:["İş Bankası C",16,"Hisse"],YKBNK:["Yapı Kredi",34,"Hisse"],ASELS:["Aselsan",195,"Hisse"],EREGL:["Erdemir",27,"Hisse"],KRDMD:["Kardemir D",28,"Hisse"],BIMAS:["BİM Mağazalar",560,"Hisse"],MGROS:["Migros",480,"Hisse"],KCHOL:["Koç Holding",190,"Hisse"],SAHOL:["Sabancı Holding",85,"Hisse"],SISE:["Şişecam",42,"Hisse"],TUPRS:["Tüpraş",170,"Hisse"],PETKM:["Petkim",20,"Hisse"],FROTO:["Ford Otosan",1050,"Hisse"],TOASO:["Tofaş",260,"Hisse"],PGSUS:["Pegasus",230,"Hisse"],TAVHL:["TAV Havalimanları",330,"Hisse"],TCELL:["Turkcell",95,"Hisse"],TTKOM:["Türk Telekom",55,"Hisse"],SASA:["Sasa Polyester",3.5,"Hisse"],HEKTS:["Hektaş",3,"Hisse"],ARCLK:["Arçelik",140,"Hisse"],VESTL:["Vestel",95,"Hisse"],ENKAI:["Enka İnşaat",70,"Hisse"],EKGYO:["Emlak Konut",20,"Hisse"],KOZAL:["Koza Altın",20,"Hisse"],ASTOR:["Astor Enerji",110,"Hisse"],ALARK:["Alarko Holding",110,"Hisse"],DOHOL:["Doğan Holding",19,"Hisse"],ULKER:["Ülker",120,"Hisse"],
 AEFES:["Anadolu Efes",170,"Hisse"],AGHOL:["AG Anadolu Grubu",25,"Hisse"],AKSA:["Aksa Akrilik",5.5,"Hisse"],AKSEN:["Aksa Enerji",38,"Hisse"],AKCNS:["Akçansa",230,"Hisse"],ANSGR:["Anadolu Sigorta",85,"Hisse"],AYDEM:["Aydem Yenilenebilir",12,"Hisse"],BIOEN:["Biotrend Enerji",15,"Hisse"],BRSAN:["Borusan Mannesmann",470,"Hisse"],BRYAT:["Borusan Yatırım",2400,"Hisse"],CANTE:["Çan2 Termik",3.5,"Hisse"],CCOLA:["Coca-Cola İçecek",60,"Hisse"],CIMSA:["Çimsa",55,"Hisse"],CWENE:["CW Enerji",60,"Hisse"],DOAS:["Doğuş Otomotiv",230,"Hisse"],ECILC:["Eczacıbaşı İlaç",90,"Hisse"],ENJSA:["Enerjisa",70,"Hisse"],GENIL:["Gen İlaç",110,"Hisse"],GESAN:["Girişim Elektrik",45,"Hisse"],GUBRF:["Gübre Fabrikaları",330,"Hisse"],HALKB:["Halkbank",28,"Hisse"],ISMEN:["İş Yatırım",50,"Hisse"],KONTR:["Kontrolmatik",20,"Hisse"],KORDS:["Kordsa",160,"Hisse"],LOGO:["Logo Yazılım",120,"Hisse"],MAVI:["Mavi Giyim",75,"Hisse"],MIATK:["Mia Teknoloji",32,"Hisse"],ODAS:["Odaş Elektrik",6,"Hisse"],OTKAR:["Otokar",480,"Hisse"],OYAKC:["Oyak Çimento",40,"Hisse"],SELEC:["Selçuk Ecza",70,"Hisse"],SKBNK:["Şekerbank",6,"Hisse"],SMRTG:["Smart Güneş",30,"Hisse"],SOKM:["Şok Marketler",50,"Hisse"],TKFEN:["Tekfen Holding",90,"Hisse"],TSKB:["TSKB",12,"Hisse"],TTRAK:["Türk Traktör",520,"Hisse"],TURSG:["Türkiye Sigorta",9,"Hisse"],VAKBN:["Vakıfbank",24,"Hisse"],VESBE:["Vestel Beyaz Eşya",16,"Hisse"],YEOTK:["Yeo Teknoloji",180,"Hisse"],ZOREN:["Zorlu Enerji",3,"Hisse"],
 AHGAZ:["Ahlatcı Doğal Gaz",10,"Hisse"],AKFYE:["Akfen Yenilenebilir Enerji",15,"Hisse"],ALBRK:["Albaraka Türk",7,"Hisse"],ANHYT:["Anadolu Hayat Emeklilik",150,"Hisse"],AYGAZ:["Aygaz",180,"Hisse"],BINHO:["1000 Yatırımlar Holding",100,"Hisse"],ECZYT:["Eczacıbaşı Yatırım",25,"Hisse"],EGEEN:["Ege Endüstri",7000,"Hisse"],EGGUB:["Ege Gübre",120,"Hisse"],ENTRA:["IC Enterra Yenilenebilir",15,"Hisse"],GLYHO:["Global Yatırım Holding",12,"Hisse"],GWIND:["Galata Wind Enerji",12,"Hisse"],ISDMR:["İskenderun Demir Çelik",45,"Hisse"],KARSN:["Karsan Otomotiv",6,"Hisse"],KATMR:["Katmerciler",12,"Hisse"],KCAER:["Kocaer Çelik",12,"Hisse"],LMKDC:["Limak Doğu Anadolu Çimento",90,"Hisse"],RGYAS:["Rönesans Gayrimenkul",40,"Hisse"],RYSAS:["Reysaş Lojistik",20,"Hisse"],SNGYO:["Sinpaş GYO",7,"Hisse"],TABGD:["TAB Gıda",200,"Hisse"],TCKRC:["TCKRC",40,"Hisse"],TRGYO:["Torunlar GYO",40,"Hisse"],TRMET:["TR Anadolu Metal Madencilik",100,"Hisse"]};
-function conv(sym){
-  const d=full[sym]||(full[sym]=gen(sym));
+function conv(sym,four){
+  const d=(four&&full4[sym])||full[sym];
   if(cu==="TL"||sym==="USDTRY")return d;
-  const u=full.USDTRY||(full.USDTRY=gen("USDTRY")),r=x=>+x.toFixed(3);
-  return d.map((b,i)=>{const k=u[i].close;return{time:b.time,open:r(b.open/k),high:r(b.high/k),low:r(b.low/k),close:r(b.close/k),vol:b.vol}});
+  const r=x=>+x.toFixed(3),fx=date=>{const a=full.USDTRY;let lo=0,hi=a.length-1,v=a[0].close;while(lo<=hi){const m=(lo+hi)>>1;if(a[m].time<=date){v=a[m].close;lo=m+1}else hi=m-1}return v};
+  return d.map(b=>{const k=fx(typeof b.time==="number"?new Date(b.time*1000).toISOString().slice(0,10):b.time);return{time:b.time,open:r(b.open/k),high:r(b.high/k),low:r(b.low/k),close:r(b.close/k),vol:b.vol}});
 }
 function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 function gen(sym){
@@ -142,7 +142,7 @@ function ema(data,n){
   });
   return out;
 }
-let cur="THYAO",tf="D",full={},view=[];
+let cur="THYAO",tf="D",full={},full4={},view=[];
 function colors(){
   chart.applyOptions({layout:{background:{type:"solid",color:css("--bg")},textColor:css("--mute")},grid:{vertLines:{color:css("--line")},horzLines:{color:css("--line")}}});
   candles.applyOptions({upColor:css("--up"),downColor:css("--down"),wickUpColor:css("--up"),wickDownColor:css("--down")});
@@ -154,7 +154,7 @@ function setVol(){
 }
 function load(){
   full[cur]=full[cur]||gen(cur);
-  view=agg(conv(cur),tf);
+  view=tf==="H4"&&full4[cur]?conv(cur,true):agg(conv(cur),tf);
   candles.setData(view);setVol();
   m20.setData(ma(view,20));m50.setData(ma(view,50));s9.setData(ema(view,9));s21.setData(ema(view,21));
   chart.timeScale().fitContent();
@@ -252,7 +252,21 @@ function draw(){
   for(const d of all)shape(d,r.width);
   requestAnimationFrame(draw);
 }
-colors();load();draw();
+let real=0;
+const mp=j=>j.map(x=>({time:x[0],open:x[1],high:x[2],low:x[3],close:x[4],vol:x[5]}));
+async function ensure(s){
+  try{
+    const r=await fetch("data/"+s+".json");if(!r.ok)throw 0;
+    full[s]=mp(await r.json());real++;
+    try{const r4=await fetch("data/"+s+"_4h.json");if(r4.ok)full4[s]=mp(await r4.json())}catch(e){}
+  }catch(e){full[s]=gen(s)}
+}
+Promise.all(Object.keys(SYMS).map(ensure)).then(async()=>{
+  const total=Object.keys(SYMS).length;let upd="";
+  try{const m=await (await fetch("data/meta.json")).json();upd=m.updated}catch(e){}
+  document.getElementById("note").textContent=real===0?"Dikkat: data/ klasöründe veri bulunamadı, gösterilen fiyatlar örnek (simüle) veridir.":(real<total?real+"/"+total+" sembolde gerçek veri var, kalanlar örnek veridir. ":"")+"Veri: Yahoo Finance, gün sonu"+(upd?" · son güncelleme "+upd:"")+". Gram altın/gümüş, ons fiyatı ve kura göre hesaplanır, kuyumcu fiyatından farklı olabilir.";
+  colors();load();draw();
+});
 </script>
 </body>
 </html>
